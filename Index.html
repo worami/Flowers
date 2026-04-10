@@ -1,0 +1,254 @@
+<!DOCTYPE html>
+<html lang="nl">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Zonnige Border – Kwekerij Muijderman</title>
+<style>
+*, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+body { font-family: sans-serif; background: #f5f0e8; color: #2a2a1e; min-height: 100vh; }
+
+header { background: #2d4a2d; color: #f5f0e8; padding: 1.25rem 1.5rem; text-align: center; }
+header .sub { font-size: 0.6rem; letter-spacing: 0.2em; text-transform: uppercase; color: #c8a84b; margin-bottom: 0.3rem; }
+header h1 { font-size: 1.4rem; font-weight: bold; line-height: 1.2; }
+header h1 em { color: #7aad7a; font-style: italic; }
+header p { font-size: 0.7rem; color: rgba(245,240,232,0.6); margin-top: 0.3rem; }
+
+.toolbar { background: #faf8f3; border-bottom: 1px solid #ddd5c0; padding: 0.6rem 0.75rem; position: sticky; top: 0; z-index: 10; box-shadow: 0 2px 6px rgba(0,0,0,0.05); display: flex; flex-direction: column; gap: 0.45rem; }
+.filters { display: flex; flex-wrap: wrap; gap: 0.3rem; align-items: center; }
+.filters button { border: 1px solid #ccc; background: white; color: #333; padding: 0.22rem 0.6rem; border-radius: 2rem; font-size: 0.7rem; cursor: pointer; transition: all 0.15s; }
+.filters button.active { background: #2d4a2d; border-color: #2d4a2d; color: white; }
+.count { margin-left: auto; font-size: 0.68rem; color: #888; white-space: nowrap; }
+#search { border: 1px solid #ddd5c0; border-radius: 2rem; padding: 0.28rem 0.75rem; font-size: 0.76rem; outline: none; background: white; width: 100%; }
+
+.grid { padding: 0.9rem; display: grid; grid-template-columns: repeat(auto-fill, minmax(240px, 1fr)); gap: 0.85rem; }
+
+.card { background: white; border-radius: 8px; overflow: hidden; border: 1px solid #ddd5c0; display: flex; flex-direction: column; }
+.card-img { position: relative; }
+.card-img svg { width: 100%; height: 80px; display: block; }
+.photo-link { position: absolute; bottom: 5px; right: 6px; background: rgba(0,0,0,0.5); color: white; font-size: 0.62rem; padding: 0.12rem 0.45rem; border-radius: 2rem; text-decoration: none; }
+.card-body { padding: 0.8rem 0.9rem 0; flex: 1; }
+.badges { display: flex; gap: 0.3rem; flex-wrap: wrap; margin-bottom: 0.3rem; }
+.badge { font-size: 0.58rem; padding: 0.08rem 0.45rem; border-radius: 2rem; text-transform: uppercase; font-weight: 600; }
+.badge-hoog { background: #e8f0e8; color: #2d4a2d; }
+.badge-middel { background: #fdf3e3; color: #7a5a20; }
+.badge-laag { background: #fdecea; color: #8b3a2a; }
+.badge-vaste { background: #f0f5ff; color: #304080; }
+.badge-bodem { background: #fff5e8; color: #804020; }
+.card-name { font-size: 0.98rem; font-weight: bold; color: #2d4a2d; line-height: 1.2; }
+.card-latin { font-style: italic; font-size: 0.7rem; color: #999; margin-bottom: 0.3rem; }
+.pills { display: flex; gap: 0.25rem; flex-wrap: wrap; margin-bottom: 0.4rem; }
+.pill { font-size: 0.62rem; padding: 0.08rem 0.4rem; border-radius: 2rem; }
+.pill-sun { background: #fffbea; border: 1px solid #e8d578; color: #7a6010; }
+.pill-bloom { background: #f5f0e8; border: 1px solid #ddd5c0; color: #666; }
+.card-desc { font-size: 0.73rem; color: #555; line-height: 1.5; }
+.cultivar-toggle { width: 100%; background: none; border: none; border-top: 1px solid #f0ebe0; margin-top: 0.5rem; padding: 0.45rem 0.9rem; text-align: left; cursor: pointer; font-size: 0.7rem; color: #4a7c59; font-weight: 600; display: flex; justify-content: space-between; align-items: center; }
+.cultivars { border-top: 1px solid #f0ebe0; background: #faf8f3; padding: 0.5rem 0.9rem 0.7rem; display: none; }
+.cultivars.open { display: block; }
+.cultivar { margin-bottom: 0.5rem; padding-bottom: 0.5rem; border-bottom: 1px solid #ede8dc; }
+.cultivar:last-child { margin-bottom: 0; padding-bottom: 0; border-bottom: none; }
+.cv-header { display: flex; justify-content: space-between; align-items: flex-start; }
+.cv-name { font-size: 0.75rem; font-weight: 600; color: #2d4a2d; }
+.cv-height { font-size: 0.65rem; color: #888; margin-left: 0.35rem; }
+.cv-photo { font-size: 0.65rem; color: #4a7c59; text-decoration: none; white-space: nowrap; margin-left: 0.4rem; }
+.cv-color { display: flex; gap: 0.3rem; align-items: center; margin-top: 0.15rem; }
+.cv-dot { width: 9px; height: 9px; border-radius: 50%; flex-shrink: 0; }
+.cv-kleur { font-size: 0.65rem; color: #777; }
+.cv-tip { font-size: 0.68rem; color: #666; margin-top: 0.18rem; line-height: 1.45; }
+
+.loader { height: 40px; display: flex; align-items: center; justify-content: center; font-size: 0.75rem; color: #aaa; }
+footer { text-align: center; padding: 1rem; font-size: 0.65rem; color: #888; border-top: 1px solid #ddd5c0; }
+
+/* ============================================================
+   PLANTEN TOEVOEGEN: kopieer een blok hieronder en pas aan.
+   Velden: n=naam, l=latijn, h=hoog/middel/laag,
+   s=voorjaar/zomer/herfst, b=bloeitijd, c=kleurcode (#rrggbb),
+   cat=vaste plant/bodembedekker, d=beschrijving,
+   cv=array van cultivars met name/kleur/hoogte/tip
+   ============================================================ */
+</style>
+</head>
+<body>
+
+<header>
+  <p class="sub">Kwekerij Muijderman · Veldhoven</p>
+  <h1>Planten voor een <em>zonnige border</em></h1>
+  <p id="hdr-count"></p>
+</header>
+
+<div class="toolbar">
+  <div class="filters" id="filters">
+    <button class="active" data-filter="all">Alles</button>
+    <button data-filter="hoog">🌿 Hoog</button>
+    <button data-filter="middel">🌿 Middel</button>
+    <button data-filter="laag">🌿 Laag</button>
+    <button data-filter="bodembedekker">🟫 Bodembedekkers</button>
+    <button data-filter="voorjaar">🌱 Voorjaar</button>
+    <button data-filter="zomer">☀️ Zomer</button>
+    <button data-filter="herfst">🍂 Herfst</button>
+    <span class="count" id="count"></span>
+  </div>
+  <input id="search" type="search" placeholder="Zoek op naam…">
+</div>
+
+<div class="grid" id="grid"></div>
+<div class="loader" id="loader"></div>
+<footer>Kwekerij Muijderman · Volmolenweg 9 Veldhoven · do/vr/za 9–17u</footer>
+
+<script>
+// ============================================================
+// PLANTENLIJST — voeg hier planten toe of pas ze aan
+// ============================================================
+const PLANTS = [
+  { n:"Indigo-lupine", l:"Baptisia australis", h:"hoog", s:"voorjaar", b:"mei–jun", c:"#5b6fbf", cat:"vaste plant", d:"Volle zon, droogtetolerant. Blauwpaarse bloemen op stevige stengels. Langzame starter maar jarenlang trouw.", cv:[{name:"australis",kleur:"blauwpaars",hoogte:"120cm",tip:"De klassieke soort, meest winterhard"},{name:"'Purple Smoke'",kleur:"blauwpaars",hoogte:"100cm",tip:"Rookpaarse stengels, iets compacter"},{name:"'Pale Spire'",kleur:"crèmewit",hoogte:"80cm",tip:"Elegante witte aren, smaller van vorm"}]},
+  { n:"Rode zonnehoed", l:"Echinacea purpurea", h:"hoog", s:"zomer", b:"jul–sep", c:"#c0607a", cat:"vaste plant", d:"Volle zon. Trekt vlinders en bijen. Muijderman heeft ruim 20 cultivars — van klassiek roze tot oranje en wit.", cv:[{name:"'Magnus'",kleur:"roze-paars",hoogte:"90cm",tip:"Klassieker, platte horizontale bloemblaadjes"},{name:"'White Swan'",kleur:"wit",hoogte:"80cm",tip:"Stijlvolle witte variant met bruin hart"},{name:"'Tomato Soup'",kleur:"tomaatrood",hoogte:"75cm",tip:"Opvallende rode kleur, compact"},{name:"'Green Jewel'",kleur:"geelgroen",hoogte:"60cm",tip:"Bijzondere groene kleur, echte blikvanger"},{name:"'Rubinstern'",kleur:"robijnrood",hoogte:"90cm",tip:"Sterk terugbuigende bloemblaadjes"}]},
+  { n:"Gele zonnehoed", l:"Rudbeckia fulgida", h:"hoog", s:"zomer", b:"jul–okt", c:"#d4a010", cat:"vaste plant", d:"Zon tot halfschaduw. Gele bloemen met zwart hart. Bloeit extreem lang.", cv:[{name:"'Goldsturm'",kleur:"geel",hoogte:"70cm",tip:"De absolute klassieker, zeer robuust"},{name:"'Little Goldstar'",kleur:"geel",hoogte:"40cm",tip:"Compact, ideaal voor kleinere borders"},{name:"subtomentosa",kleur:"geel",hoogte:"130cm",tip:"Hoge soort, sterk vertakt en rijk bloeiend"}]},
+  { n:"Daglelie", l:"Hemerocallis", h:"hoog", s:"zomer", b:"jun–aug", c:"#e07030", cat:"vaste plant", d:"Volle zon. Muijderman heeft 25 cultivars. Elke bloem leeft één dag maar de plant bloeit wekenlang.", cv:[{name:"citrina",kleur:"lichtgeel",hoogte:"90cm",tip:"Heerlijk geurend, bloeit 's avonds"},{name:"'Arctic Snow'",kleur:"crèmewit",hoogte:"60cm",tip:"Zeldzame lichte kleur, lang bloeiend"},{name:"'Edge Ahead'",kleur:"lavendelpaars",hoogte:"60cm",tip:"Bijzondere paarse tint, brede bloem"}]},
+  { n:"Kogeldistel", l:"Echinops ritro", h:"hoog", s:"zomer", b:"jul–aug", c:"#4070b0", cat:"vaste plant", d:"Volle zon, droogtetolerant. Staalblauwe ronde bloemen. Geliefd bij bijen.", cv:[{name:"ritro",kleur:"staalsblauw",hoogte:"90cm",tip:"De soort, stevige bolvormige bloemen"},{name:"'Veitch's Blue'",kleur:"diepblauw",hoogte:"100cm",tip:"Intensere blauwe kleur dan de soort"},{name:"'Platinum Blue'",kleur:"lichtblauw",hoogte:"80cm",tip:"Zilverachtige stengels, zachter blauw"}]},
+  { n:"Kattestaart", l:"Lythrum salicaria", h:"hoog", s:"zomer", b:"jun–sep", c:"#a050a0", cat:"vaste plant", d:"Zon tot halfschaduw. Roze-paarse pluimen de hele zomer. Combineert prachtig met Echinacea en Achillea.", cv:[{name:"salicaria",kleur:"roze-paars",hoogte:"100cm",tip:"De wilde soort, meest naturalistisch"},{name:"'Feuerkerze'",kleur:"vuurrood",hoogte:"100cm",tip:"Intensere kleur dan de soort"},{name:"'Blush'",kleur:"lichtroze",hoogte:"80cm",tip:"Zachte pasteltint, eleganter van karakter"}]},
+  { n:"Zonnekruid", l:"Helenium autumnale", h:"hoog", s:"herfst", b:"jul–okt", c:"#c85020", cat:"vaste plant", d:"Volle zon. Warme oranje-rode bloemen. Vult de border met kleur als andere planten uitgebloeid zijn.", cv:[{name:"'Moerheim Beauty'",kleur:"roodbruin",hoogte:"90cm",tip:"Rijke bruinrode kleur, klassiek"},{name:"'Sahin's Early Flowerer'",kleur:"oranje-geel",hoogte:"100cm",tip:"Bloeit al vanaf juni"},{name:"'Rubinzwerg'",kleur:"robijnrood",hoogte:"60cm",tip:"Compact, geen staken nodig"}]},
+  { n:"Vlambloem", l:"Phlox paniculata", h:"hoog", s:"zomer", b:"jul–sep", c:"#d060a0", cat:"vaste plant", d:"Volle zon. Grote geurende bloemtrossen. Goed doorlatende voedselrijke grond.", cv:[{name:"'Amethyst'",kleur:"lila-paars",hoogte:"80cm",tip:"Klassiek lila, fraai geurend"},{name:"amplifolia 'Minnehaha'",kleur:"roze-wit",hoogte:"120cm",tip:"Grote trossen, meeldauwresistent"},{name:"amplifolia 'Kleine Augustern'",kleur:"lavendelroze",hoogte:"100cm",tip:"Compact, rijke bloei"}]},
+  { n:"Bergamotplant", l:"Monarda", h:"hoog", s:"zomer", b:"jul–sep", c:"#c04050", cat:"vaste plant", d:"Volle zon, goed doorlatende grond. Bijzondere bloemen, trekt bijen en vlinders. Kies meeldauwresistente cultivars.", cv:[{name:"'Gardenview Scarlet'",kleur:"scharlakenrood",hoogte:"130cm",tip:"Groot en opvallend, vrij meeldauwvrij"},{name:"'Fireball'",kleur:"vuurrood",hoogte:"80cm",tip:"Compacte vorm, intensere kleur"},{name:"'Praerienacht'",kleur:"paarslila",hoogte:"120cm",tip:"Klassieke lila, goed winterhard"},{name:"'Schneewittchen'",kleur:"wit",hoogte:"100cm",tip:"Zeldzame witte variant, elegant"}]},
+  { n:"Dropplant", l:"Agastache", h:"hoog", s:"zomer", b:"jun–okt", c:"#9060b0", cat:"vaste plant", d:"Volle zon, goed doorlatende grond. Bloeit tot in de herfst. Enorme aantrekkingskracht op bijen.", cv:[{name:"'Black Adder'",kleur:"blauwpaars",hoogte:"100cm",tip:"Lange donkere aren, zeer robuust"},{name:"'Blue Fortune'",kleur:"blauw",hoogte:"80cm",tip:"Klassiek, zeer lang bloeiend"},{name:"'Purple Haze'",kleur:"paars",hoogte:"80cm",tip:"Compact, stevige stelen"},{name:"'Little Adder'",kleur:"blauwpaars",hoogte:"40cm",tip:"Dwergvorm, ook voor kuipen"}]},
+  { n:"Vuurpijl", l:"Kniphofia", h:"hoog", s:"zomer", b:"jun–okt", c:"#d05010", cat:"vaste plant", d:"Volle zon, goed doorlatende grond. Spectaculaire fakkelachtige bloemen. Opvallend verticaal accent.", cv:[{name:"'Alcazar'",kleur:"oranjerood",hoogte:"120cm",tip:"Indrukwekkende hoge soort"},{name:"'Orange Vanilla Popsicle'",kleur:"oranje-crème",hoogte:"60cm",tip:"Compact, tweekleurig"},{name:"'Little Maid'",kleur:"crèmewit",hoogte:"60cm",tip:"Subtiel, zachte crème-ivoor kleur"},{name:"'Redhot Popsicle'",kleur:"vuurrood",hoogte:"60cm",tip:"Compact en felrood, lange bloei"}]},
+  { n:"Guldenroede", l:"Solidago", h:"hoog", s:"herfst", b:"aug–okt", c:"#c8a010", cat:"vaste plant", d:"Volle zon. Zwavelgele pluimen in de herfst. Niet-woekerende soorten bij Muijderman.", cv:[{name:"'Fireworks'",kleur:"zwavelgeel",hoogte:"140cm",tip:"Spectaculaire boogvormige bloeiwijze"},{name:"'Loysder Crown'",kleur:"lichtgeel",hoogte:"100cm",tip:"Compacter, elegantere pluimen"}]},
+  { n:"Salie", l:"Salvia nemorosa", h:"middel", s:"zomer", b:"mei–sep", c:"#6050b0", cat:"vaste plant", d:"Volle zon. Bloeit na terugsnoeien opnieuw. Diverse cultivars in blauw, roze en wit.", cv:[{name:"'Caradonna'",kleur:"blauwpaars",hoogte:"80cm",tip:"Klassieker met donkere stengels"},{name:"'Rose Queen'",kleur:"roze",hoogte:"65cm",tip:"Warme roze tint, goede tweede bloei"},{name:"'Amethyst'",kleur:"lilaroze",hoogte:"70cm",tip:"Zachte pastellila, bloeit laat door"}]},
+  { n:"Duizendblad", l:"Achillea millefolium", h:"middel", s:"zomer", b:"jun–aug", c:"#c8a840", cat:"vaste plant", d:"Volle zon, droogtetolerant. Platte bloemschermen. Na terugsnoeien soms tweede bloei tot in november.", cv:[{name:"'Paprika'",kleur:"rood-oranje",hoogte:"60cm",tip:"Warme rode kleur, verbleekt fraai naar zalm"},{name:"'Cerise Queen'",kleur:"donkerroze",hoogte:"60cm",tip:"Rijke donkerroze kleur"},{name:"'Lilac Beauty'",kleur:"lila",hoogte:"60cm",tip:"Zachte lila tint, fijne combinatieplant"},{name:"'Peter Cottontail'",kleur:"wit",hoogte:"50cm",tip:"Zeer rijke bloeier, sneeuwwit"}]},
+  { n:"Kattenkruid", l:"Nepeta faassenii", h:"middel", s:"zomer", b:"mei–okt", c:"#8070b0", cat:"vaste plant", d:"Volle zon, droogtetolerant. Lavendelblauw, bloeit bijna het hele seizoen. Na snoeien tweede bloei.", cv:[{name:"'Walker's Low'",kleur:"lavendelblauw",hoogte:"60cm",tip:"Meest populair, breed uitwaaierend"},{name:"'Six Hills Giant'",kleur:"blauwpaars",hoogte:"80cm",tip:"Grootste cultivar, imposante plant"},{name:"'Kit Cat'",kleur:"lichtblauw",hoogte:"30cm",tip:"Compact, ideaal voor borderrand"},{name:"'Snowflake'",kleur:"wit",hoogte:"40cm",tip:"Zeldzame witte variant, fris karakter"}]},
+  { n:"Pioenroos", l:"Paeonia lactiflora", h:"middel", s:"voorjaar", b:"mei–jun", c:"#d06080", cat:"vaste plant", d:"Volle zon. Weelderige bloemen in roze, rood of wit. Niet verplanten na aanplant.", cv:[{name:"lactiflora",kleur:"roze",hoogte:"80cm",tip:"De soort, enkelvoudig en luchtig"},{name:"'Sarah Bernhardt'",kleur:"zachtroze",hoogte:"90cm",tip:"Gevuld, heerlijk geurend, klassieker"},{name:"'Karl Rosenfield'",kleur:"donkerrood",hoogte:"90cm",tip:"Rijkgevuld, intens rood"}]},
+  { n:"Duizendknoop", l:"Persicaria amplexicaulis", h:"middel", s:"zomer", b:"jul–okt", c:"#b03040", cat:"vaste plant", d:"Zon tot halfschaduw. Rode of roze kaarsjes, bloeit maandenlang tot in de herfst.", cv:[{name:"'Blackfield'",kleur:"donkerrood",hoogte:"80cm",tip:"Diep donkerrood, compact"},{name:"bistorta 'Superbum'",kleur:"lichtroze",hoogte:"70cm",tip:"Zachte roze kleur, vroegst bloeiend"},{name:"polymorpha",kleur:"roomwit",hoogte:"170cm",tip:"Grote struikachtige soort, imposant"}]},
+  { n:"Russische salie", l:"Perovskia atriplicifolia", h:"middel", s:"zomer", b:"jul–okt", c:"#7878c0", cat:"vaste plant", d:"Volle zon, droogtetolerant. Zilverachtige stengels met lavendelblauwe bloemen.", cv:[{name:"atriplicifolia",kleur:"lavendelblauw",hoogte:"100cm",tip:"De soort, luchtig en sierlijk"},{name:"'Blue Spire'",kleur:"diepblauw",hoogte:"120cm",tip:"Intensere kleur, breed uitwaaierend"}]},
+  { n:"Klokjesbloem", l:"Campanula persicifolia", h:"middel", s:"zomer", b:"jun–aug", c:"#5878c0", cat:"vaste plant", d:"Zon tot halfschaduw. Sierlijke klokjes op slanke stelen.", cv:[{name:"persicifolia",kleur:"blauw",hoogte:"80cm",tip:"De soort, klassiek lichtblauw"},{name:"persicifolia 'Alba'",kleur:"wit",hoogte:"80cm",tip:"Witte variant, fris en elegant"},{name:"poscharskyana",kleur:"lavendelblauw",hoogte:"20cm",tip:"Kruipende vorm, ideaal voor borderrand"}]},
+  { n:"Beemdkroon", l:"Knautia macedonica", h:"middel", s:"zomer", b:"jun–okt", c:"#a03050", cat:"vaste plant", d:"Volle zon. Donkerrode knoopachtige bloemen, bloeit bijna het hele seizoen. Vlindervriendelijk.", cv:[{name:"macedonica",kleur:"donkerrood",hoogte:"100cm",tip:"De soort, meest robuust"},{name:"'Mars Midget'",kleur:"donkerrood",hoogte:"50cm",tip:"Compacte dwergvorm"},{name:"'Red Knight'",kleur:"scharlakenrood",hoogte:"80cm",tip:"Intensere rode kleur"},{name:"arvensis",kleur:"lila",hoogte:"80cm",tip:"Inheemse soort, lichter lila"}]},
+  { n:"Bloedooievaarsbek", l:"Geranium sanguineum", h:"laag", s:"zomer", b:"mei–aug", c:"#b05080", cat:"vaste plant", d:"Zon tot halfschaduw. Roze-paarse bloemen, uitwaaierende groei. 60 Geranium-cultivars bij Muijderman.", cv:[{name:"sanguineum",kleur:"roze-paars",hoogte:"30cm",tip:"De soort, meest droogtetolerant"},{name:"'Vision Violet'",kleur:"violet",hoogte:"25cm",tip:"Intensere paarse kleur, compacte bol"},{name:"'Elke'",kleur:"roze",hoogte:"30cm",tip:"Helderroze met wit hart, lang bloeiend"}]},
+  { n:"Loodkruid", l:"Ceratostigma plumbaginoides", h:"laag", s:"herfst", b:"aug–okt", c:"#3070c0", cat:"vaste plant", d:"Volle zon. Knalblauw met rood herfstblad tegelijk. Bloeit als de meeste planten uitgebloeid zijn.", cv:[{name:"plumbaginoides",kleur:"kobaltblauw",hoogte:"25cm",tip:"Uitstekende bodembedekker, wintergroen"}]},
+  { n:"Duifkruid", l:"Scabiosa columbaria", h:"laag", s:"zomer", b:"mei–nov", c:"#8080c0", cat:"vaste plant", d:"Volle zon. Lavendelblauwe bloemknopjes op sierlijke stelen. Bloeit extreem lang. Vlinders er dol op.", cv:[{name:"'Butterfly Blue'",kleur:"lavendelblauw",hoogte:"35cm",tip:"Langstbloeiende cultivar, mei tot november"}]},
+  { n:"Blauw schapegras", l:"Festuca glauca", h:"laag", s:"zomer", b:"jaarrond", c:"#7090a0", cat:"vaste plant", d:"Volle zon, droogtetolerant. Grijsblauw siergras, jaarrond decoratief.", cv:[{name:"glauca",kleur:"grijsblauw",hoogte:"25cm",tip:"Compacte bol, jaarrond mooi"},{name:"'Eisvogel'",kleur:"ijsblauw",hoogte:"30cm",tip:"Intenser blauw, iets groter formaat"}]},
+  { n:"Stachys", l:"Stachys byzantina", h:"laag", s:"zomer", b:"jun–aug", c:"#a0a0c0", cat:"vaste plant", d:"Volle zon, droogtetolerant. Prachtig zilvergrijs wollig blad. Wintergroen.", cv:[{name:"byzantina",kleur:"lila",hoogte:"40cm",tip:"De soort, bloeit met lila aren"},{name:"'Silver Carpet'",kleur:"geen bloei",hoogte:"20cm",tip:"Puur zilvergrijs, geen bloemen"},{name:"'Summer Sweets'",kleur:"lichtroze",hoogte:"40cm",tip:"Herbloei in september"}]},
+  { n:"Rotsooievaarsbek", l:"Geranium macrorrhizum", h:"laag", s:"voorjaar", b:"mei–jul", c:"#c06080", cat:"bodembedekker", d:"Zon tot schaduw. Een van de sterkste bodembedekkers. Geurig blad, mooie herfstkleur.", cv:[{name:"'Spessart'",kleur:"wit-roze",hoogte:"30cm",tip:"Sterkste en meest gebruikte cultivar"},{name:"'Ingwersen's Variety'",kleur:"lichtroze",hoogte:"30cm",tip:"Zachtroze, elegant van kleur"},{name:"'Bevan's Variety'",kleur:"cerise-roze",hoogte:"25cm",tip:"Intensere roze kleur, compacter"}]},
+  { n:"Cambridge-ooievaarsbek", l:"Geranium cantabrigiense", h:"laag", s:"voorjaar", b:"mei–jul", c:"#d07090", cat:"bodembedekker", d:"Volle zon tot halfschaduw. Halfwintergroen, compact tapijt. Droogtetolerant. Geurig blad.", cv:[{name:"'Karmina'",kleur:"donkerroze",hoogte:"25cm",tip:"Rijke donkerroze kleur, sterk"},{name:"'St. Ola'",kleur:"wit",hoogte:"25cm",tip:"Witte variant, fris en elegant"},{name:"'Biokovo'",kleur:"wit-roze",hoogte:"20cm",tip:"Heel laag, dicht tapijt, populair"}]},
+  { n:"Kruipend zenegroen", l:"Ajuga reptans", h:"laag", s:"voorjaar", b:"apr–jun", c:"#5060a0", cat:"bodembedekker", d:"Zon tot halfschaduw. Snelgroeiende wintergroene bodembedekker met blauwe bloeiaren in het voorjaar.", cv:[{name:"'Atropurpurea'",kleur:"blauw",hoogte:"15cm",tip:"Opvallend bronsrood blad, klassiek"},{name:"'Black Scallop'",kleur:"blauw",hoogte:"15cm",tip:"Bijna zwart blad, meest donkere cultivar"},{name:"'Catlin's Giant'",kleur:"blauw",hoogte:"25cm",tip:"Groter blad en bloemen"},{name:"'Burgundy Glow'",kleur:"blauw",hoogte:"15cm",tip:"Veelkleurig blad in roze, wit en groen"}]},
+  { n:"Brunel", l:"Prunella grandiflora", h:"laag", s:"zomer", b:"jun–sep", c:"#8050a0", cat:"bodembedekker", d:"Volle zon tot halfschaduw. Sterke wintergroene bodembedekker. Bij- en vlinderplant.", cv:[{name:"grandiflora",kleur:"lila-paars",hoogte:"25cm",tip:"De soort, meest robuust"},{name:"'Inshriach Ruby'",kleur:"rozerood",hoogte:"25cm",tip:"Warme rozerode kleur, lang bloeiend"},{name:"'Summer Daze'",kleur:"roze",hoogte:"25cm",tip:"Zachte roze kleur, compacte groei"},{name:"pinnatifida",kleur:"lila",hoogte:"20cm",tip:"Fijner gesneden blad, delicater"}]},
+  { n:"Kruiptijm", l:"Thymus serpyllum", h:"laag", s:"zomer", b:"jun–aug", c:"#c060a0", cat:"bodembedekker", d:"Volle zon verplicht, droogtetolerant. Vormt een dicht geurig tapijt. Bijenvriendelijk. Ook tussen tegels.", cv:[{name:"serpyllum",kleur:"roze-lila",hoogte:"5cm",tip:"De soort, sterkst tapijtvormend"},{name:"'Coccineus'",kleur:"scharlakenrood",hoogte:"5cm",tip:"Felrood, meest opvallende kleur"},{name:"praecox 'Albiflorus'",kleur:"wit",hoogte:"5cm",tip:"Witte variant, fris en zeldzaam"},{name:"praecox 'Red Carpet'",kleur:"rood",hoogte:"5cm",tip:"Compact rood tapijt, rijke bloei"}]},
+  { n:"Ganzerik", l:"Potentilla", h:"laag", s:"zomer", b:"mei–aug", c:"#d0a020", cat:"bodembedekker", d:"Volle zon, droogtetolerant. Gele of oranje rozetbloemen. Sterk voor warme, droge plekken.", cv:[{name:"aurea",kleur:"geel",hoogte:"10cm",tip:"Goudgeel, laagste soort, dicht tapijt"},{name:"'Volcan'",kleur:"oranje-rood",hoogte:"25cm",tip:"Warme oranje-rode kleur, opvallend"},{name:"'William Rollisson'",kleur:"oranje-rood",hoogte:"25cm",tip:"Gevuld, warme oranje kleur"},{name:"tonguei",kleur:"abrikoos",hoogte:"10cm",tip:"Warmabrikoos met rood hart, kruipend"}]},
+];
+// ============================================================
+// EINDE PLANTENLIJST
+// ============================================================
+
+const PAGE = 8;
+let filter = "all", query = "", page = 1, filtered = [];
+
+function flower(c) {
+  const pts = [0,60,120,180,240,300].map(a => {
+    const x = 60 + 13*Math.cos(a*Math.PI/180), y = 22 + 13*Math.sin(a*Math.PI/180);
+    return `<ellipse cx="${x.toFixed(1)}" cy="${y.toFixed(1)}" rx="7" ry="5" fill="${c}" opacity="0.8" transform="rotate(${a},${x.toFixed(1)},${y.toFixed(1)})"/>`;
+  }).join('');
+  return `<svg viewBox="0 0 120 90" style="background:${c}15">
+    <ellipse cx="60" cy="80" rx="52" ry="8" fill="${c}20"/>
+    <line x1="60" y1="80" x2="60" y2="22" stroke="${c}77" stroke-width="2.5"/>
+    <ellipse cx="44" cy="55" rx="10" ry="4" fill="#4a7c5955" transform="rotate(-25,44,55)"/>
+    <ellipse cx="76" cy="57" rx="10" ry="4" fill="#4a7c5955" transform="rotate(25,76,57)"/>
+    ${pts}
+    <circle cx="60" cy="22" r="6" fill="${c}"/>
+    <circle cx="60" cy="22" r="2.5" fill="white" opacity="0.4"/>
+  </svg>`;
+}
+
+function glink(l, cv) {
+  return `https://www.google.com/search?q=${encodeURIComponent(l+' '+cv+' tuin border')}&tbm=isch`;
+}
+
+function cardHTML(p) {
+  const hBg = {hoog:'#e8f0e8',middel:'#fdf3e3',laag:'#fdecea'};
+  const hTx = {hoog:'#2d4a2d',middel:'#7a5a20',laag:'#8b3a2a'};
+  const hLb = {hoog:'Hoog >60cm',middel:'Middel 30–60cm',laag:'Laag <30cm'};
+  const cvHTML = p.cv.map(cv => `
+    <div class="cultivar">
+      <div class="cv-header">
+        <div><span class="cv-name">${cv.name}</span><span class="cv-height">· ${cv.hoogte}</span></div>
+        <a class="cv-photo" href="${glink(p.l,cv.name)}" target="_blank" rel="noopener">📷 foto</a>
+      </div>
+      <div class="cv-color"><span class="cv-dot" style="background:${p.c}"></span><span class="cv-kleur">${cv.kleur}</span></div>
+      <div class="cv-tip">${cv.tip}</div>
+    </div>`).join('');
+  return `<div class="card">
+    <div class="card-img">
+      ${flower(p.c)}
+      <a class="photo-link" href="${glink(p.l,'')}" target="_blank" rel="noopener">📷</a>
+    </div>
+    <div class="card-body">
+      <div class="badges">
+        <span class="badge badge-${p.h}" style="background:${hBg[p.h]};color:${hTx[p.h]}">${hLb[p.h]}</span>
+        <span class="badge ${p.cat==='bodembedekker'?'badge-bodem':'badge-vaste'}">${p.cat}</span>
+      </div>
+      <div class="card-name">${p.n}</div>
+      <div class="card-latin">${p.l}</div>
+      <div class="pills">
+        <span class="pill pill-sun">☀️ zon</span>
+        <span class="pill pill-bloom">🌸 ${p.b}</span>
+      </div>
+      <div class="card-desc">${p.d}</div>
+    </div>
+    <button class="cultivar-toggle" onclick="this.nextElementSibling.classList.toggle('open');this.querySelector('.arr').textContent=this.nextElementSibling.classList.contains('open')?'▲':'▼'">
+      <span>🌿 ${p.cv.length} varianten</span><span class="arr">▼</span>
+    </button>
+    <div class="cultivars">${cvHTML}</div>
+  </div>`;
+}
+
+function applyFilter() {
+  filtered = PLANTS.filter(p => {
+    const mf = filter==='all' || p.h===filter || p.s===filter || (filter==='bodembedekker' && p.cat==='bodembedekker');
+    const ms = query==='' || p.n.toLowerCase().includes(query) || p.l.toLowerCase().includes(query);
+    return mf && ms;
+  });
+  page = 1;
+  document.getElementById('grid').innerHTML = '';
+  renderMore();
+}
+
+function renderMore() {
+  const grid = document.getElementById('grid');
+  const loader = document.getElementById('loader');
+  const slice = filtered.slice((page-1)*PAGE, page*PAGE);
+  grid.insertAdjacentHTML('beforeend', slice.map(cardHTML).join(''));
+  const shown = Math.min(page*PAGE, filtered.length);
+  document.getElementById('count').textContent = shown + '/' + filtered.length;
+  document.getElementById('hdr-count').textContent = PLANTS.length + ' planten met cultivarvarianten · 📷 = Google foto\'s';
+  if (shown < filtered.length) {
+    loader.textContent = 'Meer laden…';
+  } else {
+    loader.textContent = filtered.length > 0 ? '— alle ' + filtered.length + ' planten getoond —' : 'Geen planten gevonden';
+  }
+  page++;
+}
+
+// Infinite scroll
+const obs = new IntersectionObserver(entries => {
+  if (entries[0].isIntersecting && page*PAGE <= filtered.length+PAGE) renderMore();
+}, { threshold: 0.1 });
+obs.observe(document.getElementById('loader'));
+
+// Filter buttons
+document.getElementById('filters').addEventListener('click', e => {
+  const btn = e.target.closest('button');
+  if (!btn) return;
+  document.querySelectorAll('.filters button').forEach(b => b.classList.remove('active'));
+  btn.classList.add('active');
+  filter = btn.dataset.filter;
+  applyFilter();
+});
+
+// Search
+let debounce;
+document.getElementById('search').addEventListener('input', e => {
+  clearTimeout(debounce);
+  debounce = setTimeout(() => { query = e.target.value.toLowerCase(); applyFilter(); }, 200);
+});
+
+// Init
+applyFilter();
+</script>
+</body>
+</html>
