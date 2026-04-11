@@ -57,6 +57,9 @@ header p { font-size: 0.7rem; color: rgba(245,240,232,0.6); margin-top: 0.3rem; 
 .cv-dot { width: 9px; height: 9px; border-radius: 50%; flex-shrink: 0; }
 .cv-kleur { font-size: 0.65rem; color: #777; }
 .cv-tip { font-size: 0.68rem; color: #666; margin-top: 0.18rem; line-height: 1.45; }
+.cv-fav { background: none; border: none; cursor: pointer; font-size: 0.9rem; color: #ccc; padding: 0 2px; line-height: 1; flex-shrink: 0; transition: color 0.15s; }
+.cv-fav.active { color: #f0a500; }
+.empty-msg { text-align: center; padding: 3rem 1rem; color: #999; font-size: 0.85rem; }
 
 .loader { height: 40px; display: flex; align-items: center; justify-content: center; font-size: 0.75rem; color: #aaa; }
 footer { text-align: center; padding: 1rem; font-size: 0.65rem; color: #888; border-top: 1px solid #ddd5c0; }
@@ -88,6 +91,7 @@ footer { text-align: center; padding: 1rem; font-size: 0.65rem; color: #888; bor
     <button data-filter="voorjaar">🌱 Voorjaar</button>
     <button data-filter="zomer">☀️ Zomer</button>
     <button data-filter="herfst">🍂 Herfst</button>
+    <button data-filter="favorieten">★ Favorieten</button>
     <span class="count" id="count"></span>
   </div>
   <div class="filters" id="filters-licht">
@@ -200,6 +204,8 @@ const PLANTS = [
 
 const PAGE = 8;
 let filter = "all", filterLicht = "all", query = "", page = 1, filtered = [];
+let favorieten = new Set(JSON.parse(localStorage.getItem('mj_fav') || '[]'));
+function saveFav() { localStorage.setItem('mj_fav', JSON.stringify([...favorieten])); }
 
 function flower(c) {
   const pts = [0,60,120,180,240,300].map(a => {
@@ -225,15 +231,24 @@ function cardHTML(p) {
   const hBg = {hoog:'#e8f0e8',middel:'#fdf3e3',laag:'#fdecea'};
   const hTx = {hoog:'#2d4a2d',middel:'#7a5a20',laag:'#8b3a2a'};
   const hLb = {hoog:'Hoog >60cm',middel:'Middel 30–60cm',laag:'Laag <30cm'};
-  const cvHTML = p.cv.map(cv => `
+  const isFav = filter === 'favorieten';
+  const cvList = isFav ? p.cv.filter(cv => favorieten.has(`${p.l}||${cv.name}`)) : p.cv;
+  const cvHTML = cvList.map(cv => {
+    const id = `${p.l}||${cv.name}`;
+    const starred = favorieten.has(id);
+    return `
     <div class="cultivar">
       <div class="cv-header">
         <div><span class="cv-name">${cv.name}</span><span class="cv-height">· ${cv.hoogte}</span></div>
-        <a class="cv-photo" href="${glink(p.l,cv.name)}" target="_blank" rel="noopener">📷 foto</a>
+        <div style="display:flex;gap:0.3rem;align-items:center">
+          <button class="cv-fav${starred?' active':''}" data-fav="${id}" title="Favoriet">${starred?'★':'☆'}</button>
+          <a class="cv-photo" href="${glink(p.l,cv.name)}" target="_blank" rel="noopener">📷 foto</a>
+        </div>
       </div>
       <div class="cv-color"><span class="cv-dot" style="background:${p.c}"></span><span class="cv-kleur">${cv.kleur}</span></div>
       <div class="cv-tip">${cv.tip}</div>
-    </div>`).join('');
+    </div>`;
+  }).join('');
   return `<div class="card">
     <div class="card-img">
       ${flower(p.c)}
@@ -253,15 +268,17 @@ function cardHTML(p) {
       <div class="card-desc">${p.d}</div>
     </div>
     <button class="cultivar-toggle" onclick="this.nextElementSibling.classList.toggle('open');this.querySelector('.arr').textContent=this.nextElementSibling.classList.contains('open')?'▲':'▼'">
-      <span>🌿 ${p.cv.length} varianten</span><span class="arr">▼</span>
+      <span>🌿 ${cvList.length} varianten</span><span class="arr">${isFav?'▲':'▼'}</span>
     </button>
-    <div class="cultivars">${cvHTML}</div>
+    <div class="cultivars${isFav?' open':''}">${cvHTML}</div>
   </div>`;
 }
 
 function applyFilter() {
   filtered = PLANTS.filter(p => {
-    const mf = filter==='all' || p.h===filter || p.s===filter || (filter==='bodembedekker' && p.cat==='bodembedekker');
+    const mf = filter==='favorieten'
+      ? p.cv.some(cv => favorieten.has(`${p.l}||${cv.name}`))
+      : filter==='all' || p.h===filter || p.s===filter || (filter==='bodembedekker' && p.cat==='bodembedekker');
     const ml = filterLicht==='all' || p.licht===filterLicht;
     const ms = query==='' || p.n.toLowerCase().includes(query) || p.l.toLowerCase().includes(query);
     return mf && ml && ms;
@@ -279,10 +296,13 @@ function renderMore() {
   const shown = Math.min(page*PAGE, filtered.length);
   document.getElementById('count').textContent = shown + '/' + filtered.length;
   document.getElementById('hdr-count').textContent = PLANTS.length + ' planten met cultivarvarianten · 📷 = Google foto\'s';
+  if (filtered.length === 0 && filter === 'favorieten') {
+    grid.innerHTML = '<p class="empty-msg">Nog geen favorieten. Open een plant, klik op ☆ bij een cultivar om hem op te slaan.</p>';
+  }
   if (shown < filtered.length) {
     loader.textContent = 'Meer laden…';
   } else {
-    loader.textContent = filtered.length > 0 ? '— alle ' + filtered.length + ' planten getoond —' : 'Geen planten gevonden';
+    loader.textContent = filtered.length > 0 ? '— alle ' + filtered.length + ' planten getoond —' : (filter === 'favorieten' ? '' : 'Geen planten gevonden');
   }
   page++;
 }
@@ -311,6 +331,25 @@ document.getElementById('filters-licht').addEventListener('click', e => {
   btn.classList.add('active');
   filterLicht = btn.dataset.licht;
   applyFilter();
+});
+
+// Favorieten toggle
+document.getElementById('grid').addEventListener('click', e => {
+  const btn = e.target.closest('.cv-fav');
+  if (!btn) return;
+  e.stopPropagation();
+  const id = btn.dataset.fav;
+  if (favorieten.has(id)) {
+    favorieten.delete(id);
+    btn.classList.remove('active');
+    btn.textContent = '☆';
+    if (filter === 'favorieten') { applyFilter(); }
+  } else {
+    favorieten.add(id);
+    btn.classList.add('active');
+    btn.textContent = '★';
+  }
+  saveFav();
 });
 
 // Search
