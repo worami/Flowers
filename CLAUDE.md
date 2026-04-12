@@ -250,7 +250,7 @@ De PLANTS-array is nog niet compleet. Het volledige Muijderman-assortiment bevat
 | # | Genera | Status |
 |---|---|---|
 | S1 | Briza · Deschampsia · Helictotrichon · Luzula · Milium | ✅ |
-| S2 | Anemanthele · Chasmanthium · Imperata · Schizachyrium · Sorghastrum · Sporobolus | ⬜ |
+| S2 | Anemanthele · Chasmanthium · Imperata · Schizachyrium · Sorghastrum · Sporobolus | ✅ |
 
 ### Bodembedekkers — batchplan
 
