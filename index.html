@@ -485,10 +485,8 @@ function renderMore() {
     loader.textContent = filtered.length > 0 ? '— alle ' + filtered.length + ' planten getoond —' : (filter === 'favorieten' ? '' : 'Geen planten gevonden');
   }
   page++;
-  // Als loader nog in beeld staat na het toevoegen van kaarten, direct doorgaan
-  requestAnimationFrame(() => {
-    if (loader.getBoundingClientRect().top < window.innerHeight) renderMore();
-  });
+  // Synchroon doorgaan zolang loader in beeld staat (getBoundingClientRect forceert layout)
+  if (loader.getBoundingClientRect().top < window.innerHeight) renderMore();
 }
 
 // Afbeeldingen lazy laden
@@ -498,16 +496,9 @@ const imgObserver = new IntersectionObserver(entries => {
   });
 }, { rootMargin: '300px' });
 
-// Infinite scroll via scroll-event (betrouwbaarder dan IntersectionObserver)
-let _scrollRaf = false;
+// Infinite scroll
 window.addEventListener('scroll', () => {
-  if (_scrollRaf) return;
-  _scrollRaf = true;
-  requestAnimationFrame(() => {
-    _scrollRaf = false;
-    const loader = document.getElementById('loader');
-    if (loader.getBoundingClientRect().top < window.innerHeight + 200) renderMore();
-  });
+  if (document.getElementById('loader').getBoundingClientRect().top < window.innerHeight + 200) renderMore();
 }, { passive: true });
 
 // Filter buttons — hoogte/seizoen/categorie
