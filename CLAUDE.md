@@ -2,7 +2,21 @@
 
 ## Project Overview
 
-A self-contained, single-file static web application for **Kwekerij Muijderman** (Muijderman Nursery) in Veldhoven, Netherlands. The app is a filterable catalogue of *vaste planten* (perennial plants) with cultivar listings, SVG flower previews, favourite tracking, and Google Images photo links.
+A self-contained, single-file static web application for **Kwekerij Muijderman** (Muijderman Nursery) in Veldhoven, Netherlands.
+
+### Doel / Purpose
+
+Het doel van deze app is het **doorzoekbaar en overzichtelijk maken van de plantenassortiment van Kwekerij Muijderman**. De kwekerij verkoopt een groot en gevarieerd assortiment vaste planten, bodembedekkers en siergrassen. De officiële assortimentslijst is te vinden op:
+
+> https://www.kwekerijmuijderman.nl/assortiment/overzicht
+
+De app lost drie problemen op die de ruwe assortimentslijst niet oplost:
+
+1. **Groepering per genus** — planten worden gegroepeerd onder hun Latijnse geslachtsnaam (bijv. alle *Echinacea*-soorten bij elkaar), met per soort de beschikbare cultivars.
+2. **Filters** — bezoekers kunnen snel filteren op hoogte, bloeiperiode, categorie, lichtbehoefte en vrije tekst, zodat ze direct de planten zien die bij hun situatie passen.
+3. **Favorieten** — bezoekers kunnen individuele cultivars markeren als favoriet (opgeslagen in `localStorage`) zodat ze een persoonlijke verlanglijst kunnen samenstellen voor hun bezoek aan de kwekerij.
+
+The app is a filterable catalogue of *vaste planten* (perennial plants) with cultivar listings, SVG flower previews, favourite tracking, and Google Images photo links.
 
 - **Language:** Dutch throughout (UI text, variable names, commit messages)
 - **Stack:** Pure vanilla HTML + CSS + JavaScript — no framework, no build tool, no dependencies
