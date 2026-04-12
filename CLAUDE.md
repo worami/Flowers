@@ -262,4 +262,4 @@ De PLANTS-array is nog niet compleet. Het volledige Muijderman-assortiment bevat
 
 | # | Genera | Status |
 |---|---|---|
-| V1 | Adiantum · Athyrium · Blechnum · Matteuccia · Osmunda · Polystichum | ⬜ |
+| V1 | Adiantum · Athyrium · Blechnum · Matteuccia · Osmunda · Polystichum | ✅ |
