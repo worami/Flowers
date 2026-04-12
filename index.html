@@ -494,7 +494,7 @@ const imgObserver = new IntersectionObserver(entries => {
 // Infinite scroll
 const obs = new IntersectionObserver(entries => {
   if (entries[0].isIntersecting && page*PAGE <= filtered.length+PAGE) renderMore();
-}, { threshold: 0.1 });
+}, { threshold: 0 });
 obs.observe(document.getElementById('loader'));
 
 // Filter buttons — hoogte/seizoen/categorie
