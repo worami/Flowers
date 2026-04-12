@@ -485,6 +485,10 @@ function renderMore() {
     loader.textContent = filtered.length > 0 ? '— alle ' + filtered.length + ' planten getoond —' : (filter === 'favorieten' ? '' : 'Geen planten gevonden');
   }
   page++;
+  // Als loader nog in beeld staat na het toevoegen van kaarten, direct doorgaan
+  requestAnimationFrame(() => {
+    if (loader.getBoundingClientRect().top < window.innerHeight) renderMore();
+  });
 }
 
 // Afbeeldingen lazy laden
