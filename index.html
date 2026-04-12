@@ -369,6 +369,7 @@ function kleurBg(kleur, fallback) {
 
 function laadAfbeelding(el) {
   el.dataset.gevraagd = '1';
+  imgObserver.unobserve(el);
   const lat = el.dataset.lat.replace(/ /g, '_');
   fetch(`https://en.wikipedia.org/api/rest_v1/page/summary/${encodeURIComponent(lat)}`)
     .then(r => r.ok ? r.json() : Promise.reject())
@@ -465,11 +466,13 @@ function applyFilter() {
 }
 
 function renderMore() {
+  if ((page - 1) * PAGE >= filtered.length) return;
   const grid = document.getElementById('grid');
   const loader = document.getElementById('loader');
   const slice = filtered.slice((page-1)*PAGE, page*PAGE);
   grid.insertAdjacentHTML('beforeend', slice.map(cardHTML).join(''));
-  grid.querySelectorAll('.card-img[data-lat]:not([data-gevraagd])').forEach(el => imgObserver.observe(el));
+  const allCards = grid.querySelectorAll('.card-img[data-lat]');
+  Array.from(allCards).slice(-slice.length).forEach(el => imgObserver.observe(el));
   const shown = Math.min(page*PAGE, filtered.length);
   document.getElementById('count').textContent = shown + '/' + filtered.length;
   document.getElementById('hdr-count').textContent = PLANTS.length + ' planten met cultivarvarianten · 📷 = Google foto\'s';
@@ -493,7 +496,7 @@ const imgObserver = new IntersectionObserver(entries => {
 
 // Infinite scroll
 const obs = new IntersectionObserver(entries => {
-  if (entries[0].isIntersecting && page*PAGE <= filtered.length+PAGE) renderMore();
+  if (entries[0].isIntersecting) renderMore();
 }, { threshold: 0 });
 obs.observe(document.getElementById('loader'));
 
