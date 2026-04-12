@@ -241,7 +241,7 @@ De PLANTS-array is nog niet compleet. Het volledige Muijderman-assortiment bevat
 | 7 | Amsonia · Astilboides · Caltha · Crambe · Darmera | ✅ |
 | 8 | Anthemis · Armeria · Acanthus · Catananche · Cephalaria | ✅ |
 | 9 | Gentiana · Gillenia · Hepatica · Inula · Kirengeshoma | ✅ |
-| 10 | Sidalcea · Silphium · Stokesia · Symphytum · Tellima | ⬜ |
+| 10 | Sidalcea · Silphium · Stokesia · Symphytum · Tellima | ✅ |
 | 11 | Anemonella · Arisaema · Trillium · Uvularia · Jeffersonia | ⬜ |
 | 12 | Overige (Cosmos · Dierama · Disporum · Dodecatheon · Isotoma) | ⬜ |
 
