@@ -244,6 +244,18 @@ De PLANTS-array is nog niet compleet. Het volledige Muijderman-assortiment bevat
 | 10 | Sidalcea · Silphium · Stokesia · Symphytum · Tellima | ✅ |
 | 11 | Anemonella · Arisaema · Trillium · Uvularia · Jeffersonia | ✅ |
 | 12 | Overige (Cosmos · Dierama · Disporum · Dodecatheon · Isotoma) | ✅ |
+| 13 | Origanum · Dicentra · Corydalis · Physostegia · Doronicum | ✅ |
+| 14 | Artemisia · Asclepias · Dictamnus · Macleaya · Galega | ✅ |
+| 15 | Anaphalis · Anthericum · Kalimeris · Sisyrinchium · Telekia | ✅ |
+| 16 | Delosperma · Erysimum · Linum · Malva · Physalis | ✅ |
+| 17 | Cardamine · Lunaria · Mertensia · Tanacetum · Thermopsis | ✅ |
+| 18 | Incarvillea · Morina · Podophyllum · Trachystemon · Trifolium | ✅ |
+| 19 | Buphthalmum · Cenolophium · Hylomecon · Ophiopogon · Selinum | ✅ |
+| 20 | Limonium · Patrinia · Scutellaria · Seseli · Succisa | ✅ |
+| 21 | Chrysanthemum · Leontopodium · Lewisia · Linaria · Meconopsis | ✅ |
+| 22 | Mitella · Mukdenia · Phuopsis · Phyteuma · Ranunculus | ✅ |
+| 23 | Saruma · Serratula · Smilacina · Stylophorum · Tulbaghia | ✅ |
+| 24 | Berkheya · Deinanthe · Melittis · Parthenium · Peltoboykinia | ✅ |
 
 ### Siergrassen — batchplan
 
@@ -251,15 +263,18 @@ De PLANTS-array is nog niet compleet. Het volledige Muijderman-assortiment bevat
 |---|---|---|
 | S1 | Briza · Deschampsia · Helictotrichon · Luzula · Milium | ✅ |
 | S2 | Anemanthele · Chasmanthium · Imperata · Schizachyrium · Sorghastrum · Sporobolus | ✅ |
+| S3 | Elymus · Eragrostis · Koeleria · Leymus · Melica · Muehlenbergia · Sesleria · Spodiopogon | ✅ |
 
 ### Bodembedekkers — batchplan
 
 | # | Genera | Status |
 |---|---|---|
 | B1 | Acaena · Arabis · Asarum · Aubrieta · Chiastophyllum · Galium · Houttuynia | ✅ |
+| B2 | Arctostaphylos · Arenaria · Aurinia · Cerastium · Leptinella · Mazus · Sagina | ✅ |
 
 ### Varens (als vaste plant) — batchplan
 
 | # | Genera | Status |
 |---|---|---|
 | V1 | Adiantum · Athyrium · Blechnum · Matteuccia · Osmunda · Polystichum | ✅ |
+| V2 | Asplenium · Cyrtomium · Onoclea · Phyllitis | ✅ |
