@@ -10,6 +10,8 @@ Het doel van deze app is het **doorzoekbaar en overzichtelijk maken van de plant
 
 > https://www.kwekerijmuijderman.nl/assortiment/overzicht
 
+**Scope:** alleen de categorie *vaste planten* (inclusief bodembedekkers en siergrassen) uit het Muijderman-assortiment valt binnen de scope van deze app. Andere categorieën die de kwekerij voert — zoals bomen, heesters, klimplanten of seizoensplanten — worden **buiten beschouwing gelaten** en mogen niet worden toegevoegd aan de `PLANTS`-array.
+
 De app lost drie problemen op die de ruwe assortimentslijst niet oplost:
 
 1. **Groepering per genus** — planten worden gegroepeerd onder hun Latijnse geslachtsnaam (bijv. alle *Echinacea*-soorten bij elkaar), met per soort de beschikbare cultivars.
