@@ -498,11 +498,17 @@ const imgObserver = new IntersectionObserver(entries => {
   });
 }, { rootMargin: '300px' });
 
-// Infinite scroll
-const obs = new IntersectionObserver(entries => {
-  if (entries[0].isIntersecting) renderMore();
-}, { threshold: 0 });
-obs.observe(document.getElementById('loader'));
+// Infinite scroll via scroll-event (betrouwbaarder dan IntersectionObserver)
+let _scrollRaf = false;
+window.addEventListener('scroll', () => {
+  if (_scrollRaf) return;
+  _scrollRaf = true;
+  requestAnimationFrame(() => {
+    _scrollRaf = false;
+    const loader = document.getElementById('loader');
+    if (loader.getBoundingClientRect().top < window.innerHeight + 200) renderMore();
+  });
+}, { passive: true });
 
 // Filter buttons — hoogte/seizoen/categorie
 document.getElementById('filters').addEventListener('click', e => {
