@@ -217,3 +217,49 @@ To add a new light requirement beyond `"zon"`, `"halfschaduw"`, `"schaduw"`:
 
 1. Add a button in `#filters-licht` with `data-licht="<value>"`.
 2. Add a CSS pill class and update the pill ternary in `cardHTML` (line 277).
+
+---
+
+## Catalogus uitbreiden — voortgang
+
+De PLANTS-array is nog niet compleet. Het volledige Muijderman-assortiment bevat ~90 extra genera voor vaste planten plus ~13 siergrassen en ~8 bodembedekkers die nog niet in de app staan.
+
+**Werkwijze:** voeg per sessie 1 batch toe (5–7 genera), commit daarna, en markeer de batch hieronder als ✅.
+
+> **Volgende sessie:** start bij de eerste batch die nog ⬜ heeft.
+
+### Vaste planten — batchplan
+
+| # | Genera | Status |
+|---|---|---|
+| 1 | Aster · Bergenia · Crocosmia · Geum · Leucanthemum | ⬜ |
+| 2 | Delphinium · Heuchera · Iris (sibirica) · Liatris · Lupinus | ⬜ |
+| 3 | Agapanthus · Centaurea · Dianthus · Papaver orientale · Pulsatilla | ⬜ |
+| 4 | Euphorbia · Helianthus · Heliopsis · Primula · Veronica | ⬜ |
+| 5 | Platycodon · Polemonium · Saxifraga · Tricyrtis · Verbascum | ⬜ |
+| 6 | Sedum (kleine soorten) · Sempervivum · Gypsophila · Lychnis · Liriope | ⬜ |
+| 7 | Amsonia · Astilboides · Caltha · Crambe · Darmera | ⬜ |
+| 8 | Anthemis · Armeria · Acanthus · Catananche · Cephalaria | ⬜ |
+| 9 | Gentiana · Gillenia · Hepatica · Inula · Kirengeshoma | ⬜ |
+| 10 | Sidalcea · Silphium · Stokesia · Symphytum · Tellima | ⬜ |
+| 11 | Anemonella · Arisaema · Trillium · Uvularia · Jeffersonia | ⬜ |
+| 12 | Overige (Cosmos · Dierama · Disporum · Dodecatheon · Isotoma) | ⬜ |
+
+### Siergrassen — batchplan
+
+| # | Genera | Status |
+|---|---|---|
+| S1 | Briza · Deschampsia · Helictotrichon · Luzula · Milium | ⬜ |
+| S2 | Anemanthele · Chasmanthium · Imperata · Schizachyrium · Sorghastrum · Sporobolus | ⬜ |
+
+### Bodembedekkers — batchplan
+
+| # | Genera | Status |
+|---|---|---|
+| B1 | Acaena · Arabis · Asarum · Aubrieta · Chiastophyllum · Galium · Houttuynia | ⬜ |
+
+### Varens (als vaste plant) — batchplan
+
+| # | Genera | Status |
+|---|---|---|
+| V1 | Adiantum · Athyrium · Blechnum · Matteuccia · Osmunda · Polystichum | ⬜ |
