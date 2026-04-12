@@ -256,6 +256,9 @@ De PLANTS-array is nog niet compleet. Het volledige Muijderman-assortiment bevat
 | 22 | Mitella · Mukdenia · Phuopsis · Phyteuma · Ranunculus | ✅ |
 | 23 | Saruma · Serratula · Smilacina · Stylophorum · Tulbaghia | ✅ |
 | 24 | Berkheya · Deinanthe · Melittis · Parthenium · Peltoboykinia | ✅ |
+| 25 | Alstroemeria · Althaea · Anemonopsis · Asphodeline · Beesia · Belamcanda | ✅ |
+| 26 | Betonica · Boltonia · Buglossoides · Chelonopsis · Chrysogonum · Chrysosplenium | ✅ |
+| 27 | Dendranthema · Dystaenia · Erodium · Gaura · Houstonia · Peucedanum | ✅ |
 
 ### Siergrassen — batchplan
 
