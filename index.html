@@ -495,10 +495,17 @@ const imgObserver = new IntersectionObserver(entries => {
 }, { rootMargin: '300px' });
 
 // Infinite scroll — IntersectionObserver op de loader
+// unobserve + observe binnen de callback forceert hereval uatie:
+// blijft de loader na het renderen nog in beeld, dan vuurt de observer
+// opnieuw (anders stopt hij na één statuswisseling).
+const _loaderEl = document.getElementById('loader');
 const loaderObserver = new IntersectionObserver(entries => {
-  if (entries[0].isIntersecting) renderMore();
+  if (!entries[0].isIntersecting) return;
+  loaderObserver.unobserve(_loaderEl);
+  renderMore();
+  loaderObserver.observe(_loaderEl);
 }, { rootMargin: '200px' });
-loaderObserver.observe(document.getElementById('loader'));
+loaderObserver.observe(_loaderEl);
 
 // Filter buttons — hoogte/seizoen/categorie
 document.getElementById('filters').addEventListener('click', e => {
