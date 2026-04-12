@@ -232,7 +232,7 @@ De PLANTS-array is nog niet compleet. Het volledige Muijderman-assortiment bevat
 
 | # | Genera | Status |
 |---|---|---|
-| 1 | Aster · Bergenia · Crocosmia · Geum · Leucanthemum | ⬜ |
+| 1 | Aster · Bergenia · Crocosmia · Geum · Leucanthemum | ✅ |
 | 2 | Delphinium · Heuchera · Iris (sibirica) · Liatris · Lupinus | ⬜ |
 | 3 | Agapanthus · Centaurea · Dianthus · Papaver orientale · Pulsatilla | ⬜ |
 | 4 | Euphorbia · Helianthus · Heliopsis · Primula · Veronica | ⬜ |
