@@ -462,7 +462,10 @@ function applyFilter() {
   });
   page = 1;
   document.getElementById('grid').innerHTML = '';
-  renderMore();
+  // Vul het scherm direct op: laad batches totdat de loader buiten beeld is
+  const loader = document.getElementById('loader');
+  do { renderMore(); }
+  while ((page - 1) * PAGE < filtered.length && loader.getBoundingClientRect().top < window.innerHeight);
 }
 
 function renderMore() {
@@ -494,18 +497,16 @@ const imgObserver = new IntersectionObserver(entries => {
   });
 }, { rootMargin: '300px' });
 
-// Infinite scroll — IntersectionObserver op de loader
-// unobserve + observe binnen de callback forceert hereval uatie:
-// blijft de loader na het renderen nog in beeld, dan vuurt de observer
-// opnieuw (anders stopt hij na één statuswisseling).
+// Infinite scroll — twee mechanismen voor maximale betrouwbaarheid
 const _loaderEl = document.getElementById('loader');
-const loaderObserver = new IntersectionObserver(entries => {
-  if (!entries[0].isIntersecting) return;
-  loaderObserver.unobserve(_loaderEl);
-  renderMore();
-  loaderObserver.observe(_loaderEl);
-}, { rootMargin: '200px' });
-loaderObserver.observe(_loaderEl);
+// 1. IntersectionObserver: pikt op wanneer loader zichtbaar wordt
+new IntersectionObserver(entries => {
+  if (entries[0].isIntersecting) renderMore();
+}, { rootMargin: '200px' }).observe(_loaderEl);
+// 2. Scroll-event als backup (o.a. voor snel scrollen op mobiel)
+window.addEventListener('scroll', () => {
+  if (_loaderEl.getBoundingClientRect().top < window.innerHeight + 300) renderMore();
+}, { passive: true });
 
 // Filter buttons — hoogte/seizoen/categorie
 document.getElementById('filters').addEventListener('click', e => {
