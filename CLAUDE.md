@@ -237,7 +237,7 @@ De PLANTS-array is nog niet compleet. Het volledige Muijderman-assortiment bevat
 | 3 | Agapanthus · Centaurea · Dianthus · Papaver orientale · Pulsatilla | ✅ |
 | 4 | Euphorbia · Helianthus · Heliopsis · Primula · Veronica | ✅ |
 | 5 | Platycodon · Polemonium · Saxifraga · Tricyrtis · Verbascum | ✅ |
-| 6 | Sedum (kleine soorten) · Sempervivum · Gypsophila · Lychnis · Liriope | ⬜ |
+| 6 | Sedum (kleine soorten) · Sempervivum · Gypsophila · Lychnis · Liriope | ✅ |
 | 7 | Amsonia · Astilboides · Caltha · Crambe · Darmera | ⬜ |
 | 8 | Anthemis · Armeria · Acanthus · Catananche · Cephalaria | ⬜ |
 | 9 | Gentiana · Gillenia · Hepatica · Inula · Kirengeshoma | ⬜ |
