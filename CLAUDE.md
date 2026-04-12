@@ -256,7 +256,7 @@ De PLANTS-array is nog niet compleet. Het volledige Muijderman-assortiment bevat
 
 | # | Genera | Status |
 |---|---|---|
-| B1 | Acaena · Arabis · Asarum · Aubrieta · Chiastophyllum · Galium · Houttuynia | ⬜ |
+| B1 | Acaena · Arabis · Asarum · Aubrieta · Chiastophyllum · Galium · Houttuynia | ✅ |
 
 ### Varens (als vaste plant) — batchplan
 
