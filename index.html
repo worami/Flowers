@@ -24,9 +24,14 @@ header p { font-size: 0.7rem; color: rgba(245,240,232,0.6); margin-top: 0.3rem; 
 .grid { padding: 0.9rem; display: grid; grid-template-columns: repeat(auto-fill, minmax(240px, 1fr)); gap: 0.85rem; }
 
 .card { background: white; border-radius: 8px; overflow: hidden; border: 1px solid #ddd5c0; display: flex; flex-direction: column; }
-.card-img { position: relative; }
-.card-img svg { width: 100%; height: 80px; display: block; }
-.photo-link { position: absolute; bottom: 5px; right: 6px; background: rgba(0,0,0,0.5); color: white; font-size: 0.62rem; padding: 0.12rem 0.45rem; border-radius: 2rem; text-decoration: none; }
+.card-img { position: relative; height: 160px; overflow: hidden; background: #ede9e0; }
+.card-img svg { width: 100%; height: 100%; display: block; }
+.card-img img { position: absolute; inset: 0; width: 100%; height: 100%; object-fit: cover; display: block; opacity: 0; transition: opacity 0.4s; }
+.card-img img.geladen { opacity: 1; }
+@keyframes shimmer { from { background-position: -400px 0; } to { background-position: 400px 0; } }
+.card-img::after { content: ''; position: absolute; inset: 0; pointer-events: none; background: linear-gradient(90deg, transparent 0%, rgba(255,255,255,0.45) 50%, transparent 100%); background-size: 400px 100%; animation: shimmer 1.4s ease-in-out infinite; }
+.card-img.geladen::after { display: none; }
+.photo-link { position: absolute; bottom: 5px; right: 6px; background: rgba(0,0,0,0.5); color: white; font-size: 0.62rem; padding: 0.12rem 0.45rem; border-radius: 2rem; text-decoration: none; z-index: 1; }
 .card-body { padding: 0.8rem 0.9rem 0; flex: 1; }
 .badges { display: flex; gap: 0.3rem; flex-wrap: wrap; margin-bottom: 0.3rem; }
 .badge { font-size: 0.58rem; padding: 0.08rem 0.45rem; border-radius: 2rem; text-transform: uppercase; font-weight: 600; }
@@ -362,6 +367,21 @@ function kleurBg(kleur, fallback) {
   return fallback;
 }
 
+function laadAfbeelding(el) {
+  el.dataset.gevraagd = '1';
+  const lat = el.dataset.lat.replace(/ /g, '_');
+  fetch(`https://en.wikipedia.org/api/rest_v1/page/summary/${encodeURIComponent(lat)}`)
+    .then(r => r.ok ? r.json() : Promise.reject())
+    .then(data => {
+      const url = data.thumbnail?.source;
+      if (!url) { el.classList.add('geladen'); return; }
+      const img = el.querySelector('img');
+      img.onload = () => { img.classList.add('geladen'); el.classList.add('geladen'); };
+      img.src = url;
+    })
+    .catch(() => el.classList.add('geladen'));
+}
+
 function flower(c) {
   const pts = [0,60,120,180,240,300].map(a => {
     const x = 60 + 13*Math.cos(a*Math.PI/180), y = 22 + 13*Math.sin(a*Math.PI/180);
@@ -405,8 +425,9 @@ function cardHTML(p) {
     </div>`;
   }).join('');
   return `<div class="card">
-    <div class="card-img">
+    <div class="card-img" data-lat="${p.l}" data-kleur="${p.c}" style="background:${p.c}20">
       ${flower(p.c)}
+      <img alt="${p.l}">
       <a class="photo-link" href="${glink(p.l,'')}" target="_blank" rel="noopener">📷</a>
     </div>
     <div class="card-body">
@@ -448,6 +469,7 @@ function renderMore() {
   const loader = document.getElementById('loader');
   const slice = filtered.slice((page-1)*PAGE, page*PAGE);
   grid.insertAdjacentHTML('beforeend', slice.map(cardHTML).join(''));
+  grid.querySelectorAll('.card-img[data-lat]:not([data-gevraagd])').forEach(el => imgObserver.observe(el));
   const shown = Math.min(page*PAGE, filtered.length);
   document.getElementById('count').textContent = shown + '/' + filtered.length;
   document.getElementById('hdr-count').textContent = PLANTS.length + ' planten met cultivarvarianten · 📷 = Google foto\'s';
@@ -461,6 +483,13 @@ function renderMore() {
   }
   page++;
 }
+
+// Afbeeldingen lazy laden
+const imgObserver = new IntersectionObserver(entries => {
+  entries.forEach(e => {
+    if (e.isIntersecting && !e.target.dataset.gevraagd) laadAfbeelding(e.target);
+  });
+}, { rootMargin: '300px' });
 
 // Infinite scroll
 const obs = new IntersectionObserver(entries => {
