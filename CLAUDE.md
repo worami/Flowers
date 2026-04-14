@@ -22,7 +22,29 @@ The app is a filterable catalogue of *vaste planten* (perennial plants) with cul
 
 - **Language:** Dutch throughout (UI text, variable names, commit messages)
 - **Stack:** Pure vanilla HTML + CSS + JavaScript — no framework, no build tool, no dependencies
-- **Entry point:** `index.html` (the entire application; ~380 lines)
+- **Entry point:** `index.html` (vaste planten) · `bomen-heesters.html` (bomen, heesters, conifeers)
+
+### Tweede pagina: `bomen-heesters.html`
+
+Naast `index.html` bestaat er een tweede zelfstandige pagina voor **bomen, heesters en conifeers**. Deze pagina heeft dezelfde visuele stijl maar een aangepast dataschema en andere filters.
+
+**Aanvullende / gewijzigde schema-velden:**
+
+| Veld | Waarden |
+|------|---------|
+| `h` | `"klein"` (<3m) \| `"middel"` (3–8m) \| `"groot"` (>8m) |
+| `cat` | `"boom"` \| `"heester"` \| `"conifeer"` |
+| `blad` | `"bladverliezend"` \| `"groenblijvend"` *(nieuw veld)* |
+| `s` | `"voorjaar"` \| `"zomer"` \| `"herfst"` \| `"winter"` *(winter toegevoegd)* |
+| `b` | Sierperiode (niet alleen bloei — ook herfstkleur, bessen, schors) |
+
+**Extra filter:** `#filters-blad` (bladverliezend / groenblijvend), state variabele `filterBlad`.
+
+**LocalStorage sleutel:** `'mj_fav_bh'` (apart van `'mj_fav'` in index.html).
+
+**SVG illustraties:** `plantSVG(cat, c)` — dispatcher naar `boomSVG`, `heesterSVG`, `conifeerSVG` in plaats van `flower(c)`.
+
+**Scope van `bomen-heesters.html`:** uitsluitend `"boom"`, `"heester"` en `"conifeer"`. Voeg geen vaste planten, bodembedekkers of siergrassen toe aan de `PLANTS`-array van dit bestand.
 
 ---
 
