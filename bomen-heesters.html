@@ -1,0 +1,430 @@
+<!DOCTYPE html>
+<html lang="nl">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Bomen &amp; Heesters – Kwekerij Muijderman</title>
+<style>
+*, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+body { font-family: sans-serif; background: #f5f0e8; color: #2a2a1e; min-height: 100vh; }
+
+nav { background: #1e3520; display: flex; justify-content: center; gap: 0.5rem; padding: 0.4rem 1rem; }
+nav a { color: #c8a84b; font-size: 0.72rem; text-decoration: none; padding: 0.22rem 0.7rem; border-radius: 2rem; border: 1px solid transparent; letter-spacing: 0.05em; }
+nav a:hover { border-color: #c8a84b; }
+nav a.actief { background: #c8a84b; color: #1e3520; font-weight: bold; }
+
+header { background: #2d4a2d; color: #f5f0e8; padding: 1.25rem 1.5rem; text-align: center; }
+header .sub { font-size: 0.6rem; letter-spacing: 0.2em; text-transform: uppercase; color: #c8a84b; margin-bottom: 0.3rem; }
+header h1 { font-size: 1.4rem; font-weight: bold; line-height: 1.2; }
+header h1 em { color: #7aad7a; font-style: italic; }
+header p { font-size: 0.7rem; color: rgba(245,240,232,0.6); margin-top: 0.3rem; }
+
+.toolbar { background: #faf8f3; border-bottom: 1px solid #ddd5c0; padding: 0.6rem 0.75rem; position: sticky; top: 0; z-index: 10; box-shadow: 0 2px 6px rgba(0,0,0,0.05); display: flex; flex-direction: column; gap: 0.45rem; }
+.filters { display: flex; flex-wrap: wrap; gap: 0.3rem; align-items: center; }
+.filters button { border: 1px solid #ccc; background: white; color: #333; padding: 0.22rem 0.6rem; border-radius: 2rem; font-size: 0.7rem; cursor: pointer; transition: all 0.15s; }
+.filters button.active { background: #2d4a2d; border-color: #2d4a2d; color: white; }
+.count { margin-left: auto; font-size: 0.68rem; color: #888; white-space: nowrap; }
+#search { border: 1px solid #ddd5c0; border-radius: 2rem; padding: 0.28rem 0.75rem; font-size: 0.76rem; outline: none; background: white; width: 100%; }
+
+.grid { padding: 0.9rem; display: grid; grid-template-columns: repeat(auto-fill, minmax(240px, 1fr)); gap: 0.85rem; }
+
+.card { background: white; border-radius: 8px; overflow: hidden; border: 1px solid #ddd5c0; display: flex; flex-direction: column; }
+.card-img { position: relative; height: 160px; overflow: hidden; background: #ede9e0; }
+.card-img svg { width: 100%; height: 100%; display: block; }
+.card-img img { position: absolute; inset: 0; width: 100%; height: 100%; object-fit: cover; display: block; opacity: 0; transition: opacity 0.4s; }
+.card-img img.geladen { opacity: 1; }
+@keyframes shimmer { from { background-position: -400px 0; } to { background-position: 400px 0; } }
+.card-img::after { content: ''; position: absolute; inset: 0; pointer-events: none; background: linear-gradient(90deg, transparent 0%, rgba(255,255,255,0.45) 50%, transparent 100%); background-size: 400px 100%; animation: shimmer 1.4s ease-in-out infinite; }
+.card-img.geladen::after { display: none; }
+.photo-link { position: absolute; bottom: 5px; right: 6px; background: rgba(0,0,0,0.5); color: white; font-size: 0.62rem; padding: 0.12rem 0.45rem; border-radius: 2rem; text-decoration: none; z-index: 1; }
+.card-body { padding: 0.8rem 0.9rem 0; flex: 1; }
+.badges { display: flex; gap: 0.3rem; flex-wrap: wrap; margin-bottom: 0.3rem; }
+.badge { font-size: 0.58rem; padding: 0.08rem 0.45rem; border-radius: 2rem; text-transform: uppercase; font-weight: 600; }
+.badge-klein  { background: #fdecea; color: #8b3a2a; }
+.badge-middel { background: #fdf3e3; color: #7a5a20; }
+.badge-groot  { background: #e8f0e8; color: #2d4a2d; }
+.badge-boom     { background: #e8f2e8; color: #1e4a1e; }
+.badge-heester  { background: #fff8e8; color: #6a4800; }
+.badge-conifeer { background: #eef4ee; color: #2a5a2a; }
+.card-name { font-size: 0.98rem; font-weight: bold; color: #2d4a2d; line-height: 1.2; }
+.card-latin { font-style: italic; font-size: 0.7rem; color: #999; margin-bottom: 0.3rem; }
+.pills { display: flex; gap: 0.25rem; flex-wrap: wrap; margin-bottom: 0.4rem; }
+.pill { font-size: 0.62rem; padding: 0.08rem 0.4rem; border-radius: 2rem; }
+.pill-sun        { background: #fffbea; border: 1px solid #e8d578; color: #7a6010; }
+.pill-halfschaduw{ background: #eef4ff; border: 1px solid #b0c8e8; color: #305080; }
+.pill-schaduw    { background: #f0ede8; border: 1px solid #c0b8a8; color: #504840; }
+.pill-bloom      { background: #f5f0e8; border: 1px solid #ddd5c0; color: #666; }
+.pill-bladverliezend { background: #fff8e8; border: 1px solid #e8d080; color: #7a5800; }
+.pill-groenblijvend  { background: #eef4ee; border: 1px solid #a0cc80; color: #2a5a2a; }
+.card-desc { font-size: 0.73rem; color: #555; line-height: 1.5; }
+.cultivar-toggle { width: 100%; background: none; border: none; border-top: 1px solid #f0ebe0; margin-top: 0.5rem; padding: 0.45rem 0.9rem; text-align: left; cursor: pointer; font-size: 0.7rem; color: #4a7c59; font-weight: 600; display: flex; justify-content: space-between; align-items: center; }
+.cultivars { border-top: 1px solid #f0ebe0; background: #faf8f3; padding: 0.5rem 0.9rem 0.7rem; display: none; }
+.cultivars.open { display: block; }
+.cultivar { margin-bottom: 0.5rem; padding-bottom: 0.5rem; border-bottom: 1px solid #ede8dc; }
+.cultivar:last-child { margin-bottom: 0; padding-bottom: 0; border-bottom: none; }
+.cv-header { display: flex; justify-content: space-between; align-items: flex-start; }
+.cv-name { font-size: 0.75rem; font-weight: 600; color: #2d4a2d; }
+.cv-height { font-size: 0.65rem; color: #888; margin-left: 0.35rem; }
+.cv-photo { font-size: 0.65rem; color: #4a7c59; text-decoration: none; white-space: nowrap; margin-left: 0.4rem; }
+.cv-color { display: flex; gap: 0.3rem; align-items: center; margin-top: 0.15rem; }
+.cv-dot { width: 9px; height: 9px; border-radius: 50%; flex-shrink: 0; border: 1px solid rgba(0,0,0,0.15); }
+.cv-kleur { font-size: 0.65rem; color: #777; }
+.cv-tip { font-size: 0.68rem; color: #666; margin-top: 0.18rem; line-height: 1.45; }
+.cv-fav { background: none; border: none; cursor: pointer; font-size: 0.9rem; color: #ccc; padding: 0 2px; line-height: 1; flex-shrink: 0; transition: color 0.15s; }
+.cv-fav.active { color: #f0a500; }
+.empty-msg { text-align: center; padding: 3rem 1rem; color: #999; font-size: 0.85rem; }
+.loader { height: 40px; display: flex; align-items: center; justify-content: center; font-size: 0.75rem; color: #aaa; }
+footer { text-align: center; padding: 1rem; font-size: 0.65rem; color: #888; border-top: 1px solid #ddd5c0; }
+</style>
+</head>
+<body>
+
+<nav>
+  <a href="./index.html">🌿 Vaste planten</a>
+  <a href="./bomen-heesters.html" class="actief">🌳 Bomen &amp; heesters</a>
+</nav>
+
+<header>
+  <p class="sub">Kwekerij Muijderman · Veldhoven</p>
+  <h1><em>Bomen &amp; heesters</em> catalogus</h1>
+  <p id="hdr-count"></p>
+</header>
+
+<div class="toolbar">
+  <div class="filters" id="filters">
+    <button class="active" data-filter="all">Alles</button>
+    <button data-filter="boom">🌳 Bomen</button>
+    <button data-filter="heester">🌿 Heesters</button>
+    <button data-filter="conifeer">🌲 Conifeers</button>
+    <button data-filter="klein">↕ Klein</button>
+    <button data-filter="middel">↕ Middel</button>
+    <button data-filter="groot">↕ Groot</button>
+    <button data-filter="voorjaar">🌱 Voorjaar</button>
+    <button data-filter="zomer">☀️ Zomer</button>
+    <button data-filter="herfst">🍂 Herfst</button>
+    <button data-filter="winter">❄️ Winter</button>
+    <button data-filter="favorieten">★ Favorieten</button>
+    <span class="count" id="count"></span>
+  </div>
+  <div class="filters" id="filters-licht">
+    <button class="active" data-licht="all">Alle licht</button>
+    <button data-licht="zon">☀️ Zon</button>
+    <button data-licht="halfschaduw">🌤 Halfschaduw</button>
+    <button data-licht="schaduw">🌑 Schaduw</button>
+  </div>
+  <div class="filters" id="filters-blad">
+    <button class="active" data-blad="all">Alle blad</button>
+    <button data-blad="bladverliezend">🍂 Bladverliezend</button>
+    <button data-blad="groenblijvend">🟢 Groenblijvend</button>
+  </div>
+  <input id="search" type="search" placeholder="Zoek op naam…">
+</div>
+
+<div class="grid" id="grid"></div>
+<div class="loader" id="loader"></div>
+<footer>Kwekerij Muijderman · Volmolenweg 9 Veldhoven · do/vr/za 9–17u</footer>
+
+<script>
+// ============================================================
+// PLANTENLIJST — bomen, heesters en conifeers
+// ============================================================
+const PLANTS = [
+  { n:"Beuk", l:"Fagus sylvatica", h:"groot", cat:"boom", blad:"bladverliezend", s:"herfst", b:"sep–nov", c:"#c87820", licht:"zon", d:"Volle zon tot halfschaduw, goed doorlatende grond. Majestueuze boom met gladde grijze schors en golvende bladrand. Herfstkleur goudbruin. Vormt dichte haag of solitair monument. Langzaam groeiend maar zeer langlevend.", cv:[{name:"sylvatica",kleur:"goudbruin herfstblad",hoogte:"25m",tip:"De klassieke bosboom, prachtig als solitair"},{name:"'Atropunicea'",kleur:"donkerrood blad",hoogte:"20m",tip:"Rode beuk — indrukwekkend jaarrond"},{name:"'Dawyck'",kleur:"goudbruin herfst",hoogte:"20m",tip:"Zuilvormig — ideaal voor smalle percelen"}]},
+  { n:"Haagbeuk", l:"Carpinus betulus", h:"groot", cat:"boom", blad:"bladverliezend", s:"herfst", b:"okt–nov", c:"#c8a040", licht:"zon", d:"Zon tot halfschaduw, vrijwel elke grond. Uitstekende haagplant én solitaire boom. Gerimpeld blad met opvallende zaadtrossen in de herfst. Behoudt dood blad als haag in de winter — goede privacy.", cv:[{name:"betulus",kleur:"geelgroen herfst",hoogte:"20m",tip:"Standaard haagbeuk — vrijwel overal"},{name:"'Fastigiata'",kleur:"geelgroen herfst",hoogte:"15m",tip:"Zuilvormig, populair als laanboom"}]},
+  { n:"Berk", l:"Betula", h:"groot", cat:"boom", blad:"bladverliezend", s:"voorjaar", b:"mrt–apr", c:"#f0e890", licht:"zon", d:"Volle zon, licht zure goed doorlatende grond. Witte of kastanjebruine schors sierlijk jaarrond. Hangende katjes vroeg in het voorjaar. Luchtige kroon trekt veel insecten. Elegant als solitair of in groep.", cv:[{name:"pendula",kleur:"geel herfst",hoogte:"20m",tip:"Gewone witte berk — snelgroeiend, luchtig"},{name:"utilis 'Doorenbos'",kleur:"geel herfst",hoogte:"15m",tip:"Spierwit schors, beste sierberk"},{name:"nigra",kleur:"geelbruin herfst",hoogte:"18m",tip:"Roestbruine schors — voor natte plekken"}]},
+  { n:"Zomereik", l:"Quercus robur", h:"groot", cat:"boom", blad:"bladverliezend", s:"herfst", b:"okt–nov", c:"#a06820", licht:"zon", d:"Volle zon, diepe klei- of zandgrond. Iconische Nederlandse boom met diep ingesneden blad. Uitzonderlijk ecologisch waardevol — meer dan 400 insectensoorten. Langzaam groeiend maar eeuwenoud.", cv:[{name:"robur",kleur:"bruingoud herfst",hoogte:"30m",tip:"Solitaire plaatsboom — voor grote tuinen"},{name:"'Fastigiata'",kleur:"bruingoud herfst",hoogte:"20m",tip:"Zuilvormig — geschikt voor kleinere tuinen"}]},
+  { n:"Japanse esdoorn", l:"Acer palmatum", h:"middel", cat:"boom", blad:"bladverliezend", s:"herfst", b:"sep–okt", c:"#e04020", licht:"halfschaduw", d:"Halfschaduw, humusrijke vochtige zure grond. Verfijnde handvormige bladeren in groen, rood of paars. Spectaculaire herfstkleur. Beschutte standplaats — gevoelig voor late vorst en droge wind. Snoeiarm.", cv:[{name:"'Bloodgood'",kleur:"dieppaars blad",hoogte:"5m",tip:"Meest betrouwbare rode cultivar"},{name:"'Sango-kaku'",kleur:"geel herfst + rode twijgen",hoogte:"6m",tip:"Koraalrode jonge twijgen — sierlijk in winter"},{name:"'Dissectum Atropurpureum'",kleur:"donkerrood",hoogte:"2m",tip:"Verenkelde groeiwijze, hangende takken"}]},
+  { n:"Sierkers", l:"Prunus", h:"middel", cat:"boom", blad:"bladverliezend", s:"voorjaar", b:"apr–mei", c:"#f0b0d0", licht:"zon", d:"Volle zon, goed gedraineerde grond. Rijkelijk bloeiend in het voorjaar, een van de meest populaire sierbomen. Snelle groeier. Verwijder dood hout direct na bloei om harskanker te vermijden.", cv:[{name:"'Kanzan'",kleur:"dieproze gevuld",hoogte:"8m",tip:"Klassieke Japanse sierkers, meest geteeld"},{name:"serrula",kleur:"wit + rode schors",hoogte:"10m",tip:"Glanzend mahonieschors — sierwaarde jaarrond"},{name:"subhirtella 'Autumnalis'",kleur:"lichtroze",hoogte:"8m",tip:"Bloeit herfst en winter bij zachte perioden"},{name:"'Accolade'",kleur:"zachtroze",hoogte:"8m",tip:"Half gevulde bloem, robuust en weinig kanker"}]},
+  { n:"Krentenboompje", l:"Amelanchier", h:"middel", cat:"boom", blad:"bladverliezend", s:"voorjaar", b:"apr", c:"#f5f0f5", licht:"zon", d:"Zon tot halfschaduw, humeuze goed gedraineerde grond. Wolkige witte bloesem vroeg in de lente, eetbare donkerrode bessen in juli, oranje-rode herfstkleur. Drieseizoensboom bij uitstek.", cv:[{name:"lamarckii",kleur:"wit bloesem",hoogte:"8m",tip:"Meest geteelde, grote bloemtrossen"},{name:"'Robin Hill'",kleur:"roze knoppen → wit",hoogte:"7m",tip:"Roze knoppen openen tot wit — extra sierwaarde"},{name:"canadensis",kleur:"wit",hoogte:"6m",tip:"Compacter, ook als meerstammige struik"}]},
+  { n:"Magnolia", l:"Magnolia", h:"middel", cat:"boom", blad:"bladverliezend", s:"voorjaar", b:"mrt–mei", c:"#e8c0d0", licht:"zon", d:"Zon tot halfschaduw, voedselrijke vochtige grond zonder kalk. Indrukwekkende bloemen op kaal hout in het vroege voorjaar. Plant op beschutte plek — bloemen gevoelig voor late vorst.", cv:[{name:"stellata",kleur:"wit",hoogte:"3m",tip:"Stervormige bloemen, vroegst en kleinst"},{name:"x soulangeana",kleur:"roze-wit",hoogte:"6m",tip:"Kelkvormige bloemen, meest robuust"},{name:"'Susan'",kleur:"roodpaars",hoogte:"4m",tip:"Laat bloeiend — minder kans op vorstschade"}]},
+  { n:"Kornoelje", l:"Cornus kousa", h:"middel", cat:"boom", blad:"bladverliezend", s:"zomer", b:"jun–jul", c:"#f8f5f0", licht:"halfschaduw", d:"Halfschaduw, zure humusrijke grond. Bloeit zomer na bladuitlopen — minder vorstgevoelig dan C. florida. Grote witte schutbladen, aardbeienachtige rode vruchten in september, herfstkleur rood-paars.", cv:[{name:"kousa",kleur:"wit",hoogte:"7m",tip:"Betrouwbaarst, ook op zwaardere grond"},{name:"'China Girl'",kleur:"zuiverwit",hoogte:"6m",tip:"Extra grote schutbladen, rijke bloei"},{name:"'Satomi'",kleur:"rozerood",hoogte:"5m",tip:"Roze schutbladen, spectaculair"}]},
+  { n:"Vlinderstruik", l:"Buddleja davidii", h:"klein", cat:"heester", blad:"bladverliezend", s:"zomer", b:"jul–sep", c:"#8855bb", licht:"zon", d:"Volle zon, goed gedraineerde arme grond. Trekt enorme aantallen vlinders en bijen. Snoeien in maart terug tot 20–30 cm boven de grond voor beste bloei op nieuwe scheuten. Sterk en droogtetolerant.", cv:[{name:"'Black Knight'",kleur:"donkerpaars",hoogte:"2.5m",tip:"Diepste kleur, sterk geurend"},{name:"'White Profusion'",kleur:"wit",hoogte:"2m",tip:"Helderwit, trekt ook dagpauwoog"},{name:"'Pink Delight'",kleur:"roze",hoogte:"2m",tip:"Lange bloemtrossen, lichtroze"},{name:"'Nanho Blue'",kleur:"lichtpaars",hoogte:"1.5m",tip:"Kleinste cultivar voor kleine tuinen"}]},
+  { n:"Hortensia", l:"Hydrangea", h:"klein", cat:"heester", blad:"bladverliezend", s:"zomer", b:"jul–sep", c:"#99aacc", licht:"halfschaduw", d:"Halfschaduw, voedselrijke vochtige grond. Indrukwekkende bloemhoofdjes in zomer en herfst. Kleur afhankelijk van bodem-pH: zuur = blauw, neutraal/kalk = roze. Droge zomers bijgieten.", cv:[{name:"macrophylla 'Endless Summer'",kleur:"blauw of roze",hoogte:"1.2m",tip:"Bloeit op oud én nieuw hout — betrouwbaarst"},{name:"paniculata 'Limelight'",kleur:"limoengroen → wit → roze",hoogte:"2m",tip:"Kalkbestendig, prachtige sierwaarde"},{name:"arborescens 'Annabelle'",kleur:"wit",hoogte:"1.5m",tip:"Enorme bollen, ook in schaduw"},{name:"quercifolia",kleur:"wit",hoogte:"2m",tip:"Eikenbladvorm, schors siert in winter"}]},
+  { n:"Sering", l:"Syringa vulgaris", h:"middel", cat:"heester", blad:"bladverliezend", s:"voorjaar", b:"mei", c:"#9988cc", licht:"zon", d:"Volle zon, kalkhoudende goed gedraineerde grond. Onmiskenbaar geurend symbool van de Nederlandse voorjaarstuin. Verwijder verbloeide trossen direct — bevordert bloei volgend jaar.", cv:[{name:"'Madame Lemoine'",kleur:"wit gevuld",hoogte:"4m",tip:"Klassieke dubbele witte sering"},{name:"'Charles Joly'",kleur:"donkerpaars gevuld",hoogte:"4m",tip:"Rijkst geurende donkere cultivar"},{name:"'Michel Buchner'",kleur:"lila gevuld",hoogte:"3.5m",tip:"Compact, lang bloeiend"},{name:"meyeri 'Palibin'",kleur:"lila",hoogte:"1.5m",tip:"Dwergvorm — geschikt voor kleine tuin"}]},
+  { n:"Viburnum", l:"Viburnum", h:"klein", cat:"heester", blad:"bladverliezend", s:"winter", b:"dec–mrt", c:"#f8f0e0", licht:"halfschaduw", d:"Halfschaduw tot zon, humeuze goed vochthoudende grond. Heesters voor elk seizoen: sommige bloeien winterhard geurend in januari, anderen met decoratieve bessen in de herfst. Weinig onderhoud.", cv:[{name:"bodnantense 'Dawn'",kleur:"roze-wit geurend",hoogte:"3m",tip:"Bloeit nov–feb op kaal hout — ongekend"},{name:"opulus 'Roseum'",kleur:"wit bolvormig",hoogte:"4m",tip:"Sneeuwbal — klassieke voorjaarsbloei"},{name:"tinus 'Eve Price'",kleur:"rozerood knoppen → wit",hoogte:"2.5m",tip:"Wintergroen, bloeit winter–voorjaar"},{name:"plicatum 'Mariesii'",kleur:"wit",hoogte:"3m",tip:"Horizontale takarchitectuur, spectaculair"}]},
+  { n:"Toverhazelaar", l:"Hamamelis x intermedia", h:"middel", cat:"heester", blad:"bladverliezend", s:"winter", b:"jan–mrt", c:"#e8a030", licht:"halfschaduw", d:"Halfschaduw, zure humusrijke vochtige grond zonder kalk. Bloeit op kaal hout in de winter — lintvormige bloemen overleven lichte vorst. Herfstkleur goud-oranje-rood. Nooit op kalk planten.", cv:[{name:"'Jelena'",kleur:"oranje-koperbruin",hoogte:"4m",tip:"Breedste kleurenpalet, ook prachtige herfst"},{name:"'Pallida'",kleur:"zwavelgeel geurend",hoogte:"4m",tip:"Sterkst geurend, meest populair"},{name:"'Diane'",kleur:"diepkoper-rood",hoogte:"3.5m",tip:"Rode tinten, ook mooie herfstkleur"}]},
+  { n:"Weigela", l:"Weigela florida", h:"klein", cat:"heester", blad:"bladverliezend", s:"voorjaar", b:"mei–jun", c:"#dd5577", licht:"zon", d:"Volle zon, goed gedraineerde humeuze grond. Trompetbloemen massaal in mei-juni, soms nabloeien in september. Trekt hommels en bijen. Snoei na bloei door oude takken aan de basis te verwijderen.", cv:[{name:"'Bristol Ruby'",kleur:"robijnrood",hoogte:"2m",tip:"Meest geteelde, robuust en betrouwbaar"},{name:"'Briant Rubidor'",kleur:"rood + geel blad",hoogte:"1.5m",tip:"Geel blad — sterk contrast"},{name:"'White Knight'",kleur:"wit",hoogte:"1.5m",tip:"Sierlijk wit, zeldzamer"}]},
+  { n:"Spiraea", l:"Spiraea", h:"klein", cat:"heester", blad:"bladverliezend", s:"voorjaar", b:"apr–jun", c:"#f5c0d8", licht:"zon", d:"Volle zon, vrijwel elke goed gedraineerde grond. Fijnbladige struik met wolkige bloemschermen. Soorten die op oud hout bloeien in het voorjaar direct na de bloei snoeien; zomerbloeiers in het voorjaar.", cv:[{name:"nipponica 'Snowmound'",kleur:"wit",hoogte:"1.5m",tip:"Massale witte bloei in mei, fonteinsgewijs"},{name:"japonica 'Little Princess'",kleur:"roze",hoogte:"0.8m",tip:"Compactste rozerode — ideaal voor rand"},{name:"japonica 'Goldflame'",kleur:"roze + goudgeel blad",hoogte:"1m",tip:"Jonge blaadjes vuurrood — opvallend"},{name:"x vanhouttei",kleur:"wit",hoogte:"2m",tip:"Klassieke bruidsspiraea, overhangende takken"}]},
+  { n:"Vlier", l:"Sambucus nigra", h:"middel", cat:"heester", blad:"bladverliezend", s:"zomer", b:"jun–jul", c:"#330044", licht:"zon", d:"Zon tot halfschaduw, voedselrijke grond. Inheemse struik met geurende witte schermbloemhoofdjes gevolgd door zwarte bessen. Aantrekkelijk voor vogels. Siercultivars met donkerrood of ingesneden blad.", cv:[{name:"'Black Beauty'",kleur:"zwart-rood blad + roze bloemen",hoogte:"3m",tip:"Diepste blad met roze bloemen — sterk contrast"},{name:"'Black Lace'",kleur:"zwart ingesneden blad",hoogte:"3m",tip:"Kantachtig effect door diep ingesneden blad"},{name:"nigra",kleur:"wit",hoogte:"6m",tip:"Wilde vorm — snelst, meeste bessen voor vogels"}]},
+  { n:"Forsythia", l:"Forsythia x intermedia", h:"klein", cat:"heester", blad:"bladverliezend", s:"voorjaar", b:"mrt–apr", c:"#f0d020", licht:"zon", d:"Volle zon, vrijwel elke grond. Eerste gele bloemexplosie van het jaar op kaal hout in maart. Robuust en onverslijtbaar. Na bloei direct snoeien om voldoende nieuw hout voor het volgende jaar te vormen.", cv:[{name:"'Lynwood Variety'",kleur:"goud-geel",hoogte:"2.5m",tip:"Rijkst bloeiend, goed vertakkend"},{name:"'Week-End'",kleur:"diepgeel",hoogte:"1.5m",tip:"Compact, geschikt voor kleine tuin"}]},
+  { n:"Taxus", l:"Taxus baccata", h:"middel", cat:"conifeer", blad:"groenblijvend", s:"herfst", b:"aug–okt", c:"#cc2200", licht:"schaduw", d:"Schaduw tot volle zon, elke goed gedraineerde grond. De meest waardevolle haagconifeer voor Nederland. Donkergroen naaldblad, rode bessen (giftig!). Verdraagt diep snoeien op oud hout. Extreem langlevend.", cv:[{name:"baccata",kleur:"rode bessen",hoogte:"15m",tip:"Solitair kan monumentaal worden"},{name:"'Fastigiata Robusta'",kleur:"donkergroen",hoogte:"8m",tip:"Zuilvorm, populaire haagbasis"},{name:"'Repandens'",kleur:"donkergroen",hoogte:"0.6m",tip:"Breed kruipend — ideaal als bodembedekker"}]},
+  { n:"Blauwspar", l:"Picea pungens", h:"groot", cat:"conifeer", blad:"groenblijvend", s:"zomer", b:"nvt", c:"#5577aa", licht:"zon", d:"Volle zon, vochtige zure grond. Statige piramidevorm met staalblauwe naalden, jaarrond decoratief. Heeft ruimte nodig. Sierwaarde zit in textuur en kleur — opvallend in elke tuin.", cv:[{name:"'Glauca'",kleur:"staalblauw",hoogte:"15m",tip:"Blauwspar — sterkste sierwaarde"},{name:"'Hoopsii'",kleur:"zilverblauw",hoogte:"12m",tip:"Zilverachtig blauw, statig en compact"},{name:"glauca 'Conica'",kleur:"heldergroen",hoogte:"2m",tip:"Kegelvorm, ideaal voor kleine tuin"}]},
+  { n:"Den", l:"Pinus", h:"groot", cat:"conifeer", blad:"groenblijvend", s:"zomer", b:"nvt", c:"#3a6030", licht:"zon", d:"Volle zon, arme goed gedraineerde grond. Dennen voor wind, kustverdediging en droge plekken. Interessante naaldbundels en decoratieve dennenappels. Goed aanpassingsvermogen.", cv:[{name:"sylvestris",kleur:"blauwgroen",hoogte:"25m",tip:"Grove den — droge zandgrond, meest inheems"},{name:"mugo 'Mops'",kleur:"donkergroen",hoogte:"1.5m",tip:"Bergden dwergvorm — ideaal voor rotstuin"},{name:"strobus 'Radiata'",kleur:"lichtgroen",hoogte:"2m",tip:"Dwergvorm zachte naald, sfeervolle textuur"}]},
+  { n:"Buxus", l:"Buxus sempervirens", h:"klein", cat:"conifeer", blad:"groenblijvend", s:"zomer", b:"apr–mei", c:"#2d5a2d", licht:"halfschaduw", d:"Halfschaduw, kalkrijke goed gedraineerde grond. Dé klassieke snoeiheester. Kleine glanzende bladjes, accepteert elke snoei. Let op buxusmot (Cydalima perspectalis) — tijdig behandelen.", cv:[{name:"sempervirens",kleur:"geel bloem (onopvallend)",hoogte:"5m",tip:"Ongesnoeid boom, gesnoeid perfecte bol of haag"},{name:"'Suffruticosa'",kleur:"donkergroen",hoogte:"1m",tip:"Compactste cultivar voor lage randen"},{name:"microphylla 'Faulkner'",kleur:"lichtgroen",hoogte:"1m",tip:"Robuuster tegen buxusmot dan sempervirens"}]},
+];
+
+// ============================================================
+// STATE
+// ============================================================
+const PAGE = 8;
+let filter = "all", filterLicht = "all", filterBlad = "all", query = "", page = 1, filtered = [];
+let favorieten = new Set(JSON.parse(localStorage.getItem('mj_fav_bh') || '[]'));
+function saveFav() { localStorage.setItem('mj_fav_bh', JSON.stringify([...favorieten])); }
+
+// ============================================================
+// KLEURKAART
+// ============================================================
+const _KLEUR_MAP = {
+  'wit':'#ffffff','crème':'#f5e4c0','creme':'#f5e4c0','crèmewit':'#f5e8d0','crèmegeel':'#f0d890',
+  'geel':'#f0c020','citroengeel':'#f5e020','goudgeel':'#e0b030','goud':'#d4a820','diepgeel':'#e0a000',
+  'wasgeel':'#f0e080','lichtgeel':'#f5ee80','geelgroen':'#99bb22','geel-groen':'#99bb22',
+  'oranje':'#f07820','oranjerood':'#e05020','oranjegeel':'#f0a020','zalmoranje':'#f08060','abrikoos':'#f5a055',
+  'rood':'#cc3333','donkerrood':'#991111','felrood':'#ff2222','vuurrood':'#ff2200','robijnrood':'#aa0033',
+  'bordeauxrood':'#880022','wijnrood':'#881133','baksteenrood':'#cc5533','roodbruin':'#993322',
+  'roze':'#e87898','dieproze':'#e05070','lichtroze':'#f5c0c0','donkerroze':'#dd3366','zachtroze':'#f0b0c0',
+  'zalmroze':'#f5a080','rozerood':'#dd4466','paarsroze':'#cc5588','lavendelroze':'#c888a0','magenta':'#cc2288',
+  'paars':'#8844aa','dieppaars':'#661188','donkerpaars':'#551188','lila':'#b07ed0','violet':'#7744aa',
+  'lavendel':'#b070cc','blauwpaars':'#6644cc','pruimpaars':'#662288',
+  'blauw':'#4466cc','hemelblauw':'#6699dd','kobaltblauw':'#2244cc','diepblauw':'#2233bb',
+  'lichtblauw':'#88aadd','staalblauw':'#5577aa','zilverblauw':'#9999cc','lavendelblauw':'#8888cc',
+  'groen':'#44aa44','lichtgroen':'#88cc44','donkergroen':'#226622','heldergroen':'#44cc44',
+  'blauwgroen':'#338888','zilvergroen':'#88aa88',
+  'zilver':'#c0c0c0','zilvergrijs':'#a0a0b0','bruin':'#8b5a2b','brons':'#cd7f32',
+  'koperbruin':'#aa6633','roodbruin':'#993322','beige':'#e8d8a0','zwart':'#333333','grijs':'#888888',
+};
+function kleurBg(kleur, fallback) {
+  const k = kleur.toLowerCase().replace(/\u00ad/g, '').trim();
+  if (_KLEUR_MAP[k]) return _KLEUR_MAP[k];
+  const delen = k.split(/[-\s]+/);
+  const gevonden = delen.map(d => _KLEUR_MAP[d]).filter(Boolean);
+  if (gevonden.length >= 2) return `linear-gradient(to right, ${gevonden[0]} 50%, ${gevonden[1]} 50%)`;
+  if (gevonden.length === 1) return gevonden[0];
+  return fallback;
+}
+
+// ============================================================
+// AFBEELDINGEN (Wikipedia thumbnail, lazy)
+// ============================================================
+function laadAfbeelding(el) {
+  el.dataset.gevraagd = '1';
+  imgObserver.unobserve(el);
+  const lat = el.dataset.lat.replace(/ /g, '_');
+  fetch(`https://en.wikipedia.org/api/rest_v1/page/summary/${encodeURIComponent(lat)}`)
+    .then(r => r.ok ? r.json() : Promise.reject())
+    .then(data => {
+      const url = data.thumbnail?.source;
+      if (!url) { el.classList.add('geladen'); return; }
+      const img = el.querySelector('img');
+      img.onload = () => { img.classList.add('geladen'); el.classList.add('geladen'); };
+      img.src = url;
+    })
+    .catch(() => el.classList.add('geladen'));
+}
+
+// ============================================================
+// SVG ILLUSTRATIES
+// ============================================================
+function plantSVG(cat, c) {
+  if (cat === 'conifeer') return conifeerSVG(c);
+  if (cat === 'heester')  return heesterSVG(c);
+  return boomSVG(c);
+}
+function boomSVG(c) {
+  return `<svg viewBox="0 0 120 90" style="background:${c}15">
+    <rect x="54" y="62" width="12" height="22" rx="2" fill="${c}88"/>
+    <ellipse cx="60" cy="40" rx="34" ry="28" fill="${c}99"/>
+    <ellipse cx="60" cy="36" rx="26" ry="20" fill="${c}cc"/>
+    <ellipse cx="48" cy="32" rx="14" ry="10" fill="${c}aa" opacity="0.6"/>
+    <ellipse cx="72" cy="38" rx="12" ry="9"  fill="${c}aa" opacity="0.5"/>
+  </svg>`;
+}
+function heesterSVG(c) {
+  return `<svg viewBox="0 0 120 90" style="background:${c}15">
+    <ellipse cx="60" cy="72" rx="52" ry="8"  fill="${c}20"/>
+    <ellipse cx="38" cy="58" rx="22" ry="16" fill="${c}88"/>
+    <ellipse cx="80" cy="60" rx="20" ry="14" fill="${c}88"/>
+    <ellipse cx="60" cy="50" rx="26" ry="20" fill="${c}bb"/>
+    <ellipse cx="46" cy="44" rx="16" ry="12" fill="${c}99" opacity="0.7"/>
+    <ellipse cx="74" cy="46" rx="15" ry="11" fill="${c}99" opacity="0.7"/>
+  </svg>`;
+}
+function conifeerSVG(c) {
+  return `<svg viewBox="0 0 120 90" style="background:${c}15">
+    <rect x="55" y="72" width="10" height="14" rx="1" fill="${c}77"/>
+    <polygon points="60,8 82,48 38,48"  fill="${c}99"/>
+    <polygon points="60,22 86,62 34,62" fill="${c}bb"/>
+    <polygon points="60,36 88,76 32,76" fill="${c}dd"/>
+  </svg>`;
+}
+
+// ============================================================
+// GOOGLE AFBEELDINGEN LINK
+// ============================================================
+function glink(l, cv) {
+  return `https://www.google.com/search?q=${encodeURIComponent(l+' '+cv+' tuin')}&tbm=isch`;
+}
+
+// ============================================================
+// KAART HTML
+// ============================================================
+function cardHTML(p) {
+  const hBg = {klein:'#fdecea', middel:'#fdf3e3', groot:'#e8f0e8'};
+  const hTx = {klein:'#8b3a2a', middel:'#7a5a20', groot:'#2d4a2d'};
+  const hLb = {klein:'Klein <3m', middel:'Middel 3–8m', groot:'Groot >8m'};
+  const catBadge = p.cat==='heester' ? 'badge-heester' : p.cat==='conifeer' ? 'badge-conifeer' : 'badge-boom';
+  const lichtPill = p.licht==='schaduw' ? 'pill-schaduw' : p.licht==='halfschaduw' ? 'pill-halfschaduw' : 'pill-sun';
+  const lichtLabel = p.licht==='schaduw' ? '🌑 schaduw' : p.licht==='halfschaduw' ? '🌤 halfschaduw' : '☀️ zon';
+  const bladPill = p.blad==='groenblijvend' ? 'pill-groenblijvend' : 'pill-bladverliezend';
+  const bladLabel = p.blad==='groenblijvend' ? '🟢 groenblijvend' : '🍂 bladverliezend';
+  const seizoenIcon = p.s==='winter' ? '❄️' : p.s==='herfst' ? '🍂' : p.s==='voorjaar' ? '🌱' : '☀️';
+  const isFav = filter === 'favorieten';
+  const cvList = isFav ? p.cv.filter(cv => favorieten.has(`${p.l}||${cv.name}`)) : p.cv;
+  const cvHTML = cvList.map(cv => {
+    const id = `${p.l}||${cv.name}`;
+    const starred = favorieten.has(id);
+    return `<div class="cultivar">
+      <div class="cv-header">
+        <div><span class="cv-name">${cv.name}</span><span class="cv-height">· ${cv.hoogte}</span></div>
+        <div style="display:flex;gap:0.3rem;align-items:center">
+          <button class="cv-fav${starred?' active':''}" data-fav="${id}" title="Favoriet">${starred?'★':'☆'}</button>
+          <a class="cv-photo" href="${glink(p.l,cv.name)}" target="_blank" rel="noopener">📷 foto</a>
+        </div>
+      </div>
+      <div class="cv-color"><span class="cv-dot" style="background:${kleurBg(cv.kleur, p.c)}"></span><span class="cv-kleur">${cv.kleur}</span></div>
+      <div class="cv-tip">${cv.tip}</div>
+    </div>`;
+  }).join('');
+  return `<div class="card">
+    <div class="card-img" data-lat="${p.l}" data-kleur="${p.c}" style="background:${p.c}20">
+      ${plantSVG(p.cat, p.c)}
+      <img alt="${p.l}">
+      <a class="photo-link" href="${glink(p.l,'')}" target="_blank" rel="noopener">📷</a>
+    </div>
+    <div class="card-body">
+      <div class="badges">
+        <span class="badge badge-${p.h}" style="background:${hBg[p.h]};color:${hTx[p.h]}">${hLb[p.h]}</span>
+        <span class="badge ${catBadge}">${p.cat}</span>
+      </div>
+      <div class="card-name">${p.n}</div>
+      <div class="card-latin">${p.l}</div>
+      <div class="pills">
+        <span class="pill ${lichtPill}">${lichtLabel}</span>
+        <span class="pill ${bladPill}">${bladLabel}</span>
+        <span class="pill pill-bloom">${seizoenIcon} ${p.b}</span>
+      </div>
+      <div class="card-desc">${p.d}</div>
+    </div>
+    <button class="cultivar-toggle" onclick="this.nextElementSibling.classList.toggle('open');this.querySelector('.arr').textContent=this.nextElementSibling.classList.contains('open')?'▲':'▼'">
+      <span>🌳 ${cvList.length} varianten</span><span class="arr">${isFav?'▲':'▼'}</span>
+    </button>
+    <div class="cultivars${isFav?' open':''}">${cvHTML}</div>
+  </div>`;
+}
+
+// ============================================================
+// FILTEREN & RENDEREN
+// ============================================================
+function applyFilter() {
+  filtered = PLANTS.filter(p => {
+    const mf = filter==='favorieten'
+      ? p.cv.some(cv => favorieten.has(`${p.l}||${cv.name}`))
+      : filter==='all' || p.h===filter || p.s===filter || p.cat===filter;
+    const ml = filterLicht==='all' || p.licht===filterLicht;
+    const mb = filterBlad==='all' || p.blad===filterBlad;
+    const ms = query==='' || p.n.toLowerCase().includes(query) || p.l.toLowerCase().includes(query);
+    return mf && ml && mb && ms;
+  });
+  page = 1;
+  document.getElementById('grid').innerHTML = '';
+  const loader = document.getElementById('loader');
+  do { renderMore(); }
+  while ((page - 1) * PAGE < filtered.length && loader.getBoundingClientRect().top < window.innerHeight);
+}
+
+function renderMore() {
+  if ((page - 1) * PAGE >= filtered.length) return;
+  const grid = document.getElementById('grid');
+  const loader = document.getElementById('loader');
+  const slice = filtered.slice((page-1)*PAGE, page*PAGE);
+  grid.insertAdjacentHTML('beforeend', slice.map(cardHTML).join(''));
+  const allCards = grid.querySelectorAll('.card-img[data-lat]');
+  Array.from(allCards).slice(-slice.length).forEach(el => imgObserver.observe(el));
+  const shown = Math.min(page*PAGE, filtered.length);
+  document.getElementById('count').textContent = shown + '/' + filtered.length;
+  document.getElementById('hdr-count').textContent = PLANTS.length + ' soorten met cultivarvarianten · 📷 = Google foto\'s';
+  if (filtered.length === 0 && filter === 'favorieten') {
+    grid.innerHTML = '<p class="empty-msg">Nog geen favorieten. Open een plant, klik op ☆ bij een cultivar om hem op te slaan.</p>';
+  }
+  loader.textContent = shown < filtered.length ? 'Meer laden…'
+    : filtered.length > 0 ? '— alle ' + filtered.length + ' soorten getoond —'
+    : (filter === 'favorieten' ? '' : 'Geen planten gevonden');
+  page++;
+}
+
+// ============================================================
+// AFBEELDINGEN LAZY LADEN
+// ============================================================
+const imgObserver = new IntersectionObserver(entries => {
+  entries.forEach(e => { if (e.isIntersecting && !e.target.dataset.gevraagd) laadAfbeelding(e.target); });
+}, { rootMargin: '300px' });
+
+// ============================================================
+// INFINITE SCROLL
+// ============================================================
+const _loaderEl = document.getElementById('loader');
+new IntersectionObserver(entries => {
+  if (entries[0].isIntersecting) renderMore();
+}, { rootMargin: '200px' }).observe(_loaderEl);
+window.addEventListener('scroll', () => {
+  if (_loaderEl.getBoundingClientRect().top < window.innerHeight + 300) renderMore();
+}, { passive: true });
+
+// ============================================================
+// EVENT LISTENERS
+// ============================================================
+document.getElementById('filters').addEventListener('click', e => {
+  const btn = e.target.closest('button');
+  if (!btn || !btn.dataset.filter) return;
+  document.querySelectorAll('#filters button').forEach(b => b.classList.remove('active'));
+  btn.classList.add('active');
+  filter = btn.dataset.filter;
+  applyFilter();
+});
+
+document.getElementById('filters-licht').addEventListener('click', e => {
+  const btn = e.target.closest('button');
+  if (!btn || !btn.dataset.licht) return;
+  document.querySelectorAll('#filters-licht button').forEach(b => b.classList.remove('active'));
+  btn.classList.add('active');
+  filterLicht = btn.dataset.licht;
+  applyFilter();
+});
+
+document.getElementById('filters-blad').addEventListener('click', e => {
+  const btn = e.target.closest('button');
+  if (!btn || !btn.dataset.blad) return;
+  document.querySelectorAll('#filters-blad button').forEach(b => b.classList.remove('active'));
+  btn.classList.add('active');
+  filterBlad = btn.dataset.blad;
+  applyFilter();
+});
+
+document.getElementById('grid').addEventListener('click', e => {
+  const btn = e.target.closest('.cv-fav');
+  if (!btn) return;
+  e.stopPropagation();
+  const id = btn.dataset.fav;
+  if (favorieten.has(id)) {
+    favorieten.delete(id);
+    btn.classList.remove('active');
+    btn.textContent = '☆';
+    if (filter === 'favorieten') applyFilter();
+  } else {
+    favorieten.add(id);
+    btn.classList.add('active');
+    btn.textContent = '★';
+  }
+  saveFav();
+});
+
+let debounce;
+document.getElementById('search').addEventListener('input', e => {
+  clearTimeout(debounce);
+  debounce = setTimeout(() => { query = e.target.value.toLowerCase(); applyFilter(); }, 200);
+});
+
+// Init
+applyFilter();
+</script>
+</body>
+</html>

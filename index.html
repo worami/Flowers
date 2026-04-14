@@ -70,6 +70,11 @@ header p { font-size: 0.7rem; color: rgba(245,240,232,0.6); margin-top: 0.3rem; 
 .loader { height: 40px; display: flex; align-items: center; justify-content: center; font-size: 0.75rem; color: #aaa; }
 footer { text-align: center; padding: 1rem; font-size: 0.65rem; color: #888; border-top: 1px solid #ddd5c0; }
 
+nav { background: #1e3520; display: flex; justify-content: center; gap: 0.5rem; padding: 0.4rem 1rem; }
+nav a { color: #c8a84b; font-size: 0.72rem; text-decoration: none; padding: 0.22rem 0.7rem; border-radius: 2rem; border: 1px solid transparent; letter-spacing: 0.05em; }
+nav a:hover { border-color: #c8a84b; }
+nav a.actief { background: #c8a84b; color: #1e3520; font-weight: bold; }
+
 /* ============================================================
    PLANTEN TOEVOEGEN: kopieer een blok hieronder en pas aan.
    Velden: n=naam, l=latijn, h=hoog/middel/laag,
@@ -80,6 +85,11 @@ footer { text-align: center; padding: 1rem; font-size: 0.65rem; color: #888; bor
 </style>
 </head>
 <body>
+
+<nav>
+  <a href="./index.html" class="actief">🌿 Vaste planten</a>
+  <a href="./bomen-heesters.html">🌳 Bomen &amp; heesters</a>
+</nav>
 
 <header>
   <p class="sub">Kwekerij Muijderman · Veldhoven</p>
