@@ -328,7 +328,7 @@ De PLANTS-array in `bomen-heesters.html` is nog niet compleet. Op basis van het 
 | # | Genera | Status |
 |---|---|---|
 | BH5 | Abeliophyllum · Edgeworthia · Sarcococca · Stachyurus · Jasminum nudiflorum | ✅ |
-| BH6 | Clethra · Lagerstroemia · Vitex · Lespedeza · Spartium · Clerodendrum | ⬜ |
+| BH6 | Clethra · Lagerstroemia · Vitex · Lespedeza · Spartium · Clerodendrum | ✅ |
 | BH7 | Aronia · Rhus · Leucothoe · Vaccinium · Fuchsia | ⬜ |
 | BH8 | Kalmia · Zenobia · Sinocalycanthus · Diervilla · Escallonia | ⬜ |
 | BH9 | Decaisnea · Tamarix · Caragana · Rhodotypos · Genista · Ulex | ⬜ |
