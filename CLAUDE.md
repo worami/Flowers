@@ -303,3 +303,39 @@ De PLANTS-array is nog niet compleet. Het volledige Muijderman-assortiment bevat
 |---|---|---|
 | V1 | Adiantum · Athyrium · Blechnum · Matteuccia · Osmunda · Polystichum | ✅ |
 | V2 | Asplenium · Cyrtomium · Onoclea · Phyllitis | ✅ |
+
+---
+
+## Catalogus uitbreiden — bomen-heesters.html
+
+De PLANTS-array in `bomen-heesters.html` is nog niet compleet. Op basis van het volledige Muijderman-assortiment ontbreken ~60 genera bomen, heesters en conifeers.
+
+**Werkwijze:** voeg per sessie 1 batch toe (5–7 genera), commit daarna, en markeer de batch hieronder als ✅.
+
+> **Volgende sessie:** start bij de eerste batch die nog ⬜ heeft.
+
+### Bomen — batchplan
+
+| # | Genera | Status |
+|---|---|---|
+| BH1 | Halesia · Ginkgo · Cercidiphyllum · Davidia · Nyssa | ✅ |
+| BH2 | Koelreuteria · Sophora · Morus · Juglans · Pterocarya | ⬜ |
+| BH3 | Oxydendrum · Stewartia · Franklinia · Sassafras · Nothofagus | ⬜ |
+| BH4 | Eucalyptus · Tetradium · Idesia · Ptelea · Pterostyrax | ⬜ |
+
+### Heesters — batchplan
+
+| # | Genera | Status |
+|---|---|---|
+| BH5 | Abeliophyllum · Edgeworthia · Sarcococca · Stachyurus · Jasminum nudiflorum | ⬜ |
+| BH6 | Clethra · Lagerstroemia · Vitex · Lespedeza · Spartium · Clerodendrum | ⬜ |
+| BH7 | Aronia · Rhus · Leucothoe · Vaccinium · Fuchsia | ⬜ |
+| BH8 | Kalmia · Zenobia · Sinocalycanthus · Diervilla · Escallonia | ⬜ |
+| BH9 | Decaisnea · Tamarix · Caragana · Rhodotypos · Genista · Ulex | ⬜ |
+| BH10 | Rhaphiolepis · Neillia · Corokia · Xanthorhiza · Rostrinucula | ⬜ |
+
+### Conifeers — batchplan
+
+| # | Genera | Status |
+|---|---|---|
+| BHC1 | Cryptomeria · Larix · Microbiota · Sciadopitys · Sequoiadendron | ⬜ |
