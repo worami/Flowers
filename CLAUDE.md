@@ -332,7 +332,7 @@ De PLANTS-array in `bomen-heesters.html` is nog niet compleet. Op basis van het 
 | BH7 | Aronia · Rhus · Leucothoe · Vaccinium · Fuchsia | ✅ |
 | BH8 | Kalmia · Zenobia · Sinocalycanthus · Diervilla · Escallonia | ✅ |
 | BH9 | Decaisnea · Tamarix · Caragana · Rhodotypos · Genista · Ulex | ✅ |
-| BH10 | Rhaphiolepis · Neillia · Corokia · Xanthorhiza · Rostrinucula | ⬜ |
+| BH10 | Rhaphiolepis · Neillia · Corokia · Xanthorhiza · Rostrinucula | ✅ |
 
 ### Conifeers — batchplan
 
