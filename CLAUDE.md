@@ -339,3 +339,10 @@ De PLANTS-array in `bomen-heesters.html` is nog niet compleet. Op basis van het 
 | # | Genera | Status |
 |---|---|---|
 | BHC1 | Cryptomeria · Larix · Microbiota · Sciadopitys · Sequoiadendron | ✅ |
+
+### Aanvulling na hercontrole
+
+| # | Genera | Status |
+|---|---|---|
+| BH11 | Aralia · Chitalpa · Chionanthus · Heptacodium · Maclura · Xanthoceras · Ziziphus | ✅ |
+| BH12 | Arbutus · Cistus · Colutea · Distylium · Elsholtzia · Frangula · Myrica · Poncirus · Staphylea · Sycoparrotia · Sycopsis · Tetrapanax | ✅ |
