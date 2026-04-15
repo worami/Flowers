@@ -319,7 +319,7 @@ De PLANTS-array in `bomen-heesters.html` is nog niet compleet. Op basis van het 
 | # | Genera | Status |
 |---|---|---|
 | BH1 | Halesia · Ginkgo · Cercidiphyllum · Davidia · Nyssa | ✅ |
-| BH2 | Koelreuteria · Sophora · Morus · Juglans · Pterocarya | ⬜ |
+| BH2 | Koelreuteria · Sophora · Morus · Juglans · Pterocarya | ✅ |
 | BH3 | Oxydendrum · Stewartia · Franklinia · Sassafras · Nothofagus | ⬜ |
 | BH4 | Eucalyptus · Tetradium · Idesia · Ptelea · Pterostyrax | ⬜ |
 
