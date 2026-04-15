@@ -338,4 +338,4 @@ De PLANTS-array in `bomen-heesters.html` is nog niet compleet. Op basis van het 
 
 | # | Genera | Status |
 |---|---|---|
-| BHC1 | Cryptomeria · Larix · Microbiota · Sciadopitys · Sequoiadendron | ⬜ |
+| BHC1 | Cryptomeria · Larix · Microbiota · Sciadopitys · Sequoiadendron | ✅ |
