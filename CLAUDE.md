@@ -294,6 +294,11 @@ De PLANTS-array in `data/vaste-planten.js` is nog niet compleet. Het volledige M
 | 25 | Alstroemeria · Althaea · Anemonopsis · Asphodeline · Beesia · Belamcanda | ✅ |
 | 26 | Betonica · Boltonia · Buglossoides · Chelonopsis · Chrysogonum · Chrysosplenium | ✅ |
 | 27 | Dendranthema · Dystaenia · Erodium · Gaura · Houstonia · Peucedanum | ✅ |
+| 28 | Epimedium · Filipendula · Alcea | ✅ |
+| 29 | Helianthemum · Eremurus · Epilobium · Hesperis · Angelica | ✅ |
+| 30 | Strobilanthes · Vernonia · Schizostylis · Hibiscus moscheutos · Nerine · Cornus canadensis | ✅ |
+| 31 | Petasites · Zantedeschia · Romneya · Myosotis · Valeriana · Anchusa · Draba · Dryas | ✅ |
+| 32 | Arum · Iberis · Hieracium · Senecio · Sphaeralcea · Meehania · Ruellia · Verbesina · Pimpinella | ✅ |
 
 ### Siergrassen — batchplan
 
