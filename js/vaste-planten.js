@@ -50,7 +50,7 @@ function cardHTML(p) {
     <div class="card-body">
       <div class="badges">
         <span class="badge badge-${p.h}" style="background:${hBg[p.h]};color:${hTx[p.h]}">${hLb[p.h]}</span>
-        <span class="badge ${p.cat==='bodembedekker'?'badge-bodem':p.cat==='siergras'?'badge-gras':'badge-vaste'}">${p.cat}</span>
+        <span class="badge ${p.cat==='bodembedekker'?'badge-bodem':p.cat==='siergras'?'badge-gras':p.cat==='klimplant'?'badge-klimplant':'badge-vaste'}">${p.cat}</span>
       </div>
       <div class="card-name">${p.n}</div>
       <div class="card-latin">${p.l}</div>

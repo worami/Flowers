@@ -6,11 +6,11 @@ A multi-file static web application for **Kwekerij Muijderman** (Muijderman Nurs
 
 ### Doel / Purpose
 
-Het doel van deze app is het **doorzoekbaar en overzichtelijk maken van de plantenassortiment van Kwekerij Muijderman**. De kwekerij verkoopt een groot en gevarieerd assortiment vaste planten, bodembedekkers en siergrassen. De officiële assortimentslijst is te vinden op:
+Het doel van deze app is het **doorzoekbaar en overzichtelijk maken van de plantenassortiment van Kwekerij Muijderman**. De kwekerij verkoopt een groot en gevarieerd assortiment vaste planten, bodembedekkers, siergrassen en klimplanten. De officiële assortimentslijst is te vinden op:
 
 > https://www.kwekerijmuijderman.nl/assortiment/overzicht
 
-**Scope:** alleen de categorie *vaste planten* (inclusief bodembedekkers en siergrassen) uit het Muijderman-assortiment valt binnen de scope van deze app. Andere categorieën die de kwekerij voert — zoals bomen, heesters, klimplanten of seizoensplanten — worden **buiten beschouwing gelaten** en mogen niet worden toegevoegd aan de `PLANTS`-array.
+**Scope:** de categorie *vaste planten* (inclusief bodembedekkers, siergrassen en klimplanten) uit het Muijderman-assortiment valt binnen de scope van `index.html`. Andere categorieën die de kwekerij voert — zoals bomen, heesters of seizoensplanten — worden **buiten beschouwing gelaten** en mogen niet worden toegevoegd aan de `PLANTS`-array van dit bestand.
 
 De app lost drie problemen op die de ruwe assortimentslijst niet oplost:
 
@@ -321,6 +321,14 @@ De PLANTS-array in `data/vaste-planten.js` is nog niet compleet. Het volledige M
 |---|---|---|
 | V1 | Adiantum · Athyrium · Blechnum · Matteuccia · Osmunda · Polystichum | ✅ |
 | V2 | Asplenium · Cyrtomium · Onoclea · Phyllitis | ✅ |
+
+### Klimplanten — batchplan
+
+| # | Genera | Status |
+|---|---|---|
+| K1 | Clematis | ✅ |
+| K2 | Hedera · Lonicera · Parthenocissus · Wisteria | ✅ |
+| K3 | Actinidia · Campsis · Hydrangea petiolaris · Passiflora · Schizophragma | ✅ |
 
 ---
 
