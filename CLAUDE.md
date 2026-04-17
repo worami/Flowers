@@ -2,7 +2,7 @@
 
 ## Project Overview
 
-A self-contained, single-file static web application for **Kwekerij Muijderman** (Muijderman Nursery) in Veldhoven, Netherlands.
+A multi-file static web application for **Kwekerij Muijderman** (Muijderman Nursery) in Veldhoven, Netherlands.
 
 ### Doel / Purpose
 
@@ -50,18 +50,29 @@ Naast `index.html` bestaat er een tweede zelfstandige pagina voor **bomen, heest
 
 ## Architecture
 
-Everything lives in one file: `index.html`.
+The project uses a multi-file structure. Both HTML pages are lean skeletons that load shared and page-specific assets.
 
-| Lines | Content |
-|-------|---------|
-| 1–5 | HTML boilerplate, `lang="nl"`, viewport meta |
-| 6–74 | Embedded `<style>` block — all CSS |
-| 67–73 | CSS comment with field reference for adding new plants |
-| 76–112 | HTML structure: `<header>`, `.toolbar`, `.grid`, `<footer>` |
-| 111–215 | `<script>`: `PLANTS` array (the data) |
-| 217–376 | `<script>`: state variables, functions, event listeners, init call |
+```
+/
+├── index.html               (~54 regels — HTML-skelet vaste planten)
+├── bomen-heesters.html      (~61 regels — HTML-skelet bomen/heesters)
+├── css/
+│   ├── shared.css           (gedeelde stijlen, ~85% identiek in beide pagina's)
+│   ├── vaste-planten.css    (badge-klassen: hoog/middel/laag, vaste/bodem/gras)
+│   └── bomen-heesters.css   (badge/pill-klassen: klein/middel/groot, boom/heester/conifeer, bladverliezend/groenblijvend)
+├── js/
+│   ├── shared.js            (_KLEUR_MAP, kleurBg(), glink(), laadAfbeelding())
+│   ├── vaste-planten.js     (flower(), cardHTML(), applyFilter(), renderMore(), events, init)
+│   └── bomen-heesters.js   (plantSVG + SVG-helpers, cardHTML(), applyFilter() + filterBlad, events, init)
+└── data/
+    ├── vaste-planten.js     (const PLANTS = [...] — ~271 entries)
+    └── bomen-heesters.js   (const PLANTS = [...] — ~179 entries)
+```
 
-**Do not split this into multiple files** unless explicitly asked. The single-file approach is intentional — it keeps deployment trivial (any static host, GitHub Pages, direct file open).
+**Laadvolgorde per pagina** (via `<script src="">` tags, géén ES modules):
+1. `js/shared.js` — gedeelde utilities
+2. `data/vaste-planten.js` of `data/bomen-heesters.js` — plantdata
+3. `js/vaste-planten.js` of `js/bomen-heesters.js` — paginalogica
 
 ---
 
@@ -92,24 +103,27 @@ Each entry in the `PLANTS` array (lines 116–212) follows this shape:
 }
 ```
 
-**Adding a new plant:** copy any existing entry, adjust all fields, and insert it into the `PLANTS` array. The CSS comment at lines 67–73 gives the same field reference.
+**Adding a new plant:** copy any existing entry, adjust all fields, and insert it into the `PLANTS` array in `data/vaste-planten.js` (vaste planten) or `data/bomen-heesters.js` (bomen/heesters).
 
 ---
 
 ## Key Functions
 
-| Function | Location | Purpose |
-|----------|----------|---------|
-| `flower(c)` | line 222 | Generates an inline SVG flower illustration using the plant's hex colour `c` |
-| `glink(l, cv)` | line 238 | Returns a Google Images URL for Latin name + cultivar |
-| `cardHTML(p)` | line 242 | Returns the full HTML string for a plant card, including cultivar list |
-| `applyFilter()` | line 289 | Filters `PLANTS` into `filtered[]` based on current `filter`, `filterLicht`, and `query`; resets pagination and re-renders |
-| `renderMore()` | line 303 | Appends the next page slice (`PAGE = 8`) of `filtered[]` to `#grid` using `insertAdjacentHTML` |
-| `saveFav()` | line 220 | Persists the `favorieten` Set to `localStorage` as JSON |
+| Function | Bestand | Purpose |
+|----------|---------|---------|
+| `flower(c)` | `js/vaste-planten.js` | Generates an inline SVG flower illustration using the plant's hex colour `c` |
+| `plantSVG(cat, c)` | `js/bomen-heesters.js` | Dispatcher naar `boomSVG`, `heesterSVG` of `conifeerSVG` |
+| `glink(l, cv)` | `js/shared.js` | Returns a Google Images URL for Latin name + cultivar |
+| `kleurBg(kleur, fallback)` | `js/shared.js` | Vertaalt een kleurnaam naar een hex-kleur of gradient via `_KLEUR_MAP` |
+| `laadAfbeelding(el)` | `js/shared.js` | Laadt een Wikipedia-thumbnail lazy via `imgObserver` |
+| `cardHTML(p)` | `js/vaste-planten.js` of `js/bomen-heesters.js` | Returns the full HTML string for a plant card, including cultivar list |
+| `applyFilter()` | `js/vaste-planten.js` of `js/bomen-heesters.js` | Filters `PLANTS` into `filtered[]` based on current filter state; resets pagination and re-renders |
+| `renderMore()` | `js/vaste-planten.js` of `js/bomen-heesters.js` | Appends the next page slice (`PAGE = 8`) of `filtered[]` to `#grid` using `insertAdjacentHTML` |
+| `saveFav()` | `js/vaste-planten.js` of `js/bomen-heesters.js` | Persists the `favorieten` Set to `localStorage` as JSON |
 
 ---
 
-## State Variables (lines 218–220)
+## State Variables
 
 ```js
 const PAGE = 8;                        // items per infinite-scroll page
@@ -127,7 +141,7 @@ Favourite IDs use the format `"Latin Name||Cultivar Name"`, e.g. `"Echinacea pur
 
 ## Filtering Logic
 
-Filters are **independent and ANDed** (`applyFilter`, line 289):
+Filters are **independent and ANDed** (`applyFilter` in `js/vaste-planten.js` / `js/bomen-heesters.js`):
 
 1. **Primary filter** (`#filters` buttons, `data-filter` attribute):
    - `"all"` — no restriction
@@ -152,15 +166,15 @@ Filters are **independent and ANDed** (`applyFilter`, line 289):
 
 ## Persistence
 
-- `localStorage` key: `'mj_fav'`
+- `localStorage` key: `'mj_fav'` (vaste planten) / `'mj_fav_bh'` (bomen & heesters)
 - Value: JSON array of favourite ID strings, e.g. `["Echinacea purpurea||'Magnus'", …]`
-- Read on page load (line 219), written by `saveFav()` after every toggle.
+- Read on page load, written by `saveFav()` after every toggle.
 
 ---
 
 ## CSS Conventions
 
-- All styles are in the single embedded `<style>` block (lines 7–74).
+- Gedeelde stijlen staan in `css/shared.css`. Pagina-specifieke badge/pill-klassen staan in `css/vaste-planten.css` resp. `css/bomen-heesters.css`.
 - **Colours** are hardcoded hex values — no CSS custom properties:
   - Background: `#f5f0e8`
   - Primary dark green: `#2d4a2d`
@@ -189,8 +203,8 @@ Filters are **independent and ANDed** (`applyFilter`, line 289):
 There is no build system, no test runner, and no package manager.
 
 **To develop:**
-1. Open `index.html` in a browser (file:// or any local server).
-2. Edit and reload.
+1. Open `index.html` in a browser (file:// werkt — de `<script src="">` tags zijn géén ES modules).
+2. Edit en reload. Plantdata zit in `data/`, logica in `js/`, stijlen in `css/`.
 
 **To test:**
 - Manual testing in the browser is the only test method.
@@ -198,7 +212,7 @@ There is no build system, no test runner, and no package manager.
 - Check mobile layout (resize browser or use DevTools).
 
 **To deploy:**
-- Copy `index.html` to any static host (GitHub Pages, Netlify, a plain web server). No build step needed.
+- Kopieer de volledige repo-inhoud naar een static host (GitHub Pages, Netlify, een gewone webserver). Alle mappen (`css/`, `js/`, `data/`) moeten mee. No build step needed.
 
 ---
 
@@ -216,10 +230,9 @@ There is no build system, no test runner, and no package manager.
 ## What Not To Do
 
 - **Do not add a build system** (webpack, Vite, Parcel, etc.) unless explicitly requested.
-- **Do not split the file** into separate HTML/CSS/JS files without a clear request.
 - **Do not add external dependencies** (React, Vue, jQuery, Tailwind, etc.).
 - **Do not add TypeScript** — the project is intentionally plain JavaScript.
-- **Do not add a `<link>` to an external stylesheet** — all styles stay embedded.
+- **Do not use ES modules** (`type="module"`) — reguliere `<script src="">` tags zijn bewust gekozen zodat `file://` blijft werken.
 - **Do not change the Dutch language** of the UI or data without being asked.
 - **Do not add automated tests** speculatively — there is no test infrastructure.
 - **Do not introduce CSS custom properties** unless refactoring all hardcoded colours at once.
@@ -230,23 +243,23 @@ There is no build system, no test runner, and no package manager.
 
 To add a new plant category beyond `"vaste plant"`, `"bodembedekker"`, `"siergras"`:
 
-1. Add the `cat` value to the new plant entry.
-2. Add a filter button in `#filters` with the matching `data-filter` attribute (line 86–96).
-3. Add a CSS badge class `.badge-<suffix>` in the `<style>` block.
-4. Update the badge selector ternary in `cardHTML` (line 272).
+1. Add the `cat` value to the new plant entry in `data/vaste-planten.js`.
+2. Add a filter button in `#filters` in `index.html` with the matching `data-filter` attribute.
+3. Add a CSS badge class `.badge-<suffix>` in `css/vaste-planten.css`.
+4. Update the badge selector ternary in `cardHTML` in `js/vaste-planten.js`.
 
 To add a new light requirement beyond `"zon"`, `"halfschaduw"`, `"schaduw"`:
 
-1. Add a button in `#filters-licht` with `data-licht="<value>"`.
-2. Add a CSS pill class and update the pill ternary in `cardHTML` (line 277).
+1. Add a button in `#filters-licht` in the HTML with `data-licht="<value>"`.
+2. Add a CSS pill class in `css/shared.css` and update the pill ternary in `cardHTML`.
 
 ---
 
 ## Catalogus uitbreiden — voortgang
 
-De PLANTS-array is nog niet compleet. Het volledige Muijderman-assortiment bevat ~90 extra genera voor vaste planten plus ~13 siergrassen en ~8 bodembedekkers die nog niet in de app staan.
+De PLANTS-array in `data/vaste-planten.js` is nog niet compleet. Het volledige Muijderman-assortiment bevat ~90 extra genera voor vaste planten plus ~13 siergrassen en ~8 bodembedekkers die nog niet in de app staan.
 
-**Werkwijze:** voeg per sessie 1 batch toe (5–7 genera), commit daarna, en markeer de batch hieronder als ✅.
+**Werkwijze:** voeg per sessie 1 batch toe (5–7 genera) aan `data/vaste-planten.js`, commit daarna, en markeer de batch hieronder als ✅.
 
 > **Volgende sessie:** start bij de eerste batch die nog ⬜ heeft.
 
@@ -308,9 +321,9 @@ De PLANTS-array is nog niet compleet. Het volledige Muijderman-assortiment bevat
 
 ## Catalogus uitbreiden — bomen-heesters.html
 
-De PLANTS-array in `bomen-heesters.html` is nog niet compleet. Op basis van het volledige Muijderman-assortiment ontbreken ~60 genera bomen, heesters en conifeers.
+De PLANTS-array in `data/bomen-heesters.js` is nog niet compleet. Op basis van het volledige Muijderman-assortiment ontbreken ~60 genera bomen, heesters en conifeers.
 
-**Werkwijze:** voeg per sessie 1 batch toe (5–7 genera), commit daarna, en markeer de batch hieronder als ✅.
+**Werkwijze:** voeg per sessie 1 batch toe (5–7 genera) aan `data/bomen-heesters.js`, commit daarna, en markeer de batch hieronder als ✅.
 
 > **Volgende sessie:** start bij de eerste batch die nog ⬜ heeft.
 
