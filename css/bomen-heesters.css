@@ -1,0 +1,8 @@
+.badge-klein    { background: #fdecea; color: #8b3a2a; }
+.badge-middel   { background: #fdf3e3; color: #7a5a20; }
+.badge-groot    { background: #e8f0e8; color: #2d4a2d; }
+.badge-boom     { background: #e8f2e8; color: #1e4a1e; }
+.badge-heester  { background: #fff8e8; color: #6a4800; }
+.badge-conifeer { background: #eef4ee; color: #2a5a2a; }
+.pill-bladverliezend { background: #fff8e8; border: 1px solid #e8d080; color: #7a5800; }
+.pill-groenblijvend  { background: #eef4ee; border: 1px solid #a0cc80; color: #2a5a2a; }
