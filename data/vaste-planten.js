@@ -509,11 +509,42 @@ const PLANTS = [
   { n:"Schizophragma", l:"Schizophragma hydrangeoides", h:"hoog", s:"zomer", b:"jul–aug", c:"#f5f0e0", licht:"halfschaduw", cat:"klimplant", d:"Halfschaduw, vochtige humeuze grond. Zelfklimmend net als klimmende hortensia. Decoratieve witte schutblaadjes (geen echte bloemblaadjes) rond kleine bloemen. Langzame starter — na 3 jaar prachtig. Minder bekend alternatief voor Hydrangea petiolaris.", cv:[
     {name:"hydrangeoides",kleur:"crèmewit",hoogte:"tot 12m",tip:"Species — grote witte schutblaadjes, zeldzame klimplant voor schaduw"},
     {name:"hydrangeoides 'Roseum'",kleur:"lichtroze",hoogte:"tot 10m",tip:"Roze variant van de schutblaadjes, subtiel en elegant"},
+    {name:"hydrangeoides 'Rose Sensation'",kleur:"dieprose",hoogte:"tot 8m",tip:"Intensere roze kleur dan 'Roseum', compactere groei"},
     {name:"integrifolium",kleur:"wit",hoogte:"tot 12m",tip:"Chinese soort met grotere bloeiwijzen, iets snellere groei"},
   ]},
   { n:"Toscaanse jasmijn", l:"Trachelospermum jasminoides", h:"hoog", s:"zomer", b:"jun–aug", c:"#f8f5e0", licht:"zon", cat:"klimplant", d:"Volle zon, beschutte warme standplaats (zuidmuur). Vochthoudende goed doorlatende grond. Hecht aan traliewerk of pergola. Groenblijvend in milde winters. Bloemen geven een intense, zoete jasmijngeur — vergelijkbaar met echte jasmijn. Langzaam groeiend in de eerste jaren, daarna krachtig. Niet volledig winterhard bij strenge vorst (beschermen onder -10°C).", cv:[
     {name:"jasminoides",kleur:"sterwit",hoogte:"tot 6m",tip:"Species — wit sterbloempje, intense geur, voor beschutte zuidmuur"},
     {name:"jasminoides 'Variegatum'",kleur:"wit / groen-wit bont blad",hoogte:"tot 4m",tip:"Bontbladig — crème-groen blad, iets minder winterhard dan species"},
+    {name:"jasminoides 'Pink Showers'",kleur:"lichtroze",hoogte:"tot 5m",tip:"Roze bloemvariant — zeldzamer dan wit, zelfde geur en groeiwijze"},
+    {name:"jasminoides 'Star of Sicily'",kleur:"zuiverwit",hoogte:"tot 5m",tip:"Grote stervormige bloemen, iets rijkbloeiender dan de species"},
+    {name:"'Star of Toscana'",kleur:"wit",hoogte:"tot 4m",tip:"Compactere groeivorm, geschikt voor kleinere tuinen en potten"},
     {name:"asiaticum",kleur:"crèmegeel",hoogte:"tot 5m",tip:"Aziatische soort — geelwit, iets winterhardere en compactere groei"},
+  ]},
+
+  // ── VP-K1: Klimplanten deel 1 ─────────────────────────────────────────────
+  { n:"Drievingerige akebiarank", l:"Akebia quinata", h:"hoog", s:"voorjaar", b:"apr–mei", c:"#9060a0", licht:"halfschaduw", cat:"klimplant", d:"Halfschaduw tot zon, gewone tuingrond. Snel groeiende windende klimplant met sierlijk vijfvoudig blad. Kleine chocoladepaarse geurende bloemen in april-mei. In warme zomers soms worstachtige paarse vruchten. Groenblijvend in milde winters. Snoeien na bloei.", cv:[
+    {name:"quinata",kleur:"violet-paars geurend",hoogte:"tot 10m",tip:"Species — krachtige groei, geurige bloemen, interessante vruchten"},
+    {name:"quinata 'Cream Form'",kleur:"crèmewit",hoogte:"tot 8m",tip:"Zeldzame witte bloemvorm — sierlijker dan de paarse standaard"},
+    {name:"quinata 'White Chocolate'",kleur:"crème-wit",hoogte:"tot 8m",tip:"Witbloeiende selectie met chocolate-geur in warme perioden"},
+  ]},
+  { n:"Wilde wingerd (rank)", l:"Ampelopsis", h:"hoog", s:"herfst", b:"sep–okt (bessen)", c:"#4060a0", licht:"zon", cat:"klimplant", d:"Volle zon, gewone tuingrond. Snel groeiende klimplant met hechtranken — geen hechtorganen, heeft steun nodig. Decoratieve bessen in uitzonderlijke kleuren van blauw tot roze en paars. Valt op in de herfst. Krachtig snoeien in het voorjaar.", cv:[
+    {name:"aconitifolia",kleur:"blauw-paars bessen",hoogte:"tot 8m",tip:"Fijnbladig als Aconitum-blad, turquoise-blauwe bessen in herfst"},
+    {name:"glandulosa maximowiczii",kleur:"turquoise-paars bessen",hoogte:"tot 10m",tip:"Spectaculaire bessen in blauw-paars-roze tinten tegelijk — uniek"},
+  ]},
+  { n:"Pijpbloem", l:"Aristolochia", h:"hoog", s:"zomer", b:"jun–aug", c:"#808040", licht:"halfschaduw", cat:"klimplant", d:"Halfschaduw, vochthoudende humeuze grond. Windende klimplant met grote hartlobbige bladeren tot 30 cm. Curieuze pijpvormige bruinrode bloemen. Waardplant voor de koninginnepagesvlinder. Neemt snel veel ruimte — krachtige groeier voor hoge pergola of boom.", cv:[
+    {name:"durior",kleur:"bruin-groen pijpvormig",hoogte:"tot 10m",tip:"Noord-Amerikaanse soort — krachtigste groeier, grote bladeren"},
+    {name:"macrophylla",kleur:"bruin-groen pijpvormig",hoogte:"tot 8m",tip:"Synoniem van durior — vlindervriendelijke waardplant"},
+  ]},
+  { n:"Boomwurger", l:"Celastrus orbiculatus", h:"hoog", s:"herfst", b:"okt–nov (bessen)", c:"#c08020", licht:"zon", cat:"klimplant", d:"Volle zon, gewone goed doorlatende grond. Krachtig windende klimplant die bomen en constructies kan omsnoeren — voorzichtig planten. Spectaculaire gele vruchten die openspringen en rode zaden tonen in de herfst. Plant man en vrouw samen voor vruchtzetting.", cv:[
+    {name:"orbiculatus 'Diana'",kleur:"gele vruchten / rode zaden",hoogte:"tot 14m",tip:"Vrouwelijk exemplaar — altijd samen met 'Hercules' planten"},
+    {name:"orbiculatus 'Hercules'",kleur:"gele vruchten / rode zaden",hoogte:"tot 14m",tip:"Mannelijk exemplaar — bestuiver voor 'Diana'"},
+  ]},
+  { n:"Duizendknoop (rank)", l:"Fallopia", h:"hoog", s:"zomer", b:"jul–aug", c:"#f8f0e0", licht:"zon", cat:"klimplant", d:"Volle zon, gewone tuingrond. Extreem snelle groeier — tot 5 meter per seizoen. Bedekt snel lelijke muren, bijgebouwen of constructies. Kleine witte bloemtrossen in de zomer. Let op: invasief karakter, inperken bij kleine tuin. Jaarlijks flink terugsnoeien.", cv:[
+    {name:"aubertii",kleur:"crèmewit",hoogte:"tot 15m",tip:"Witbloeiende Russische duizendknoop — krachtigste snel-klimmer"},
+    {name:"baldschuanica",kleur:"lichtroze-wit",hoogte:"tot 12m",tip:"Iets lichter roze dan aubertii, verder nagenoeg identiek"},
+  ]},
+  { n:"Hop", l:"Humulus lupulus", h:"hoog", s:"zomer", b:"jul–aug (hopbellen)", c:"#88a040", licht:"zon", cat:"klimplant", d:"Volle zon, voedselrijke vochthoudende grond. Kruidachtige klimplant die elk jaar opnieuw uitloopt vanuit de wortelstok — geen hout. Klimt via haakjes aan traliewerk of touwen. Gele hopbellen (vrouwelijke bloemtrossen) in de zomer. Gebruikt in bierbrouwerij. Snel groeiend — tot 7 meter per seizoen.", cv:[
+    {name:"lupulus",kleur:"groen (hopbellen)",hoogte:"tot 7m",tip:"Species — groene hop, gebruikt in bierbrouwerij, vlindervriendelijk"},
+    {name:"lupulus 'Nordbrau'",kleur:"groen (hopbellen)",hoogte:"tot 6m",tip:"Geselecteerde brouwershop met hoog hopzuurgehalte"},
   ]},
 ];
