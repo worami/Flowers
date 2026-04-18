@@ -257,7 +257,7 @@ To add a new light requirement beyond `"zon"`, `"halfschaduw"`, `"schaduw"`:
 
 ## Catalogus uitbreiden — voortgang
 
-De PLANTS-array in `data/vaste-planten.js` is nog niet compleet. Het volledige Muijderman-assortiment bevat ~90 extra genera voor vaste planten plus ~13 siergrassen en ~8 bodembedekkers die nog niet in de app staan.
+De PLANTS-array in `data/vaste-planten.js` streeft naar het **volledige Muijderman-assortiment** — alle cultivars die zij voeren, geen curatieve selectie. Voor klimplanten (`cat:"klimplant"`) geldt dit eveneens.
 
 **Werkwijze:** voeg per sessie 1 batch toe (5–7 genera) aan `data/vaste-planten.js`, commit daarna, en markeer de batch hieronder als ✅.
 
@@ -324,11 +324,13 @@ De PLANTS-array in `data/vaste-planten.js` is nog niet compleet. Het volledige M
 
 ### Klimplanten — batchplan
 
+**Doel: volledig assortiment** — voeg *alle* cultivars toe die Muijderman voert, geen selectie.
+
 | # | Genera | Status |
 |---|---|---|
-| K1 | Clematis | ✅ |
-| K2 | Hedera · Lonicera · Parthenocissus · Wisteria | ✅ |
-| K3 | Actinidia · Campsis · Hydrangea petiolaris · Passiflora · Schizophragma | ✅ |
+| K1 | Clematis | ⬜ aanvullen (~93 cv, nu 18) |
+| K2 | Hedera · Lonicera · Parthenocissus · Wisteria | ⬜ aanvullen (~19+8+6+5 cv, nu 5+4+3+5) |
+| K3 | Actinidia · Campsis · Hydrangea petiolaris · Passiflora · Schizophragma | ⬜ controleren op volledigheid |
 
 ---
 
