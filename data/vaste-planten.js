@@ -548,7 +548,40 @@ const PLANTS = [
     {name:"lupulus 'Nordbrau'",kleur:"groen (hopbellen)",hoogte:"tot 6m",tip:"Geselecteerde brouwershop met hoog hopzuurgehalte"},
   ]},
 
-  // ── VP-K2: Klimplanten deel 2 ─────────────────────────────────────────────
+  // ── VP-V1: Aster ontbrekende soorten deel 1 ──────────────────────────────
+  { n:"Laagblijvende aster", l:"Aster ageratifolius", h:"laag", s:"herfst", b:"aug–okt", c:"#9080d0", licht:"zon", cat:"vaste plant", d:"Volle zon, goed doorlatende grond. Compacte laagblijvende aster met kleine paarse stervormige bloemen. Ideaal voor rots- en steentuinen. Verdraagt droogte goed. Blijft compact zonder uitlopen.", cv:[
+    {name:"'Adustus Nana'",kleur:"lila-paars",hoogte:"20cm",tip:"Zeer compact — ideaal voor rotstuin of lage border"},
+    {name:"'Ashvi'",kleur:"violet",hoogte:"25cm",tip:"Helder violet, rijkbloeiend op droge standplaats"},
+    {name:"'Asran'",kleur:"paars-blauw",hoogte:"25cm",tip:"Blauwpaars, uitstekend voor droge zonnige plekken"},
+    {name:"'Ezo Murasaki'",kleur:"blauw-violet",hoogte:"30cm",tip:"Japanse selectie — blauwig violet, compacte groei"},
+    {name:"'Eleven Purple'",kleur:"dieppaars",hoogte:"25cm",tip:"Intensere paarse kleur, lang bloeiend"},
+    {name:"'Stardust'",kleur:"lichtblauw",hoogte:"25cm",tip:"Lichtblauw, subtiel en verfijnd in rotstuin"},
+    {name:"'Starshine'",kleur:"roze-lila",hoogte:"25cm",tip:"Rozig lila tint — warmer van kleur dan de blauwe soorten"},
+  ]},
+  { n:"Alpenaster", l:"Aster alpinus", h:"laag", s:"voorjaar", b:"mei–jun", c:"#8070c0", licht:"zon", cat:"vaste plant", d:"Volle zon, goed doorlatende droge tot matig vochtige grond. Vroegbloeiende laagblijvende aster voor rotstuin of voorrand. Grote solitaire bloemen. Verdraagt droogte uitstekend.", cv:[
+    {name:"'Goliath'",kleur:"lila-paars",hoogte:"25cm",tip:"Groot bloem op compacte plant — fors voor een alpenaster"},
+    {name:"'Happy End'",kleur:"roze",hoogte:"20cm",tip:"Roze alpenaster — zeldzamer dan de blauwe typen"},
+  ]},
+  { n:"Zomeraster", l:"Aster amellus", h:"middel", s:"zomer", b:"jul–sep", c:"#9070b0", licht:"zon", cat:"vaste plant", d:"Volle zon, goed doorlatende liefst kalkhoudende grond. Echte zomeraster met zachte grijsgroene bladeren. Weelderige bloemkussens. Verdeelt niet graag — laat staan waar hij staat.", cv:[
+    {name:"'Rosa Erfuellung'",kleur:"roze",hoogte:"50cm",tip:"Warm roze — zachter van toon dan de paarse cultivars"},
+    {name:"'Rudolf Goethe'",kleur:"lavendelblauw",hoogte:"60cm",tip:"Klassieke cultivar met grote lavendelblauwe bloemen"},
+  ]},
+  { n:"Hartbladige aster", l:"Aster cordifolius", h:"middel", s:"herfst", b:"sep–okt", c:"#a090d0", licht:"halfschaduw", cat:"vaste plant", d:"Halfschaduw tot zon, vochthoudende grond. Elegante aster met kleine lila bloempjes in grote losse pluimen. Goed bestand tegen schaduw. Luchtige, transparante bloeiwolk.", cv:[
+    {name:"'Little Carlow'",kleur:"lila-blauw",hoogte:"100cm",tip:"Luchtige pluim van kleine lila bloempjes — herfstmagie"},
+  ]},
+  { n:"Bosaster", l:"Aster divaricatus", h:"laag", s:"herfst", b:"aug–okt", c:"#f0f0f0", licht:"schaduw", cat:"vaste plant", d:"Schaduw tot halfschaduw, vochthoudende grond. Uitstekende aster voor droge schaduw — zeer tolerant. Kleine witte stervormige bloemen op zwarte stengels. Uitlopers vormen stevige gronddekking.", cv:[
+    {name:"divaricatus",kleur:"wit met geel hart",hoogte:"40–60cm",tip:"Beste aster voor droge schaduw — onmisbaar in schaduwborder"},
+  ]},
+  { n:"Herfstaster (fijn)", l:"Aster ericoides", h:"middel", s:"herfst", b:"sep–nov", c:"#e8e0f0", licht:"zon", cat:"vaste plant", d:"Volle zon, goed doorlatende grond. Fijnbladige aster met massa's kleine stervormige bloemen in wolkvormige pluimen. Lang bloeiend tot in november. Goede snijbloem.", cv:[
+    {name:"'Blue Star'",kleur:"lichtblauw",hoogte:"80cm",tip:"Lichtblauwe wolkpluim — subtiel en elegant"},
+    {name:"'Esther'",kleur:"lichtroze",hoogte:"90cm",tip:"Roze wolkpluim, lang bloeiend tot in de herfst"},
+    {name:"'Golden Spray'",kleur:"wit met goudgeel hart",hoogte:"100cm",tip:"Witte bloempjes met gouden hart — sierlijk en luchtig"},
+    {name:"'Lovely'",kleur:"roze-lila",hoogte:"80cm",tip:"Warm roze-lila, rijkbloeiend en wind-bestendig"},
+    {name:"'Schneetanne'",kleur:"wit",hoogte:"90cm",tip:"Stralend wit, grote wolkpluim, lang bloeiend"},
+    {name:"'Snowflurry'",kleur:"wit",hoogte:"30cm",tip:"Laagblijvend wit — bodembedekker-achtige groeiwijze"},
+  ]},
+
+  // ── VP-K2: Klimplanten deel 2 ───────────────────────────────────────────── Klimplanten deel 2 ─────────────────────────────────────────────
   { n:"Echte jasmijn", l:"Jasminum officinale", h:"hoog", s:"zomer", b:"jun–sep", c:"#f8f8f0", licht:"zon", cat:"klimplant", d:"Volle zon, beschutte warme standplaats. Goed doorlatende grond. Windende klimplant met geveerd blad en kleine witte stervormige bloemen met doordringende geur. Sterke bloeier van juni tot september. Niet volledig winterhard onder -10°C — bescherm de voet in strenge winters.", cv:[
     {name:"officinale",kleur:"wit stervormig, intens geurend",hoogte:"tot 9m",tip:"Klassieke geurjasmijn — voor beschutte zuidmuur of pergola"},
   ]},
