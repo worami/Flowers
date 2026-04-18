@@ -616,6 +616,43 @@ const PLANTS = [
     {name:"n.-b. 'Marie Ballard'",kleur:"lichtblauw gevuld",hoogte:"90cm",tip:"Gevuld lichtblauw — klassieke hoge cultivar"},
   ]},
 
+  // ── VP-V3: Aster ontbrekende soorten deel 3 ──────────────────────────────
+  { n:"Steelaster", l:"Aster peduncularis", h:"laag", s:"herfst", b:"aug–sep", c:"#a090c0", licht:"zon", cat:"vaste plant", d:"Volle zon, goed doorlatende grond. Laagblijvende aster met lange bloemsteeltjes. Kleine paarse stervormige bloemen. Geschikt voor rotstuin en voorrand.", cv:[
+    {name:"peduncularis",kleur:"lila-paars",hoogte:"30cm",tip:"Compacte rotstuin-aster met sierlijke lange bloemstelen"},
+  ]},
+  { n:"Pyreneeënaster", l:"Aster pyrenaeus", h:"middel", s:"zomer", b:"jul–aug", c:"#b0a0d0", licht:"zon", cat:"vaste plant", d:"Volle zon, goed doorlatende grond. Zeldzame Europese bergaster met lavendelblauwe bloemen vroeg in de zomer. Stevige habitus, geen steunen nodig.", cv:[
+    {name:"'Lutetia'",kleur:"lavendelblauw",hoogte:"80cm",tip:"Vroege zomerbloeier — al in juli vol in bloei"},
+  ]},
+  { n:"Pluimaster", l:"Aster ptarmicoides", h:"middel", s:"zomer", b:"jul–aug", c:"#f8f8f0", licht:"zon", cat:"vaste plant", d:"Volle zon, droge goed doorlatende grond. Fijnbladige aster met kleine witte bloemen in losse pluimen. Droogtetolerant en ongewoon fijn van textuur.", cv:[
+    {name:"'Major'",kleur:"wit",hoogte:"50cm",tip:"Stevige witte pluimaster — uitstekend voor droge zonnige plekken"},
+  ]},
+  { n:"Radula-aster", l:"Aster radula", h:"middel", s:"herfst", b:"aug–sep", c:"#9080c0", licht:"zon", cat:"vaste plant", d:"Volle zon, vochthoudende grond. Noord-Amerikaanse aster met ruw aanvoelend blad. Rijke paars-blauwe bloemen. Goed bestand tegen natte standplaatsen.", cv:[
+    {name:"'August Sky'",kleur:"paars-blauw",hoogte:"60cm",tip:"Rijkbloeiend paars-blauw, verdraagt vochtige grond"},
+  ]},
+  { n:"Blauwgrijze aster", l:"Aster sedifolius", h:"middel", s:"herfst", b:"aug–sep", c:"#b0b0d0", licht:"zon", cat:"vaste plant", d:"Volle zon, droge goed doorlatende grond. Fijnbladige Zuid-Europese aster met kleine lila-blauwe bloemen in grote hoeveelheden. Uitstekend droogteresistent.", cv:[
+    {name:"'Nanus'",kleur:"lila-blauw",hoogte:"40cm",tip:"Compact dwergtype — rijkbloeiend lila-blauw op droge bodem"},
+  ]},
+  { n:"Tatarische aster", l:"Aster tataricus", h:"hoog", s:"herfst", b:"sep–nov", c:"#9070b0", licht:"zon", cat:"vaste plant", d:"Volle zon, vochthoudende grond. Indrukwekkend hoge aster — bloemstengels tot 2 meter. Lavendelblauwe bloemen extreem laat in de herfst, tot november. Plant achterin de border.", cv:[
+    {name:"'Jindai'",kleur:"lavendelblauw",hoogte:"100cm",tip:"Compactere selectie van de tatarische aster, toch nog laat"},
+  ]},
+  { n:"Thomsons aster", l:"Aster thomsonii", h:"middel", s:"zomer", b:"jul–sep", c:"#9090c0", licht:"zon", cat:"vaste plant", d:"Volle zon, goed doorlatende grond. Himalaya-aster met grote lavendelblauwe bloemen. Bijzonder lange bloeitijd van juli tot september. Weinig bekend maar waardevol.", cv:[
+    {name:"thomsonii",kleur:"lavendelblauw",hoogte:"60cm",tip:"Grote enkelvoudige bloemen, uitzonderlijk lange bloeiperiode"},
+  ]},
+  { n:"Tongelse aster", l:"Aster tongolensis", h:"laag", s:"voorjaar", b:"mei–jun", c:"#8080c0", licht:"zon", cat:"vaste plant", d:"Volle zon, goed doorlatende grond. Vroegbloeiende laagblijvende aster met grote enkelvoudige paarse bloemen in mei-juni. Ideaal voor border-voorrand.", cv:[
+    {name:"'Wartburgstern'",kleur:"violet-blauw",hoogte:"40cm",tip:"Vroegbloeiend violet-blauw — één van de eerste asters in bloei"},
+  ]},
+  { n:"Aster (gemengde hybrides)", l:"Aster hybride", h:"middel", s:"herfst", b:"aug–okt", c:"#a080c0", licht:"zon", cat:"vaste plant", d:"Volle zon, gewone tuingrond. Diverse aster-hybrides die niet eenvoudig onder één soort vallen. Betrouwbare herfstbloeiers met goede ziekteweerstand.", cv:[
+    {name:"'Johan'",kleur:"lila-roze",hoogte:"60cm",tip:"Robuuste hybride — lang bloeiend, goede ziekteweerstand"},
+    {name:"'Pink Buttons'",kleur:"lichtroze gevuld",hoogte:"50cm",tip:"Knopvormige gevulde bloempjes in lichtroze — sierlijk"},
+    {name:"'Treffpunkt'",kleur:"paars-rood",hoogte:"70cm",tip:"Levendige paars-rode kleur, stabiele groeier"},
+    {name:"'Vibrant Dome'",kleur:"roze",hoogte:"40cm",tip:"Koepelvormige compacte habitus, roze — ziekteresistent"},
+    {name:"'Ouverture'",kleur:"roze-lila",hoogte:"50cm",tip:"Vroege bloeier, rijke roze-lila tint"},
+    {name:"'Serenade'",kleur:"roze",hoogte:"60cm",tip:"Elegante roze hybride, lang doorbloeiend in de herfst"},
+  ]},
+  { n:"Monte Cassino", l:"Aster pilosus pringlei", h:"middel", s:"herfst", b:"sep–nov", c:"#f0f0f8", licht:"zon", cat:"vaste plant", d:"Volle zon, goed doorlatende grond. De bekende snijbloem-aster 'Monte Cassino' met massa's kleine witte stervormige bloemen. Populair als snijbloem en als tuinplant voor de herfstborder.", cv:[
+    {name:"'Monte Cassino'",kleur:"wit met geel hart",hoogte:"100cm",tip:"Klassieke snijbloem-aster — enorme hoeveelheid kleine witte bloempjes"},
+  ]},
+
   // ── VP-K2: Klimplanten deel 2 ───────────────────────────────────────────── Klimplanten deel 2 ─────────────────────────────────────────────
   { n:"Echte jasmijn", l:"Jasminum officinale", h:"hoog", s:"zomer", b:"jun–sep", c:"#f8f8f0", licht:"zon", cat:"klimplant", d:"Volle zon, beschutte warme standplaats. Goed doorlatende grond. Windende klimplant met geveerd blad en kleine witte stervormige bloemen met doordringende geur. Sterke bloeier van juni tot september. Niet volledig winterhard onder -10°C — bescherm de voet in strenge winters.", cv:[
     {name:"officinale",kleur:"wit stervormig, intens geurend",hoogte:"tot 9m",tip:"Klassieke geurjasmijn — voor beschutte zuidmuur of pergola"},
