@@ -374,3 +374,7 @@ De PLANTS-array in `data/bomen-heesters.js` is nog niet compleet. Op basis van h
 |---|---|---|
 | BH11 | Aralia · Chitalpa · Chionanthus · Heptacodium · Maclura · Xanthoceras · Ziziphus | ✅ |
 | BH12 | Arbutus · Cistus · Colutea · Distylium · Elsholtzia · Frangula · Myrica · Poncirus · Staphylea · Sycoparrotia · Sycopsis · Tetrapanax | ✅ |
+| BH13 | Erica · Calluna | ✅ |
+| BH14 | Vitis · Rubus | ✅ |
+| BH15 | Phyllostachys · Fargesia · Pleioblastus · Sasa (bamboe, cat:"heester") | ✅ |
+| BH16 | Rosa struikrozen · Rosa klimrozen · Rosa bodembedekkers (cat:"rosa") | ✅ |

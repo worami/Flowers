@@ -40,7 +40,7 @@ function cardHTML(p) {
   const hBg = {klein:'#fdecea', middel:'#fdf3e3', groot:'#e8f0e8'};
   const hTx = {klein:'#8b3a2a', middel:'#7a5a20', groot:'#2d4a2d'};
   const hLb = {klein:'Klein <3m', middel:'Middel 3–8m', groot:'Groot >8m'};
-  const catBadge = p.cat==='heester' ? 'badge-heester' : p.cat==='conifeer' ? 'badge-conifeer' : 'badge-boom';
+  const catBadge = p.cat==='heester' ? 'badge-heester' : p.cat==='conifeer' ? 'badge-conifeer' : p.cat==='rosa' ? 'badge-rosa' : 'badge-boom';
   const lichtPill = p.licht==='schaduw' ? 'pill-schaduw' : p.licht==='halfschaduw' ? 'pill-halfschaduw' : 'pill-sun';
   const lichtLabel = p.licht==='schaduw' ? '🌑 schaduw' : p.licht==='halfschaduw' ? '🌤 halfschaduw' : '☀️ zon';
   const bladPill = p.blad==='groenblijvend' ? 'pill-groenblijvend' : 'pill-bladverliezend';
