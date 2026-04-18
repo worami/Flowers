@@ -378,3 +378,35 @@ De PLANTS-array in `data/bomen-heesters.js` is nog niet compleet. Op basis van h
 | BH14 | Vitis · Rubus | ✅ |
 | BH15 | Phyllostachys · Fargesia · Pleioblastus · Sasa (bamboe, cat:"heester") | ✅ |
 | BH16 | Rosa struikrozen · Rosa klimrozen · Rosa bodembedekkers (cat:"rosa") | ✅ |
+
+### Aanvulling na assortimentslijst-analyse (2026-04)
+
+**data/vaste-planten.js aanvullingen:**
+
+| # | Inhoud | Status |
+|---|--------|--------|
+| VP-K1 | Klimplanten: Akebia · Ampelopsis · Aristolochia · Celastrus · Fallopia · Humulus | ✅ |
+| VP-K2 | Klimplanten: Jasminum off. · Kadsura · Lathyrus · Periploca · Pileostegia · Stauntonia | ✅ |
+| VP-V1 | Aster deel 1: ageratifolius · alpinus · amellus · cordifolius · divaricatus · ericoides | ✅ |
+| VP-V2 | Aster deel 2: frikartii · laevis · lateriflorus · linosyris · macrophyllus · novae-belgii | ✅ |
+| VP-V3 | Aster deel 3: peduncularis · pyrenaeus · ptarmicoides · radula · sedifolius · tataricus · thomsonii · tongolensis · hybrides · pilosus pringlei | ✅ |
+| VP-V4 | Campanula: carpatica · garganica · glomerata · lactiflora · latifolia · latiloba · portenschlagiana · poscharskyana · rapunculoides · Pink Octopus · Sarastro | ✅ |
+| VP-V5 | Iris germanica (20 cv) · pumila (6 cv) | ✅ |
+| VP-V6 | Iris ensata · foetidissima · pallida · pseudacorus · reticulata | ✅ |
+| VP-V7 | Geranium deel 1: endressii · himalayense · Johnson's Blue · nodosum · oxonianum · pratense | ✅ |
+| VP-V8 | Geranium deel 2: psilostemon · renardii · riversleaianum · Rozanne · sylvaticum · versicolor · wlassovianum + 21 hybride cv | ✅ |
+| VP-V9 | Actaea pachypoda · Queen of Sheba · Cimicifuga japonica · racemosa · ramosa; simplex uitgebreid | ✅ |
+| VP-V10 | Digitalis ferruginea/lutea/mertonensis/parviflora · Lobelia gerardii/siphilitica/speciosa/tania · Lysimachia atropurpurea/barystachys/ciliata/clethroides/ephemerum/nummularia | ✅ |
+| VP-V11 | Paeonia officinalis + suffruticosa · Oenothera fruticosa/missouriensis/speciosa · Rodgersia aesculifolia/henrici/podophylla/sambucifolia | ✅ |
+| VP-V12 | Cortaderia selloana (pampasgras) | ✅ |
+| VP-V13 | Trachelospermum + Schizophragma extra cv (al aanwezig) | ✅ |
+
+**data/bomen-heesters.js aanvullingen:**
+
+| # | Inhoud | Status |
+|---|--------|--------|
+| BH-A1 | Ilex crenata (8 cv) · meserveae (6 cv) als aparte entries; koehneana bij aquifolium | ✅ |
+| BH-A2 | Ribes sanguineum · nigrum · rubrum · uva-crispa | ✅ |
+| BH-A3 | Photinia fraseri (4 cv); Ligustrum extra soorten al aanwezig als cv | ✅ |
+| BH-A4 | Cordyline australis · Hebe · Helwingia chinensis | ✅ |
+| BH-A5 | Corylus maxima 'Purpurea' · Picea abies/glauca/omorika/orientalis · Cephalotaxus harringtonia | ✅ |
