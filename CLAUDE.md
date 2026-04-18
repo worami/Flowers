@@ -328,9 +328,9 @@ De PLANTS-array in `data/vaste-planten.js` streeft naar het **volledige Muijderm
 
 | # | Genera | Status |
 |---|---|---|
-| K1 | Clematis | ⬜ aanvullen (~93 cv, nu 18) |
-| K2 | Hedera · Lonicera · Parthenocissus · Wisteria | ⬜ aanvullen (~19+8+6+5 cv, nu 5+4+3+5) |
-| K3 | Actinidia · Campsis · Hydrangea petiolaris · Passiflora · Schizophragma | ⬜ controleren op volledigheid |
+| K1 | Clematis | ✅ |
+| K2 | Hedera · Lonicera · Parthenocissus · Wisteria | ✅ |
+| K3 | Actinidia · Campsis · Hydrangea petiolaris · Passiflora · Schizophragma | ✅ |
 
 ---
 
