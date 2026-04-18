@@ -77,10 +77,17 @@ function applyFilter() {
     return mf && ml && ms;
   });
   page = 1;
-  document.getElementById('grid').innerHTML = '';
+  const grid = document.getElementById('grid');
+  grid.innerHTML = '';
   const loader = document.getElementById('loader');
   do { renderMore(); }
   while ((page - 1) * PAGE < filtered.length && loader.getBoundingClientRect().top < window.innerHeight);
+  if (filtered.length === 0) {
+    grid.innerHTML = filter === 'favorieten'
+      ? '<p class="empty-msg">Nog geen favorieten. Open een plant, klik op ☆ bij een cultivar om hem op te slaan.</p>'
+      : '<p class="empty-msg">Geen resultaten gevonden.</p>';
+    loader.textContent = '';
+  }
 }
 
 function renderMore() {
@@ -94,14 +101,7 @@ function renderMore() {
   const shown = Math.min(page*PAGE, filtered.length);
   document.getElementById('count').textContent = shown + '/' + filtered.length;
   document.getElementById('hdr-count').textContent = PLANTS.length + ' planten met cultivarvarianten · 📷 = Google foto\'s';
-  if (filtered.length === 0 && filter === 'favorieten') {
-    grid.innerHTML = '<p class="empty-msg">Nog geen favorieten. Open een plant, klik op ☆ bij een cultivar om hem op te slaan.</p>';
-  }
-  if (shown < filtered.length) {
-    loader.textContent = 'Meer laden…';
-  } else {
-    loader.textContent = filtered.length > 0 ? '— alle ' + filtered.length + ' planten getoond —' : (filter === 'favorieten' ? '' : 'Geen planten gevonden');
-  }
+  loader.textContent = shown < filtered.length ? 'Meer laden…' : '— alle ' + filtered.length + ' planten getoond —';
   page++;
 }
 
