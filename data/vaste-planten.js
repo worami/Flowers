@@ -511,4 +511,9 @@ const PLANTS = [
     {name:"hydrangeoides 'Roseum'",kleur:"lichtroze",hoogte:"tot 10m",tip:"Roze variant van de schutblaadjes, subtiel en elegant"},
     {name:"integrifolium",kleur:"wit",hoogte:"tot 12m",tip:"Chinese soort met grotere bloeiwijzen, iets snellere groei"},
   ]},
+  { n:"Toscaanse jasmijn", l:"Trachelospermum jasminoides", h:"hoog", s:"zomer", b:"jun–aug", c:"#f8f5e0", licht:"zon", cat:"klimplant", d:"Volle zon, beschutte warme standplaats (zuidmuur). Vochthoudende goed doorlatende grond. Hecht aan traliewerk of pergola. Groenblijvend in milde winters. Bloemen geven een intense, zoete jasmijngeur — vergelijkbaar met echte jasmijn. Langzaam groeiend in de eerste jaren, daarna krachtig. Niet volledig winterhard bij strenge vorst (beschermen onder -10°C).", cv:[
+    {name:"jasminoides",kleur:"sterwit",hoogte:"tot 6m",tip:"Species — wit sterbloempje, intense geur, voor beschutte zuidmuur"},
+    {name:"jasminoides 'Variegatum'",kleur:"wit / groen-wit bont blad",hoogte:"tot 4m",tip:"Bontbladig — crème-groen blad, iets minder winterhard dan species"},
+    {name:"asiaticum",kleur:"crèmegeel",hoogte:"tot 5m",tip:"Aziatische soort — geelwit, iets winterhardere en compactere groei"},
+  ]},
 ];
