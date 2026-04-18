@@ -547,4 +547,31 @@ const PLANTS = [
     {name:"lupulus",kleur:"groen (hopbellen)",hoogte:"tot 7m",tip:"Species — groene hop, gebruikt in bierbrouwerij, vlindervriendelijk"},
     {name:"lupulus 'Nordbrau'",kleur:"groen (hopbellen)",hoogte:"tot 6m",tip:"Geselecteerde brouwershop met hoog hopzuurgehalte"},
   ]},
+
+  // ── VP-K2: Klimplanten deel 2 ─────────────────────────────────────────────
+  { n:"Echte jasmijn", l:"Jasminum officinale", h:"hoog", s:"zomer", b:"jun–sep", c:"#f8f8f0", licht:"zon", cat:"klimplant", d:"Volle zon, beschutte warme standplaats. Goed doorlatende grond. Windende klimplant met geveerd blad en kleine witte stervormige bloemen met doordringende geur. Sterke bloeier van juni tot september. Niet volledig winterhard onder -10°C — bescherm de voet in strenge winters.", cv:[
+    {name:"officinale",kleur:"wit stervormig, intens geurend",hoogte:"tot 9m",tip:"Klassieke geurjasmijn — voor beschutte zuidmuur of pergola"},
+  ]},
+  { n:"Kadsura", l:"Kadsura japonica", h:"hoog", s:"zomer", b:"jun–aug", c:"#c04040", licht:"halfschaduw", cat:"klimplant", d:"Halfschaduw, vochthoudende humeuze grond. Beschutte standplaats — niet volledig winterhard. Windende groenblijvende klimplant uit Japan. Kleine crèmewitte bloemen gevolgd door rode bessenclusters in de herfst. Zeldzame maar sierlijke klimplant voor de liefhebber.", cv:[
+    {name:"japonica",kleur:"crèmewit / rode bessenclusters",hoogte:"tot 4m",tip:"Zeldzame Japanse klimplant met sierlijke bessen — voor kenners"},
+  ]},
+  { n:"Lathyrus (overblijvend)", l:"Lathyrus latifolius", h:"hoog", s:"zomer", b:"jun–sep", c:"#e060b0", licht:"zon", cat:"klimplant", d:"Volle zon, goed doorlatende grond. Overblijvende lathyrus — in tegenstelling tot de eenjarige. Klimt via ranken aan traliewerk of gaas. Bloeit rijkelijk en langdurig. Niet geurend. Sterft terug in winter, loopt elke lente weer uit.", cv:[
+    {name:"latifolius 'Pink Pearl'",kleur:"lichtroze",hoogte:"tot 2m",tip:"Zachtroze bloemkleur, rijkbloeiend en lang doorbloeiend"},
+    {name:"latifolius 'Red Pearl'",kleur:"dieprose-rood",hoogte:"tot 2m",tip:"Levendige roodroze kleur, krachtige groeier"},
+    {name:"latifolius 'White Pearl'",kleur:"zuiverwit",hoogte:"tot 2m",tip:"Stralend wit, mooi gecombineerd met roze varianten"},
+  ]},
+  { n:"Lathyrus (voorjaar)", l:"Lathyrus vernus", h:"laag", s:"voorjaar", b:"apr–mei", c:"#8060c0", licht:"halfschaduw", cat:"klimplant", d:"Halfschaduw, vochthoudende humeuze grond. Lage overblijvende lathyrus die niet klimt maar een compacte polvorm maakt. Paars-roze erwtenbloemen vroeg in het voorjaar. Verdwijnt in zomer — plant nabij later uitlopende planten.", cv:[
+    {name:"vernus",kleur:"paars-roze",hoogte:"30–40cm",tip:"Vroege voorjaarsbloeier — geen klimmer maar compacte pol"},
+    {name:"vernus 'Alboroseus'",kleur:"roze-wit tweekleurig",hoogte:"30–40cm",tip:"Tweekleurig roze-wit — eleganter dan de standaard paarse"},
+  ]},
+  { n:"Zijdewinde", l:"Periploca graeca", h:"hoog", s:"zomer", b:"jul–aug", c:"#604080", licht:"zon", cat:"klimplant", d:"Volle zon, goed doorlatende grond. Windende klimplant uit Zuidoost-Europa. Kleine bruinpaarse stervormige bloemen met witte binnenkant in zomer. Lange peulen in de herfst. Snel groeiend, voor grotere dragers. Melksap bij breken is giftig.", cv:[
+    {name:"graeca",kleur:"bruinpaars met wit hart",hoogte:"tot 10m",tip:"Zeldzame snel-klimmer met bijzondere stervormige bloemen"},
+  ]},
+  { n:"Pileostegia", l:"Pileostegia viburnoides", h:"hoog", s:"zomer", b:"aug–sep", c:"#f0ece0", licht:"schaduw", cat:"klimplant", d:"Schaduw tot halfschaduw, vochthoudende humeuze grond. Zelfklimmend via hechtorganen — klimt zonder drager aan muren. Groenblijvend leerachtig blad. Kleine crèmewitte bloemschermen in augustus-september. Langzame starter maar uiteindelijk krachtig. Uniek als schaduw-klimmer.", cv:[
+    {name:"viburnoides",kleur:"crèmewit (schermen)",hoogte:"tot 8m",tip:"Zeldzame groenblijvende schaduw-klimplant — zelfklimmend aan muur"},
+  ]},
+  { n:"Stauntonia", l:"Stauntonia hexaphylla", h:"hoog", s:"voorjaar", b:"apr–mei", c:"#e8d0f0", licht:"halfschaduw", cat:"klimplant", d:"Halfschaduw, vochthoudende humeuze grond. Beschutte standplaats — beperkt winterhard. Windende groenblijvende klimplant met geveerd blad. Lila-witte geurende bloemen in april-mei. Gevolgd door eetbare paarse vruchten. Zeldzame maar elegante klimplant voor mildere regio's.", cv:[
+    {name:"hexaphylla",kleur:"lila-wit, geurend",hoogte:"tot 8m",tip:"Sierlijk groenblijvend blad, geurende bloemen — voor beschutte plek"},
+    {name:"purpurea",kleur:"paars-lila",hoogte:"tot 6m",tip:"Dieper paarse bloemkleur dan hexaphylla, iets compacter"},
+  ]},
 ];
