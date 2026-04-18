@@ -581,6 +581,41 @@ const PLANTS = [
     {name:"'Snowflurry'",kleur:"wit",hoogte:"30cm",tip:"Laagblijvend wit — bodembedekker-achtige groeiwijze"},
   ]},
 
+  // ── VP-V2: Aster ontbrekende soorten deel 2 ──────────────────────────────
+  { n:"Italiaanse aster", l:"Aster frikartii", h:"middel", s:"zomer", b:"jul–okt", c:"#7090d0", licht:"zon", cat:"vaste plant", d:"Volle zon, goed doorlatende grond. Hybride aster met grote lavendelblauwe bloemen en geel hart. Bijzonder lange bloeitijd van juli tot oktober. Een van de mooiste asters voor de zomerborder.", cv:[
+    {name:"'Moench'",kleur:"lavendelblauw",hoogte:"70cm",tip:"Bekendste cultivar — grote bloemen, extreem lang bloeiend"},
+    {name:"'Wunder von Stäfa'",kleur:"lila-blauw",hoogte:"70cm",tip:"Iets donkerder blauw dan 'Moench', even rijkbloeiend"},
+  ]},
+  { n:"Gladde aster", l:"Aster laevis", h:"middel", s:"herfst", b:"sep–okt", c:"#8090c0", licht:"zon", cat:"vaste plant", d:"Volle zon, gewone goed doorlatende grond. Noord-Amerikaanse aster met gladde blaugroene bladeren. Stabiele opgaande groei, geen steunen nodig. Kleine lila-blauwe bloemen in grote pluimen.", cv:[
+    {name:"laevis",kleur:"lila-blauw",hoogte:"100cm",tip:"Species — krachtig en stabiel, geen steunen nodig"},
+    {name:"'Blauschleier'",kleur:"lichtblauw",hoogte:"80cm",tip:"Lichte blauwe sluier van bloemen — eleganter dan de species"},
+    {name:"'Calliope'",kleur:"paars-lila",hoogte:"120cm",tip:"Hoge krachtige groeier, rijke paarse bloemkleur"},
+    {name:"'Novemberblau'",kleur:"lila-blauw",hoogte:"100cm",tip:"Late bloeier tot in november — verlengt het aster-seizoen"},
+  ]},
+  { n:"Rankende aster", l:"Aster lateriflorus", h:"middel", s:"herfst", b:"sep–okt", c:"#d0c0e0", licht:"zon", cat:"vaste plant", d:"Volle zon tot halfschaduw, gewone grond. Horizontaal vertakte aster die breed uitgroeit. Massa's kleine witte tot lichtroze bloempjes met rood hart. Sierlijk als solitair of achterin de border.", cv:[
+    {name:"'Lady in Black'",kleur:"wit / donkerpaars blad",hoogte:"120cm",tip:"Zwart-paars blad met witte bloemetjes — dramatisch contrast"},
+    {name:"'Coombe Fishacre'",kleur:"lichtroze",hoogte:"100cm",tip:"Groot horizontaal vertakt exemplaar vol roze bloempjes"},
+    {name:"'Horizontalis'",kleur:"wit-roze",hoogte:"60cm",tip:"Breed uitwaaierende tak-structuur, kleine witte bloemen"},
+    {name:"'Prince'",kleur:"lichtroze / donker blad",hoogte:"80cm",tip:"Paarsbruin blad, roze bloemen — goede kleurcompositie"},
+  ]},
+  { n:"Goudaster", l:"Aster linosyris", h:"middel", s:"herfst", b:"aug–sep", c:"#e0c040", licht:"zon", cat:"vaste plant", d:"Volle zon, droge goed doorlatende grond. Inheemse Europese aster met goudgele pluimvormige bloemen. Lijkt op een Solidago maar is een echte Aster. Uitstekend op kalk en droge bodems.", cv:[
+    {name:"linosyris",kleur:"goudgeel",hoogte:"50cm",tip:"Goudgele herfstsier op droge kalkachtige bodem — zeldzaam"},
+  ]},
+  { n:"Grofbladige aster", l:"Aster macrophyllus", h:"middel", s:"herfst", b:"aug–sep", c:"#b0a0d0", licht:"schaduw", cat:"vaste plant", d:"Schaduw tot halfschaduw, vochthoudende grond. Grote brede bladeren die de grond bedekken. Lila-paarse bloemen in late zomer. Goede bodembedekker onder bomen.", cv:[
+    {name:"'Albus'",kleur:"wit",hoogte:"60cm",tip:"Witte versie — licht in de schaduw, goede bodembedekker"},
+    {name:"'Twilight'",kleur:"lila-paars",hoogte:"70cm",tip:"Paarse bloemen boven groot leerachtig blad — voor schaduwborder"},
+  ]},
+  { n:"Herfstaster (Engels)", l:"Aster novae-belgii", h:"middel", s:"herfst", b:"sep–okt", c:"#9060c0", licht:"zon", cat:"vaste plant", d:"Volle zon, vochthoudende voedselrijke grond. De klassieke Engelse herfstaster — compacte of middelhoge groeier met rijke bloemkleur. Deel elke 2–3 jaar voor vitaliteit. Vatbaar voor meeldauw bij droogte.", cv:[
+    {name:"(D) 'Prof. A. Kippenberg'",kleur:"lila-blauw",hoogte:"35cm",tip:"Compact en rijkbloeiend — klassieke dwergtype"},
+    {name:"(D) 'Herbstgr. vom Bresserh.'",kleur:"roze",hoogte:"35cm",tip:"Compact roze — betrouwbare dwergaster"},
+    {name:"(D) 'Jenny'",kleur:"karmijnrood gevuld",hoogte:"35cm",tip:"Gevuld rood dwergtype — levendig en compact"},
+    {name:"(D) 'Lady in Blue'",kleur:"lila-blauw",hoogte:"30cm",tip:"Laagste blauwe dwergaster, ideaal voor border-rand"},
+    {name:"(D) 'Schneekissen'",kleur:"wit",hoogte:"30cm",tip:"Wit sneeuwkussen — laag en compact met massa bloemen"},
+    {name:"n.-b. 'Crimson Brocade'",kleur:"karmijnrood",hoogte:"80cm",tip:"Diep karmijn, hogere groeier — achterin de border"},
+    {name:"n.-b. 'Karminkuppel'",kleur:"karmijnroze",hoogte:"60cm",tip:"Roze-karmijn koepelvorm, rijkbloeiend"},
+    {name:"n.-b. 'Marie Ballard'",kleur:"lichtblauw gevuld",hoogte:"90cm",tip:"Gevuld lichtblauw — klassieke hoge cultivar"},
+  ]},
+
   // ── VP-K2: Klimplanten deel 2 ───────────────────────────────────────────── Klimplanten deel 2 ─────────────────────────────────────────────
   { n:"Echte jasmijn", l:"Jasminum officinale", h:"hoog", s:"zomer", b:"jun–sep", c:"#f8f8f0", licht:"zon", cat:"klimplant", d:"Volle zon, beschutte warme standplaats. Goed doorlatende grond. Windende klimplant met geveerd blad en kleine witte stervormige bloemen met doordringende geur. Sterke bloeier van juni tot september. Niet volledig winterhard onder -10°C — bescherm de voet in strenge winters.", cv:[
     {name:"officinale",kleur:"wit stervormig, intens geurend",hoogte:"tot 9m",tip:"Klassieke geurjasmijn — voor beschutte zuidmuur of pergola"},
