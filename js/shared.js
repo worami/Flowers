@@ -58,5 +58,5 @@ function laadAfbeelding(el) {
 }
 
 function glink(l, cv) {
-  return `https://www.google.com/search?q=${encodeURIComponent(l+' '+cv+' tuin border')}&tbm=isch`;
+  return `https://www.google.com/search?q=${encodeURIComponent(l+' '+cv)}&tbm=isch`;
 }
