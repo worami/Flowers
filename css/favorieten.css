@@ -1,0 +1,32 @@
+.fav-card { padding: 0.8rem 0.9rem; }
+.fav-card-top { display: flex; justify-content: space-between; align-items: flex-start; gap: 0.5rem; }
+.fav-cv-naam { font-size: 0.78rem; color: #4a7c59; font-weight: 600; margin-top: 0.15rem; }
+.fav-verwijder { background: none; border: 1px solid #e8d8a0; border-radius: 2rem; cursor: pointer; font-size: 1rem; color: #f0a500; padding: 0.12rem 0.5rem; flex-shrink: 0; transition: background 0.15s; line-height: 1; }
+.fav-verwijder:hover { background: #fff3d8; }
+.fav-badges { margin-top: 0.5rem; }
+.fav-pills { margin-top: 0.2rem; }
+.fav-bron-pill { font-size: 0.6rem; padding: 0.06rem 0.4rem; border-radius: 2rem; }
+.fav-bron-vp { background: #e8f5e8; border: 1px solid #a0cc80; color: #2d5a2d; }
+.fav-bron-bh { background: #fdf3e3; border: 1px solid #d4a060; color: #7a4810; }
+.fav-cv-kleur { margin-top: 0.3rem; }
+.fav-acties { margin-top: 0.6rem; border-top: 1px solid #f0ebe0; padding-top: 0.55rem; display: flex; flex-direction: column; gap: 0.4rem; }
+.fav-label { display: flex; flex-direction: column; gap: 0.2rem; }
+.fav-label-tekst { font-size: 0.62rem; font-weight: 600; color: #888; text-transform: uppercase; letter-spacing: 0.05em; }
+.fav-notitie { border: 1px solid #ddd5c0; border-radius: 6px; padding: 0.35rem 0.5rem; font-size: 0.76rem; resize: vertical; font-family: inherit; background: #faf8f3; color: #333; outline: none; width: 100%; }
+.fav-notitie:focus { border-color: #4a7c59; }
+.fav-label-aantal { flex-direction: row; align-items: center; gap: 0.5rem; }
+.fav-label-aantal .fav-label-tekst { white-space: nowrap; margin: 0; }
+.fav-aantal { border: 1px solid #ddd5c0; border-radius: 6px; padding: 0.28rem 0.5rem; font-size: 0.76rem; width: 5rem; outline: none; background: white; text-align: center; }
+.fav-aantal:focus { border-color: #4a7c59; }
+.fav-toolbar-acties { display: flex; gap: 0.5rem; align-items: center; }
+#btn-print { border: 1px solid #2d4a2d; background: white; color: #2d4a2d; padding: 0.28rem 0.9rem; border-radius: 2rem; font-size: 0.73rem; cursor: pointer; transition: background 0.15s, color 0.15s; }
+#btn-print:hover { background: #2d4a2d; color: white; }
+
+@media print {
+  nav, .toolbar, .fav-verwijder, #btn-print, footer { display: none !important; }
+  body { background: white; }
+  header { padding: 0.5rem 1rem; }
+  .grid { grid-template-columns: repeat(2, 1fr); gap: 0.5rem; padding: 0.5rem; }
+  .fav-card { border: 1px solid #ccc; break-inside: avoid; }
+  .fav-notitie, .fav-aantal { border: 1px solid #ccc; background: white; }
+}

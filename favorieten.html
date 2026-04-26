@@ -1,0 +1,48 @@
+<!DOCTYPE html>
+<html lang="nl">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Favorieten – Kwekerij Muijderman</title>
+<link rel="stylesheet" href="css/shared.css">
+<link rel="stylesheet" href="css/vaste-planten.css">
+<link rel="stylesheet" href="css/bomen-heesters.css">
+<link rel="stylesheet" href="css/favorieten.css">
+</head>
+<body>
+
+<nav>
+  <a href="./index.html">🌿 Vaste planten</a>
+  <a href="./bomen-heesters.html">🌳 Bomen &amp; heesters</a>
+  <a href="./favorieten.html" class="actief">★ Favorieten</a>
+</nav>
+
+<header>
+  <p class="sub">Kwekerij Muijderman · Veldhoven</p>
+  <h1><em>Favorieten</em> overzicht</h1>
+  <p id="fav-teller"></p>
+</header>
+
+<div class="toolbar">
+  <div class="fav-toolbar-acties">
+    <button id="btn-print">🖨 Afdrukken / opslaan als PDF</button>
+  </div>
+</div>
+
+<div class="grid" id="fav-grid"></div>
+
+<div id="fav-leeg" class="empty-msg" hidden>
+  <p>Je hebt nog geen favorieten opgeslagen.</p>
+  <p style="margin-top:0.6rem">Blader door de <a href="./index.html">vaste planten</a> of <a href="./bomen-heesters.html">bomen &amp; heesters</a> en klik op ★ naast een cultivar.</p>
+</div>
+
+<footer>Kwekerij Muijderman · Volmolenweg 9 Veldhoven · do/vr/za 9–17u</footer>
+
+<script src="js/shared.js"></script>
+<script src="data/vaste-planten.js"></script>
+<script>var PLANTS_VP = PLANTS;</script>
+<script src="data/bomen-heesters.js"></script>
+<script>var PLANTS_BH = PLANTS;</script>
+<script src="js/favorieten.js"></script>
+</body>
+</html>
