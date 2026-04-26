@@ -65,7 +65,10 @@ function kaartHTML(id, bron) {
       <div class="card-latin">${p.l}</div>
       ${cv ? `<div class="cv-name fav-cv-naam">${cv.name}</div>` : ''}
     </div>
-    <button class="fav-verwijder" data-id="${id}" data-bron="${bron}" title="Verwijder uit favorieten">☆</button>
+    <div class="fav-top-acties">
+      <a class="cv-photo" href="${glink(p.l, cv ? cv.name : '')}" target="_blank" rel="noopener">📷 foto</a>
+      <button class="fav-verwijder" data-id="${id}" data-bron="${bron}" title="Verwijder uit favorieten">☆</button>
+    </div>
   </div>
   <div class="badges fav-badges">
     <span class="badge" style="background:${hBg[p.h]||'#eee'};color:${hTx[p.h]||'#333'}">${p.h}</span>
