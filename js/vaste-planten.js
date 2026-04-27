@@ -1,5 +1,5 @@
 const PAGE = 8;
-let filter = "all", filterLicht = "all", query = "", sorteer = "standaard", page = 1, filtered = [];
+let filter = "all", filterLicht = "all", query = "", sorteer = "az", page = 1, filtered = [];
 let favorieten = new Set(JSON.parse(localStorage.getItem('mj_fav') || '[]'));
 function saveFav() { localStorage.setItem('mj_fav', JSON.stringify([...favorieten])); }
 
