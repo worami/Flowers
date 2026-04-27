@@ -59,6 +59,7 @@ function cardHTML(p) {
         <span class="pill pill-bloom">🌸 ${p.b}</span>
       </div>
       <div class="card-desc">${p.d}</div>
+      <a class="meer-info-link" href="genus.html?l=${encodeURIComponent(p.l)}&bron=vp">Meer info →</a>
     </div>
     <button class="cultivar-toggle" onclick="this.nextElementSibling.classList.toggle('open');this.querySelector('.arr').textContent=this.nextElementSibling.classList.contains('open')?'▲':'▼'">
       <span>🌿 ${cvList.length} varianten</span><span class="arr">${filterFav?'▲':'▼'}</span>

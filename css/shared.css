@@ -77,6 +77,8 @@ header p { font-size: 0.7rem; color: rgba(245,240,232,0.6); margin-top: 0.3rem; 
 .cv-tip { font-size: 0.68rem; color: #666; margin-top: 0.18rem; line-height: 1.45; }
 .cv-fav { background: none; border: none; cursor: pointer; font-size: 0.9rem; color: #ccc; padding: 0 2px; line-height: 1; flex-shrink: 0; transition: color 0.15s; }
 .cv-fav.active { color: #f0a500; }
+.meer-info-link { display: inline-block; font-size: 0.68rem; color: #4a7c59; text-decoration: none; margin-top: 0.45rem; font-weight: 600; }
+.meer-info-link:hover { text-decoration: underline; }
 .empty-msg { text-align: center; padding: 3rem 1rem; color: #999; font-size: 0.85rem; }
 
 .loader { height: 40px; display: flex; align-items: center; justify-content: center; font-size: 0.75rem; color: #aaa; }
