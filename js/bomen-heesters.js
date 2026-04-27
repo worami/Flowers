@@ -1,5 +1,6 @@
 const PAGE = 8;
-let filter = "all", filterLicht = "all", filterBlad = "all", query = "", page = 1, filtered = [];
+let filterGrootte = 'alles', filterType = null, filterSeizoen = null, filterLicht = 'alle licht', filterBlad = 'alle blad', filterFav = false;
+let query = "", sorteer = "az", page = 1, filtered = [];
 let favorieten = new Set(JSON.parse(localStorage.getItem('mj_fav_bh') || '[]'));
 function saveFav() { localStorage.setItem('mj_fav_bh', JSON.stringify([...favorieten])); }
 
@@ -46,8 +47,7 @@ function cardHTML(p) {
   const bladPill = p.blad==='groenblijvend' ? 'pill-groenblijvend' : 'pill-bladverliezend';
   const bladLabel = p.blad==='groenblijvend' ? '🟢 groenblijvend' : '🍂 bladverliezend';
   const seizoenIcon = p.s==='winter' ? '❄️' : p.s==='herfst' ? '🍂' : p.s==='voorjaar' ? '🌱' : '☀️';
-  const isFav = filter === 'favorieten';
-  const cvList = isFav ? p.cv.filter(cv => favorieten.has(`${p.l}||${cv.name}`)) : p.cv;
+  const cvList = filterFav ? p.cv.filter(cv => favorieten.has(`${p.l}||${cv.name}`)) : p.cv;
   const cvHTML = cvList.map(cv => {
     const id = `${p.l}||${cv.name}`;
     const starred = favorieten.has(id);
@@ -84,30 +84,50 @@ function cardHTML(p) {
       <div class="card-desc">${p.d}</div>
     </div>
     <button class="cultivar-toggle" onclick="this.nextElementSibling.classList.toggle('open');this.querySelector('.arr').textContent=this.nextElementSibling.classList.contains('open')?'▲':'▼'">
-      <span>🌳 ${cvList.length} varianten</span><span class="arr">${isFav?'▲':'▼'}</span>
+      <span>🌳 ${cvList.length} varianten</span><span class="arr">${filterFav?'▲':'▼'}</span>
     </button>
-    <div class="cultivars${isFav?' open':''}">${cvHTML}</div>
+    <div class="cultivars${filterFav?' open':''}">${cvHTML}</div>
   </div>`;
+}
+
+const _hOrd = {klein:0, middel:1, groot:2};
+const _sOrd = {voorjaar:0, zomer:1, herfst:2, winter:3};
+
+function updateTeller() {
+  const isActief = filterGrootte !== 'alles' || filterType !== null || filterSeizoen !== null || filterLicht !== 'alle licht' || filterBlad !== 'alle blad' || filterFav;
+  const telGetal = document.getElementById('count');
+  const telTotaal = document.getElementById('teller-totaal');
+  const wisBtn = document.getElementById('filter-wis');
+  telGetal.textContent = filtered.length;
+  if (telTotaal) telTotaal.textContent = '/' + PLANTS.length;
+  telGetal.classList.toggle('actief', isActief || query !== '');
+  wisBtn.classList.toggle('zichtbaar', isActief);
 }
 
 function applyFilter() {
   filtered = PLANTS.filter(p => {
-    const mf = filter==='favorieten'
-      ? p.cv.some(cv => favorieten.has(`${p.l}||${cv.name}`))
-      : filter==='all' || p.h===filter || p.s===filter || p.cat===filter;
-    const ml = filterLicht==='all' || p.licht===filterLicht;
-    const mb = filterBlad==='all' || p.blad===filterBlad;
-    const ms = query==='' || p.n.toLowerCase().includes(query) || p.l.toLowerCase().includes(query);
-    return mf && ml && mb && ms;
+    if (filterFav && !p.cv.some(cv => favorieten.has(`${p.l}||${cv.name}`))) return false;
+    if (filterGrootte !== 'alles' && p.h !== filterGrootte) return false;
+    if (filterType !== null && p.cat !== filterType) return false;
+    if (filterSeizoen !== null && p.s !== filterSeizoen) return false;
+    if (filterLicht !== 'alle licht' && p.licht !== filterLicht) return false;
+    if (filterBlad !== 'alle blad' && p.blad !== filterBlad) return false;
+    if (query !== '' && !p.n.toLowerCase().includes(query) && !p.l.toLowerCase().includes(query)) return false;
+    return true;
   });
+  if (sorteer === 'az') filtered.sort((a,b) => a.n.localeCompare(b.n, 'nl'));
+  else if (sorteer === 'za') filtered.sort((a,b) => b.n.localeCompare(a.n, 'nl'));
+  else if (sorteer === 'grootte') filtered.sort((a,b) => (_hOrd[a.h]??1) - (_hOrd[b.h]??1));
+  else if (sorteer === 'bloei') filtered.sort((a,b) => (_sOrd[a.s]??2) - (_sOrd[b.s]??2));
   page = 1;
   const grid = document.getElementById('grid');
   grid.innerHTML = '';
+  updateTeller();
   const loader = document.getElementById('loader');
   do { renderMore(); }
   while ((page - 1) * PAGE < filtered.length && loader.getBoundingClientRect().top < window.innerHeight);
   if (filtered.length === 0) {
-    grid.innerHTML = filter === 'favorieten'
+    grid.innerHTML = filterFav
       ? '<p class="empty-msg">Nog geen favorieten. Open een plant, klik op ☆ bij een cultivar om hem op te slaan.</p>'
       : '<p class="empty-msg">Geen resultaten gevonden.</p>';
     loader.textContent = '';
@@ -123,7 +143,6 @@ function renderMore() {
   const allCards = grid.querySelectorAll('.card-img[data-lat]');
   Array.from(allCards).slice(-slice.length).forEach(el => imgObserver.observe(el));
   const shown = Math.min(page*PAGE, filtered.length);
-  document.getElementById('count').textContent = shown + '/' + filtered.length;
   document.getElementById('hdr-count').textContent = PLANTS.length + ' soorten met cultivarvarianten · 📷 = Google foto\'s';
   loader.textContent = shown < filtered.length ? 'Meer laden…' : '— alle ' + filtered.length + ' soorten getoond —';
   page++;
@@ -141,33 +160,58 @@ window.addEventListener('scroll', () => {
   if (_loaderEl.getBoundingClientRect().top < window.innerHeight + 300) renderMore();
 }, { passive: true });
 
-document.getElementById('filters').addEventListener('click', e => {
-  const btn = e.target.closest('button');
-  if (!btn || !btn.dataset.filter) return;
-  document.querySelectorAll('#filters button').forEach(b => b.classList.remove('active'));
-  btn.classList.add('active');
-  filter = btn.dataset.filter;
+// ── Chip-filters ──
+document.getElementById('chips-scroll').addEventListener('click', e => {
+  const btn = e.target.closest('.chip[data-groep]');
+  if (!btn) return;
+  const groep = btn.dataset.groep;
+  const val = btn.dataset.val;
+
+  if (groep === 'grootte') {
+    filterGrootte = filterGrootte === val ? 'alles' : val;
+    document.querySelectorAll('#chips-scroll [data-groep="grootte"]').forEach(b =>
+      b.classList.toggle('chip-actief', b.dataset.val === filterGrootte));
+  } else if (groep === 'type') {
+    filterType = filterType === val ? null : val;
+    document.querySelectorAll('#chips-scroll [data-groep="type"]').forEach(b =>
+      b.classList.toggle('chip-actief', b.dataset.val === filterType));
+  } else if (groep === 'seizoen') {
+    filterSeizoen = filterSeizoen === val ? null : val;
+    document.querySelectorAll('#chips-scroll [data-groep="seizoen"]').forEach(b =>
+      b.classList.toggle('chip-actief', b.dataset.val === filterSeizoen));
+  } else if (groep === 'licht') {
+    filterLicht = filterLicht === val ? 'alle licht' : val;
+    document.querySelectorAll('#chips-scroll [data-groep="licht"]').forEach(b =>
+      b.classList.toggle('chip-actief', b.dataset.val === filterLicht));
+  } else if (groep === 'blad') {
+    filterBlad = filterBlad === val ? 'alle blad' : val;
+    document.querySelectorAll('#chips-scroll [data-groep="blad"]').forEach(b =>
+      b.classList.toggle('chip-actief', b.dataset.val === filterBlad));
+  } else if (groep === 'fav') {
+    filterFav = !filterFav;
+    btn.classList.toggle('chip-actief', filterFav);
+  }
+
   applyFilter();
 });
 
-document.getElementById('filters-licht').addEventListener('click', e => {
-  const btn = e.target.closest('button');
-  if (!btn || !btn.dataset.licht) return;
-  document.querySelectorAll('#filters-licht button').forEach(b => b.classList.remove('active'));
-  btn.classList.add('active');
-  filterLicht = btn.dataset.licht;
+// ── Wis-knop (teller) ──
+document.getElementById('filter-wis').addEventListener('click', () => {
+  filterGrootte = 'alles'; filterType = null; filterSeizoen = null;
+  filterLicht = 'alle licht'; filterBlad = 'alle blad'; filterFav = false;
+  document.querySelectorAll('#chips-scroll [data-groep="grootte"]').forEach(b =>
+    b.classList.toggle('chip-actief', b.dataset.val === 'alles'));
+  document.querySelectorAll('#chips-scroll [data-groep="type"]').forEach(b => b.classList.remove('chip-actief'));
+  document.querySelectorAll('#chips-scroll [data-groep="seizoen"]').forEach(b => b.classList.remove('chip-actief'));
+  document.querySelectorAll('#chips-scroll [data-groep="licht"]').forEach(b =>
+    b.classList.toggle('chip-actief', b.dataset.val === 'alle licht'));
+  document.querySelectorAll('#chips-scroll [data-groep="blad"]').forEach(b =>
+    b.classList.toggle('chip-actief', b.dataset.val === 'alle blad'));
+  document.querySelectorAll('#chips-scroll [data-groep="fav"]').forEach(b => b.classList.remove('chip-actief'));
   applyFilter();
 });
 
-document.getElementById('filters-blad').addEventListener('click', e => {
-  const btn = e.target.closest('button');
-  if (!btn || !btn.dataset.blad) return;
-  document.querySelectorAll('#filters-blad button').forEach(b => b.classList.remove('active'));
-  btn.classList.add('active');
-  filterBlad = btn.dataset.blad;
-  applyFilter();
-});
-
+// ── Favorieten toggle in grid ──
 document.getElementById('grid').addEventListener('click', e => {
   const btn = e.target.closest('.cv-fav');
   if (!btn) return;
@@ -177,7 +221,7 @@ document.getElementById('grid').addEventListener('click', e => {
     favorieten.delete(id);
     btn.classList.remove('active');
     btn.textContent = '☆';
-    if (filter === 'favorieten') applyFilter();
+    if (filterFav) applyFilter();
   } else {
     favorieten.add(id);
     btn.classList.add('active');
@@ -186,10 +230,33 @@ document.getElementById('grid').addEventListener('click', e => {
   saveFav();
 });
 
+// ── Sortering ──
+document.getElementById('sorteer').addEventListener('change', e => {
+  sorteer = e.target.value;
+  applyFilter();
+});
+
+// ── Zoekbalk ──
+const _zoekbalk = document.getElementById('zoekbalk');
+const _zoekWis = document.getElementById('search-clear');
+const _zoekInput = document.getElementById('search');
+
+_zoekInput.addEventListener('focus', () => _zoekbalk.classList.add('focus'));
+_zoekInput.addEventListener('blur', () => _zoekbalk.classList.remove('focus'));
+
 let debounce;
-document.getElementById('search').addEventListener('input', e => {
+_zoekInput.addEventListener('input', e => {
   clearTimeout(debounce);
-  debounce = setTimeout(() => { query = e.target.value.toLowerCase(); applyFilter(); }, 200);
+  const val = e.target.value;
+  _zoekWis.classList.toggle('zichtbaar', val !== '');
+  debounce = setTimeout(() => { query = val.toLowerCase(); applyFilter(); }, 200);
+});
+
+_zoekWis.addEventListener('click', () => {
+  _zoekInput.value = '';
+  _zoekWis.classList.remove('zichtbaar');
+  query = '';
+  applyFilter();
 });
 
 applyFilter();

@@ -10,8 +10,9 @@
 <body>
 
 <nav>
-  <a href="./index.html" class="actief">🌿 Vaste planten</a>
-  <a href="./bomen-heesters.html">🌳 Bomen &amp; heesters</a>
+  <a href="./index.html" class="actief">🌿 Planten</a>
+  <a href="./bomen-heesters.html">🌳 Bomen</a>
+  <a href="./favorieten.html">★ Favorieten</a>
 </nav>
 
 <header>
@@ -21,27 +22,45 @@
 </header>
 
 <div class="toolbar">
-  <div class="filters" id="filters">
-    <button class="active" data-filter="all">Alles</button>
-    <button data-filter="hoog">🌿 Hoog</button>
-    <button data-filter="middel">🌿 Middel</button>
-    <button data-filter="laag">🌿 Laag</button>
-    <button data-filter="bodembedekker">🟫 Bodembedekkers</button>
-    <button data-filter="siergras">🌾 Siergrassen</button>
-    <button data-filter="klimplant">🌿 Klimplanten</button>
-    <button data-filter="voorjaar">🌱 Voorjaar</button>
-    <button data-filter="zomer">☀️ Zomer</button>
-    <button data-filter="herfst">🍂 Herfst</button>
-    <button data-filter="favorieten">★ Favorieten</button>
-    <span class="count" id="count"></span>
+  <div class="toolbar-top">
+    <div class="zoekbalk" id="zoekbalk">
+      <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="#999" stroke-width="2.5" stroke-linecap="round"><circle cx="11" cy="11" r="8"/><line x1="21" y1="21" x2="16.65" y2="16.65"/></svg>
+      <input id="search" type="search" placeholder="Zoek op naam…" autocomplete="off">
+      <button id="search-clear" class="zoek-wis" aria-label="Wis zoekopdracht">✕</button>
+    </div>
+    <select id="sorteer">
+      <option value="az">A–Z</option>
+      <option value="za">Z–A</option>
+      <option value="bloei">Bloeitijd</option>
+    </select>
   </div>
-  <div class="filters" id="filters-licht">
-    <button class="active" data-licht="all">Alle licht</button>
-    <button data-licht="zon">☀️ Zon</button>
-    <button data-licht="halfschaduw">🌤 Halfschaduw</button>
-    <button data-licht="schaduw">🌑 Schaduw</button>
+  <div class="toolbar-chips-row">
+    <div class="chips-scroll" id="chips-scroll">
+      <button class="chip chip-actief" data-groep="hoogte" data-val="alles">Alles</button>
+      <button class="chip" data-groep="hoogte" data-val="hoog"><span class="chip-emoji">🌿</span>Hoog</button>
+      <button class="chip" data-groep="hoogte" data-val="middel"><span class="chip-emoji">🌿</span>Middel</button>
+      <button class="chip" data-groep="hoogte" data-val="laag"><span class="chip-emoji">🌿</span>Laag</button>
+      <div class="chip-divider"></div>
+      <button class="chip" data-groep="type" data-val="bodembedekker"><span class="chip-emoji">🟫</span>Bodembedekkers</button>
+      <button class="chip" data-groep="type" data-val="siergras"><span class="chip-emoji">🌾</span>Siergrassen</button>
+      <button class="chip" data-groep="type" data-val="klimplant"><span class="chip-emoji">🍃</span>Klimplanten</button>
+      <div class="chip-divider"></div>
+      <button class="chip" data-groep="seizoen" data-val="voorjaar"><span class="chip-emoji">🌱</span>Voorjaar</button>
+      <button class="chip" data-groep="seizoen" data-val="zomer"><span class="chip-emoji">☀️</span>Zomer</button>
+      <button class="chip" data-groep="seizoen" data-val="herfst"><span class="chip-emoji">🍂</span>Herfst</button>
+      <div class="chip-divider"></div>
+      <button class="chip chip-actief" data-groep="licht" data-val="alle licht">Alle licht</button>
+      <button class="chip" data-groep="licht" data-val="zon"><span class="chip-emoji">☀️</span>Zon</button>
+      <button class="chip" data-groep="licht" data-val="halfschaduw"><span class="chip-emoji">⛅</span>Halfschaduw</button>
+      <button class="chip" data-groep="licht" data-val="schaduw"><span class="chip-emoji">🌑</span>Schaduw</button>
+      <div class="chip-divider"></div>
+      <button class="chip" data-groep="fav" data-val="favorieten">★ Favorieten</button>
+    </div>
+    <div class="chip-teller">
+      <div><span class="teller-getal" id="count">0</span><span class="teller-totaal" id="teller-totaal">/0</span></div>
+      <button class="teller-wis" id="filter-wis">wis</button>
+    </div>
   </div>
-  <input id="search" type="search" placeholder="Zoek op naam…">
 </div>
 
 <div class="grid" id="grid"></div>
