@@ -17,7 +17,9 @@ header p { font-size: 0.7rem; color: rgba(245,240,232,0.6); margin-top: 0.3rem; 
 .filters button { border: 1px solid #ccc; background: white; color: #333; padding: 0.22rem 0.6rem; border-radius: 2rem; font-size: 0.7rem; cursor: pointer; transition: all 0.15s; }
 .filters button.active { background: #2d4a2d; border-color: #2d4a2d; color: white; }
 .count { margin-left: auto; font-size: 0.68rem; color: #888; white-space: nowrap; }
-#search { border: 1px solid #ddd5c0; border-radius: 2rem; padding: 0.28rem 0.75rem; font-size: 0.76rem; outline: none; background: white; width: 100%; }
+.toolbar-bottom { display: flex; gap: 0.4rem; align-items: center; }
+#search { border: 1px solid #ddd5c0; border-radius: 2rem; padding: 0.28rem 0.75rem; font-size: 0.76rem; outline: none; background: white; flex: 1; min-width: 0; }
+#sorteer { border: 1px solid #ddd5c0; border-radius: 2rem; padding: 0.28rem 0.65rem; font-size: 0.72rem; outline: none; background: white; color: #333; cursor: pointer; white-space: nowrap; flex-shrink: 0; }
 
 .grid { padding: 0.9rem; display: grid; grid-template-columns: repeat(auto-fill, minmax(240px, 1fr)); gap: 0.85rem; }
 

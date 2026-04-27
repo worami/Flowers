@@ -1,5 +1,5 @@
 const PAGE = 8;
-let filter = "all", filterLicht = "all", query = "", page = 1, filtered = [];
+let filter = "all", filterLicht = "all", query = "", sorteer = "standaard", page = 1, filtered = [];
 let favorieten = new Set(JSON.parse(localStorage.getItem('mj_fav') || '[]'));
 function saveFav() { localStorage.setItem('mj_fav', JSON.stringify([...favorieten])); }
 
@@ -67,6 +67,9 @@ function cardHTML(p) {
   </div>`;
 }
 
+const _hOrd = {laag:0, middel:1, hoog:2};
+const _sOrd = {voorjaar:0, zomer:1, herfst:2};
+
 function applyFilter() {
   filtered = PLANTS.filter(p => {
     const mf = filter==='favorieten'
@@ -76,6 +79,9 @@ function applyFilter() {
     const ms = query==='' || p.n.toLowerCase().includes(query) || p.l.toLowerCase().includes(query);
     return mf && ml && ms;
   });
+  if (sorteer === 'az') filtered.sort((a,b) => a.n.localeCompare(b.n, 'nl'));
+  else if (sorteer === 'hoogte') filtered.sort((a,b) => (_hOrd[a.h]??1) - (_hOrd[b.h]??1));
+  else if (sorteer === 'bloei') filtered.sort((a,b) => (_sOrd[a.s]??2) - (_sOrd[b.s]??2));
   page = 1;
   const grid = document.getElementById('grid');
   grid.innerHTML = '';
@@ -153,6 +159,11 @@ document.getElementById('grid').addEventListener('click', e => {
     btn.textContent = '★';
   }
   saveFav();
+});
+
+document.getElementById('sorteer').addEventListener('change', e => {
+  sorteer = e.target.value;
+  applyFilter();
 });
 
 let debounce;
