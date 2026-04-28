@@ -445,11 +445,12 @@ De PLANTS-array in `data/bomen-heesters.js` is nog niet compleet. Op basis van h
 | ZK15 | Thymus → Zantedeschia + resterende klimplanten (21 entries) | ✅ |
 
 ### Combinatieplanten — `data/vaste-planten.js`
+
+**Status: ✅ VOLLEDIG — alle 407 entries verrijkt (scripts/cp1_insert.py t/m cp12_insert.py)**
+
 | # | Genera | Status |
 |---|---|---|
-| CP1 | A–G (~100 genera) | ⬜ |
-| CP2 | H–P (~100 genera) | ⬜ |
-| CP3 | R–Z (~100 genera) | ⬜ |
+| CP1–CP12 | Alle 407 genera in 12 batches van ~34 entries | ✅ |
 
 ### Bomen/heesters detailpagina
 | # | Omschrijving | Status |
