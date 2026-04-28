@@ -410,3 +410,49 @@ De PLANTS-array in `data/bomen-heesters.js` is nog niet compleet. Op basis van h
 | BH-A3 | Photinia fraseri (4 cv); Ligustrum extra soorten al aanwezig als cv | ✅ |
 | BH-A4 | Cordyline australis · Hebe · Helwingia chinensis | ✅ |
 | BH-A5 | Corylus maxima 'Purpurea' · Picea abies/glauca/omorika/orientalis · Cephalotaxus harringtonia | ✅ |
+
+---
+
+## Genus-detailpagina's — voortgang
+
+### Infrastructuur
+| # | Omschrijving | Status |
+|---|---|---|
+| Batch 1 | genus.html · css/genus.css · js/genus.js · "Meer info →" in cardHTML | ✅ |
+
+### Zorgkalender — `data/vaste-planten.js` (407 entries, ~25 per batch)
+
+**Aanpak:** Python-invoegscript per batch. Voegt `zorgkalender:{...}` in vóór `cv:[` op basis van `l:"<naam>"`.
+
+**Status: ✅ VOLLEDIG — alle 407 entries verrijkt (scripts/zk1_insert.py t/m zk15_insert.py)**
+
+| # | Genera (eerste → laatste, gesorteerd) | Status |
+|---|---|---|
+| ZK1 | Acaena → Anemone nemorosa (26 entries) | ✅ |
+| ZK2 | Anemonella → Asplenium (25 entries) | ✅ |
+| ZK3 | Aster ageratifolius → Baptisia (21 entries) | ✅ |
+| ZK4 | Beesia → Campanula poscharskyana (25 entries) | ✅ |
+| ZK5 | Campanula rapunculoides → Cosmos (30 entries) | ✅ |
+| ZK6 | Crambe → Dystaenia (25 entries) | ✅ |
+| ZK7 | Echinacea → Geranium cantabrigiense (27 entries) | ✅ |
+| ZK8 | Geranium macrorrhizum → Humulus (28 entries) | ✅ |
+| ZK9 | Hydrangea petiolaris → Lysimachia atropurpurea (50 entries) | ✅ |
+| ZK10 | Hemerocallis → Miscanthus sinensis (25 entries) | ✅ |
+| ZK11 | Mitella → Parthenium (25 entries) | ✅ |
+| ZK12 | Passiflora → Primula (25 entries) | ✅ |
+| ZK13 | Prunella → Senecio (25 entries) | ✅ |
+| ZK14 | Serratula → Thermopsis (25 entries) | ✅ |
+| ZK15 | Thymus → Zantedeschia + resterende klimplanten (21 entries) | ✅ |
+
+### Combinatieplanten — `data/vaste-planten.js`
+| # | Genera | Status |
+|---|---|---|
+| CP1 | A–G (~100 genera) | ⬜ |
+| CP2 | H–P (~100 genera) | ⬜ |
+| CP3 | R–Z (~100 genera) | ⬜ |
+
+### Bomen/heesters detailpagina
+| # | Omschrijving | Status |
+|---|---|---|
+| BH-Detail | genus-bh.html + "Meer info →" in bomen-heesters cards | ⬜ |
+| BH-ZK1–4 | Zorgkalender data bomen/heesters (4 batches) | ⬜ |
