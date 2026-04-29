@@ -106,6 +106,43 @@ function renderZorgkalender(p) {
   </div>`;
 }
 
+const KM_ICONS = {
+  plantafstand:'📏', grondtype:'🪨', zuurgraad:'⚗️', waterbehoefte:'💧',
+  groepering:'🌿', winterhard:'❄️', giftig:'⚠️', insectvriendelijk:'🐝'
+};
+const KM_LABELS = {
+  plantafstand:'Plantafstand', grondtype:'Grondtype', zuurgraad:'Grondaciditeit',
+  waterbehoefte:'Waterbehoefte', groepering:'Groepering',
+  winterhard:'Winterhard', giftig:'Giftig', insectvriendelijk:'Insectvriendelijk'
+};
+
+function renderKenmerken(p) {
+  if (!p.kenmerken) return '';
+  const k = p.kenmerken;
+  const rijen = [
+    ['plantafstand', k.plantafstand],
+    ['grondtype', k.grondtype],
+    ['zuurgraad', k.zuurgraad],
+    ['waterbehoefte', k.waterbehoefte],
+    ['groepering', k.groepering],
+    ['winterhard', k.winterhard !== undefined ? (k.winterhard ? 'ja' : 'nee') : undefined],
+    ['giftig', k.giftig !== undefined ? (k.giftig ? 'ja' : 'nee') : undefined],
+    ['insectvriendelijk', k.insectvriendelijk],
+  ].filter(([, v]) => v !== undefined);
+  if (rijen.length === 0) return '';
+  const html = rijen.map(([key, val]) =>
+    `<div class="km-rij">
+      <span class="km-icon">${KM_ICONS[key]}</span>
+      <span class="km-label">${KM_LABELS[key]}</span>
+      <span class="km-waarde km-${key}-${String(val).replace(/[^a-z0-9]/g, '-')}">${val}</span>
+    </div>`
+  ).join('');
+  return `<div class="detail-sectie">
+    <div class="detail-sectie-titel">🌱 Plantkenmerken</div>
+    <div class="kenmerken-grid">${html}</div>
+  </div>`;
+}
+
 function renderCombinaties(p) {
   if (!p.combinatieplanten || p.combinatieplanten.length === 0) return '';
   const allePlants = [...PLANTS_VP, ...PLANTS_BH];
@@ -165,6 +202,7 @@ function init() {
       <h1 class="detail-naam">${p.n}</h1>
       <div class="detail-latijn">${p.l}</div>
       <p class="detail-beschrijving">${p.d}</p>
+      ${renderKenmerken(p)}
       ${renderCultivars(p, bron)}
       ${renderZorgkalender(p)}
       ${renderCombinaties(p)}
